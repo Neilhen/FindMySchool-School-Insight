@@ -42,9 +42,10 @@ const secondaryToPrimaryMap = {};
 
 function passesFilters(s) {
   const irishOk = s.irish ? activeFilters.irish : true;
+  const charterOk = s.charter ? activeFilters.charter : true;
   return s.type === 'preschool'
-    ? activeFilters.preschool && irishOk
-    : activeFilters[s.type] && activeFilters[s.gender] && activeFilters[s.fees] && irishOk;
+    ? activeFilters.preschool && irishOk && charterOk
+    : activeFilters[s.type] && activeFilters[s.gender] && activeFilters[s.fees] && irishOk && charterOk;
 }
 
 async function initApp() {
@@ -220,6 +221,7 @@ function openSidebar(data) {
   `;
   if(data.ethos && data.ethos !== 'Unknown') badgesHTML += `<span class="badge" style="background:#FFF3E0;color:#E65100;">${data.ethos}</span>`;
   if(data.irish) badgesHTML += `<span class="badge b-iri">★ Irish-medium</span>`;
+  if(data.charter) badgesHTML += `<span class="badge" style="background:#FFF3E0;color:#E65100;">★ Charter</span>`;
   if(data.deis) badgesHTML += `<span class="badge" style="background:#E8F5E9;color:#2E7D32;font-weight:700;">✓ DEIS</span>`;
   sbBadges.innerHTML = badgesHTML;
   
@@ -255,7 +257,9 @@ function openSidebar(data) {
   const facts = [];
   if (data.enrolment) facts.push(`Enrolment: ${data.enrolment} (2024/25)`);
   if (data.patron) facts.push(`Patron: ${data.patron}`);
-  if (!data.id.startsWith('PRIV-') && !data.id.startsWith('PRE-')) facts.push(`Roll no: ${data.id}`);
+  if (data.district_name) facts.push(`District: ${data.district_name}`);
+  if (!data.id.startsWith('PRIV-') && !data.id.startsWith('PRE-') && !data.id.startsWith('US-')) facts.push(`Roll no: ${data.id}`);
+  if (data.id.startsWith('US-')) facts.push(`NCES ID: ${data.nces_id}`);
   if (facts.length) notesHTML += `<br><span style="color:#555;font-size:12px">${facts.join(' · ')}</span>`;
   if (data.approxLocation) notesHTML += `<br><span style="color:#E65100;font-size:11px;font-weight:600">📍 Approximate location — run geocode_preschools.py or check the address</span>`;
   if (data.source && data.source.indexOf('DoE') === 0) notesHTML += `<br><span style="color:#2E7D32;font-size:11px;font-weight:600">✓ Verified against DoE register 2024/25</span>`;
@@ -441,12 +445,12 @@ filtersHeader.addEventListener('click', () => {
 const activeFilters = {
   preschool:true, primary:true, secondary:true, special:true,
   boys:true, girls:true, coed:true,
-  feepaying:true, free:true, irish:true
+  feepaying:true, free:true, irish:true, charter:true
 };
 const btnCols = {
   preschool:'#16a34a', primary:'#0369a1', secondary:'#6b21a8', special:'#ea580c',
   boys:'#1e40af', girls:'#be185d', coed:'#6b21a8',
-  feepaying:'#c2410c', free:'#15803d', irish:'#ca8a04'
+  feepaying:'#c2410c', free:'#15803d', irish:'#ca8a04', charter:'#ca8a04'
 };
 
 Object.keys(activeFilters).forEach(k => {
@@ -643,5 +647,32 @@ map.on('click', function (e) {
     setPin(e.latlng.lat, e.latlng.lng, 'Pin dropped — drag it to adjust.');
   }
 });
+
+window.setRegion = function(region) {
+  const btnIe = document.getElementById('region-ie');
+  const btnUs = document.getElementById('region-us');
+  const ieFilters = document.getElementById('ie-filters');
+  const usFilters = document.getElementById('us-filters');
+  
+  if (region === 'US') {
+    btnUs.style.background = '#1a237e';
+    btnUs.style.color = 'white';
+    btnIe.style.background = 'transparent';
+    btnIe.style.color = 'black';
+    if (ieFilters) ieFilters.style.display = 'none';
+    if (usFilters) usFilters.style.display = 'block';
+    map.setView([39.8, -98.5], 4);
+    if (parishLayer && map.hasLayer(parishLayer)) map.removeLayer(parishLayer);
+  } else {
+    btnIe.style.background = '#1a237e';
+    btnIe.style.color = 'white';
+    btnUs.style.background = 'transparent';
+    btnUs.style.color = 'black';
+    if (usFilters) usFilters.style.display = 'none';
+    if (ieFilters) ieFilters.style.display = 'block';
+    map.setView([53.4, -8.0], 7);
+    if (parishLayer && !map.hasLayer(parishLayer)) map.addLayer(parishLayer);
+  }
+};
 
 initApp();

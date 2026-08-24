@@ -26,8 +26,14 @@
 
 <div id="ui-container">
   <div class="panel">
-    <div class="title-main">Ireland Schools</div>
+    <div class="title-main" id="app-title">Schools Map</div>
     <div class="title-sub">Find schools in your area</div>
+    
+    <!-- Region Toggle -->
+    <div style="display:flex; gap: 4px; margin-top: 10px; background: #e0e6ed; padding: 4px; border-radius: 8px;">
+      <button id="region-ie" onclick="setRegion('IE')" class="filter-btn" style="flex:1; border:none; text-align:center; font-weight:600; background:#1a237e; color:white;">🇮🇪 Ireland</button>
+      <button id="region-us" onclick="setRegion('US')" class="filter-btn" style="flex:1; border:none; text-align:center; font-weight:600; background:transparent;">🇺🇸 USA</button>
+    </div>
   </div>
 
   <div class="panel" id="search-box">
@@ -85,10 +91,17 @@
         </div>
       </div>
       
-      <div class="filter-group">
-        <span class="filter-label">Special</span>
+      <div class="filter-group" id="ie-filters">
+        <span class="filter-label">Special (IE)</span>
         <div class="filter-btns">
           <button class="filter-btn" id="f-irish" onclick="toggleFilter('irish')">★ Irish-medium</button>
+        </div>
+      </div>
+
+      <div class="filter-group" id="us-filters" style="display:none;">
+        <span class="filter-label">Special (US)</span>
+        <div class="filter-btns">
+          <button class="filter-btn" id="f-charter" onclick="toggleFilter('charter')">Charter School</button>
         </div>
       </div>
     </div>
