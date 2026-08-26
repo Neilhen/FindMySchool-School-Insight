@@ -168,6 +168,7 @@ function clearLines() {
 }
 
 function clearParishes() {
+  if (!parishLayer) return;
   parishLayer.eachLayer(layer => {
     parishLayer.resetStyle(layer);
   });
@@ -182,7 +183,7 @@ function drawLine(p1, p2, color) {
 
 function highlightParish(parishId) {
   clearParishes();
-  if (!parishId) return;
+  if (!parishId || !parishLayer) return;
   parishLayer.eachLayer(layer => {
     if (layer.feature && layer.feature.properties && layer.feature.properties.parishid === parishId) {
       layer.setStyle({ fillColor: '#FFF59D', fillOpacity: 0.2, color: '#FBC02D', weight: 2, opacity: 0.7 });
