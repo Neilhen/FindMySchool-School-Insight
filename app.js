@@ -49,22 +49,31 @@ function passesFilters(s) {
 }
 
 async function initApp() {
+  // Schools are the whole point of the map, so start fetching them immediately.
+  // We deliberately do NOT await this yet - it runs alongside the parish
+  // download below instead of queueing behind it.
+  const schoolsLoading = fetchSchoolsInBounds();
+
+  // Parish boundaries are a nice-to-have: they stay invisible until you click a
+  // school. If this file is slow or fails, the map must still work, so the
+  // whole block is wrapped and any error is swallowed rather than returned on.
   try {
     const pRes = await fetch("parish_data.json");
+    if (!pRes.ok) throw new Error(`HTTP ${pRes.status}`);
     parishData = await pRes.json();
-  } catch (e) {
-    console.error("Failed to load parish data:", e);
-    return;
-  }
-  
-  parishLayer = L.geoJSON(parishData, {
-    style: function () {
-      return { color: "transparent", weight: 0, opacity: 0, fillColor: "transparent", fillOpacity: 0 };
-    }
-  }).addTo(map);
-  layerControl.addOverlay(parishLayer, "Parish Boundaries");
 
-  await fetchSchoolsInBounds();
+    parishLayer = L.geoJSON(parishData, {
+      style: function () {
+        return { color: "transparent", weight: 0, opacity: 0, fillColor: "transparent", fillOpacity: 0 };
+      }
+    }).addTo(map);
+    layerControl.addOverlay(parishLayer, "Parish Boundaries");
+  } catch (e) {
+    // Non-fatal: without this layer we simply can't highlight a parish.
+    console.error("Parish boundaries unavailable (map still works):", e);
+  }
+
+  await schoolsLoading;
 }
 
 async function fetchSchoolsInBounds() {
@@ -176,7 +185,6 @@ function clearParishes() {
 
 function drawLine(p1, p2, color) {
   const line = L.polyline([[p1.lat, p1.lng], [p2.lat, p2.lng]], { color: color, weight: 3, opacity: 0.7, dashArray: '6, 6' }).addTo(map);
-  layerControl.addOverlay(parishLayer, "Parish Boundaries");
   line.bringToFront();
   activeLines.push(line);
 }
@@ -510,7 +518,6 @@ function setPin(lat, lng, label) {
       className: '', iconSize: [30, 30], iconAnchor: [15, 30]
     })
   }).addTo(map);
-  layerControl.addOverlay(parishLayer, "Parish Boundaries");
   homePin.on('dragend', () => refreshNearest());
   document.getElementById('pin-clear').style.display = '';
   document.getElementById('pin-status').textContent = label || '';
