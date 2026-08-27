@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en-IE">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Compare schools — Find a School</title>
+<meta name="description" content="Put your shortlisted schools side by side: ethos, enrolment, fees with sources, special classes, and the area around each one.">
+<link rel="canonical" href="https://www.findaschool.ie/compare.html">
+<!-- A comparison is personal to whoever built it, so there is nothing here for
+     a search engine to index. The school pages are what should rank. -->
+<meta name="robots" content="noindex,follow">
+<link rel="stylesheet" href="/schools/pages.css">
+<style>
+  .wrap{max-width:1180px;margin:0 auto;padding:24px 20px 60px}
+  .scroller{overflow-x:auto;border:1px solid var(--line);border-radius:8px}
+  table.cmp{border-collapse:collapse;width:100%;min-width:640px;font-size:14px}
+  table.cmp th,table.cmp td{padding:10px 12px;border-bottom:1px solid var(--line);
+    vertical-align:top;text-align:left}
+  table.cmp thead th{position:sticky;top:0;background:var(--sunk);z-index:1}
+  table.cmp tbody th{width:190px;color:var(--soft);font-weight:600;
+    position:sticky;left:0;background:var(--bg)}
+  table.cmp td{min-width:200px}
+  .schoolname{font-weight:700;font-size:15px;display:block;margin-bottom:2px}
+  .rm{background:none;border:none;color:var(--stop);cursor:pointer;font-size:12px;padding:0}
+  .empty{padding:44px 0;text-align:center;color:var(--soft)}
+  .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 16px}
+  .note{font-size:12px;color:var(--faint);margin-top:14px;line-height:1.5}
+  mark.best{background:#e8f5e9;color:var(--good);padding:1px 4px;border-radius:3px}
+  @media (prefers-color-scheme:dark){mark.best{background:#16301f}}
+</style>
+</head>
+<body>
+<header class="site">
+  <a class="brand" href="/">Find a School</a>
+  <nav>
+    <a href="/">Map</a>
+    <a href="/schools/">All schools</a>
+    <a href="/compare.html" id="nav-compare">Shortlist</a>
+  </nav>
+</header>
+
+<main class="wrap">
+  <h1>Your shortlist</h1>
+  <p class="lede" id="lede">Loading…</p>
+
+  <div class="toolbar" id="toolbar" style="display:none">
+    <button class="btn" id="copy">Copy a link to this comparison</button>
+    <button class="btn ghost" id="clear">Clear shortlist</button>
+    <span class="thin" id="copied"></span>
+  </div>
+
+  <div id="out"></div>
+
+  <p class="note">
+    Fees carry the year and a link to the page they were read from; where a school
+    does not publish a figure we say so rather than guessing. House prices are CSO
+    medians for the whole Eircode district. Ireland has no catchment areas — nothing
+    here indicates whether a child will get a place.
+  </p>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/supabase.js"></script>
+<script src="/schools/shortlist.js"></script>
+<script>
+// ---------------------------------------------------------------------------
+// The shortlist lives in localStorage, but a comparison is also shareable: the
+// ids go in the query string so a parent can send the exact set to a partner on
+// WhatsApp. A link opened that way seeds the reader's own shortlist, so they can
+// then edit it -- which is the whole point of sharing it.
+// ---------------------------------------------------------------------------
+const params = new URLSearchParams(location.search);
+const fromUrl = (params.get('s') || '').split(',').map(x => x.trim()).filter(Boolean);
+if (fromUrl.length) window.Shortlist.write(fromUrl);
+const ids = fromUrl.length ? fromUrl : window.Shortlist.read();
+
+const ROWS = [
+  ['Type',            s => ({primary:'Primary', secondary:'Secondary', special:'Special', preschool:'Preschool'}[s.type] || s.type)],
+  ['Where',           s => [s.area, s.county].filter(Boolean).join(', ')],
+  ['Gender',          s => ({boys:'Boys only', girls:'Girls only', coed:'Mixed'}[s.gender] || '—')],
+  ['Ethos',           s => s.ethos && s.ethos !== 'Other/Unknown' ? s.ethos : '—'],
+  ['Fees',            s => feeCell(s), 'fee'],
+  ['Enrolment',       s => s.enrolment ? s.enrolment.toLocaleString() +
+                            (s.maleEnrolment != null ? ` <span class="thin">(${s.maleEnrolment}b / ${s.femaleEnrolment}g)</span>` : '') : '—', 'enrolment'],
+  ['Irish-medium',    s => s.irish ? 'Yes' : 'No'],
+  ['DEIS',            s => s.deis ? 'Yes' : 'No'],
+  ['Special classes', s => specialCell(s), 'special'],
+  ['Boarding',        s => (s.attendanceType === 'Boarding' || s.attendanceType === 'Mixed') ? s.attendanceType : 'Day only'],
+  ['Planning area',   s => s.planningArea || '—'],
+  ['Area deprivation', s => s.deprivationScore != null
+                            ? `${s.deprivationScore} <span class="thin">${s.deprivationLabel || ''}</span>` : '—', 'deprivation'],
+  ['Local house price', s => s.medianPrice
+                            ? `€${s.medianPrice.toLocaleString()} <span class="thin">${s.medianPriceYear}</span>` : '—'],
+  ['Principal',       s => s.principal || '—'],
+  ['Contact',         s => [s.phone ? `<a href="tel:${String(s.phone).replace(/\s/g,'')}">${s.phone}</a>` : '',
+                            s.email ? `<a href="mailto:${s.email}">${s.email}</a>` : ''].filter(Boolean).join('<br>') || '—'],
+];
+
+function feeCell(s) {
+  if (s.fees !== 'feepaying') return 'Free';
+  if (!s.annualFee) return 'Fee-paying <span class="thin">— amount not confirmed</span>';
+  const src = /^https?:/.test(s.feeSource || '')
+    ? ` <a href="${s.feeSource}" target="_blank" rel="noopener nofollow">source</a>` : '';
+  return `€${s.annualFee.toLocaleString()} <span class="thin">${s.feeYear || ''}</span>${src}`;
+}
+function specialCell(s) {
+  if (!s.specialClasses) return 'None listed';
+  const types = Object.entries(s.specialClassTypes || {})
+    .map(([t, n]) => `${n}× ${t}`).join('<br>');
+  const isNew = s.specialClassesNew
+    ? `<div class="thin" style="color:var(--good)">${s.specialClassesNew} new for ${s.specialClassYear}</div>` : '';
+  return `<strong>${s.specialClasses}</strong><div class="thin">${types}</div>${isNew}`;
+}
+
+function render(schools) {
+  const out = document.getElementById('out');
+  const lede = document.getElementById('lede');
+  if (!schools.length) {
+    lede.textContent = '';
+    out.innerHTML = `<div class="empty"><p>Nothing on your shortlist yet.</p>
+      <p><a class="btn" href="/schools/">Browse schools</a>
+         <a class="btn ghost" href="/">Use the map</a></p>
+      <p class="thin">Add schools with the ☆ button on any school page or in the map sidebar.</p></div>`;
+    return;
+  }
+  lede.textContent = `${schools.length} school${schools.length > 1 ? 's' : ''} side by side.`;
+  document.getElementById('toolbar').style.display = '';
+
+  const head = schools.map(s =>
+    `<th><span class="schoolname">${s.name}</span>
+       <a class="thin" href="/#school=${encodeURIComponent(s.id)}">map</a> ·
+       <button class="rm" data-rm="${s.id}">remove</button></th>`).join('');
+
+  const body = ROWS.map(([label, fn, key]) => {
+    const cells = schools.map(s => fn(s));
+    // Highlight the standout value on the rows where "more" or "less" is
+    // unambiguous. Not on fees or deprivation: cheaper is not better, and an
+    // affluent area is not a better school.
+    let bestIdx = -1;
+    if (key === 'special' || key === 'enrolment') {
+      const nums = schools.map(s => key === 'special' ? (s.specialClasses || 0) : (s.enrolment || 0));
+      const max = Math.max(...nums);
+      if (max > 0 && nums.filter(n => n === max).length === 1) bestIdx = nums.indexOf(max);
+    }
+    return `<tr><th>${label}</th>` + cells.map((c, i) =>
+      `<td>${i === bestIdx && key === 'special' ? `<mark class="best">${c}</mark>` : c}</td>`).join('') + '</tr>';
+  }).join('');
+
+  out.innerHTML = `<div class="scroller"><table class="cmp">
+      <thead><tr><th></th>${head}</tr></thead><tbody>${body}</tbody></table></div>`;
+
+  out.querySelectorAll('[data-rm]').forEach(b => b.onclick = () => {
+    window.Shortlist.toggle(b.dataset.rm);
+    location.search = '';   // drop any shared ?s= so the edit sticks
+  });
+}
+
+(async () => {
+  if (!ids.length) return render([]);
+  try {
+    const { data, error } = await window.supabaseClient
+      .from('schools').select('*').in('id', ids);
+    if (error) throw error;
+    // Preserve the order the user added them in.
+    const order = new Map(ids.map((id, i) => [id, i]));
+    data.sort((a, b) => (order.get(a.id) ?? 99) - (order.get(b.id) ?? 99));
+    render(data);
+  } catch (e) {
+    console.error(e);
+    document.getElementById('out').innerHTML =
+      '<div class="empty">Could not load your shortlist just now. Please refresh.</div>';
+  }
+})();
+
+document.getElementById('copy').onclick = async () => {
+  const url = `${location.origin}/compare.html?s=${window.Shortlist.read().join(',')}`;
+  try { await navigator.clipboard.writeText(url); document.getElementById('copied').textContent = 'Link copied'; }
+  catch (e) { prompt('Copy this link:', url); }
+};
+document.getElementById('clear').onclick = () => {
+  window.Shortlist.write([]);
+  location.href = '/compare.html';
+};
+</script>
+</body>
+</html>

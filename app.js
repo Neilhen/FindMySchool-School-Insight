@@ -44,6 +44,19 @@ const secondaryToPrimaryMap = {};
 // so the data carries a `levels` array; Irish rows only ever have one, and fall
 // back to `type`. Filtering on the array is what makes a K-12 school show up
 // for a family with both a 5-year-old and a 15-year-old.
+
+// The Department's planning-area names are machine-shaped
+// ("Sallynoggin_Killiney_DLR"). The underscores separate real places, so they
+// become " / " rather than being swallowed, and run-together words are split on
+// the lowercase-to-uppercase boundary ("CorkCity" -> "Cork City"). Display
+// only: the raw value is what the data and the page URLs use.
+function prettyArea(name) {
+  if (!name) return name;
+  return String(name).split('_')
+    .map(tok => tok.replace(/(?<=[a-z])(?=[A-Z])/g, ' '))
+    .filter(Boolean).join(' / ');
+}
+
 function schoolLevels(s) {
   if (Array.isArray(s.levels) && s.levels.length) return s.levels;
   return [s.type];
@@ -359,6 +372,32 @@ function openSidebar(data) {
   if (data.feeLegacyAmount && !data.annualFee)
     feeHTML += `<div style="font-size:10px;color:#888;font-weight:400">An older uncited figure of €${data.feeLegacyAmount.toLocaleString()} was on file; it is not shown because it could not be traced to a published page.</div>`;
   sbFee.innerHTML = feeHTML;
+
+  // Shortlist toggle. The same localStorage list the static school pages and
+  // the compare view use, so a school added here shows up there and vice versa.
+  if (typeof Shortlist !== 'undefined') {
+    const onList = Shortlist.read().indexOf(data.id) >= 0;
+    sbFee.insertAdjacentHTML('afterend',
+      `<div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+         <button id="sb-shortlist" style="padding:7px 13px;border-radius:7px;cursor:pointer;font-size:13px;
+           border:1px solid ${onList ? '#1B5E20' : '#1a237e'};
+           background:${onList ? '#1B5E20' : 'transparent'};
+           color:${onList ? '#fff' : '#1a237e'}">
+           ${onList ? '★ On your shortlist' : '☆ Add to shortlist'}</button>
+         <a href="/compare.html" style="padding:7px 13px;border-radius:7px;font-size:13px;
+           border:1px solid #999;color:#444;text-decoration:none">Compare shortlist</a>
+       </div>`);
+    document.getElementById('sb-shortlist').onclick = function () {
+      const nowOn = Shortlist.toggle(data.id);
+      this.textContent = nowOn ? '★ On your shortlist' : '☆ Add to shortlist';
+      this.style.background = nowOn ? '#1B5E20' : 'transparent';
+      this.style.color = nowOn ? '#fff' : '#1a237e';
+      this.style.borderColor = nowOn ? '#1B5E20' : '#1a237e';
+      const nav = document.getElementById('nav-compare');
+      const n = Shortlist.read().length;
+      if (nav) nav.textContent = n ? `Shortlist (${n})` : 'Shortlist';
+    };
+  }
   
   let locHTML = data.area || '';
   if (data.address) locHTML += `<br><span style="color:#666">${data.address}</span>`;
@@ -424,7 +463,7 @@ function openSidebar(data) {
   const areaDiv = document.getElementById('sb-area');
   const areaBits = [];
   if (data.planningArea) {
-    areaBits.push(`<strong>School Planning Area:</strong> ${data.planningArea}` +
+    areaBits.push(`<strong>School Planning Area:</strong> ${prettyArea(data.planningArea)}` +
       `<div style="font-size:11px;color:#777">How the Department plans capacity. ` +
       `<em>Not a catchment</em> — in Ireland you may apply to any school.</div>`);
   }
@@ -1369,4 +1408,38 @@ function renderTransport(result) {
   return html;
 }
 
+
+// ============================================================
+// DEEP LINKS  (/#school=<roll>)
+// ============================================================
+//
+// Every static school page and every row in the compare table links back here
+// with a school id in the hash. Without this those links all land on the
+// default national view, which would make the whole set of pages feel broken.
+// The school is fetched by id rather than hoped for in the current viewport.
+async function openSchoolFromHash() {
+  const m = /(?:^|[#&])school=([^&]+)/.exec(location.hash || '');
+  if (!m) return;
+  const id = decodeURIComponent(m[1]);
+  try {
+    const { data, error } = await window.supabaseClient
+      .from('schools').select('*').eq('id', id).limit(1);
+    if (error || !data || !data.length) return;
+    const s = data[0];
+    if (!s.lat || !s.lng) return;
+    if (s.country === 'US') setRegion('US');
+    map.setView([s.lat, s.lng], 16);
+    // Give the bbox fetch a moment to place the marker, then open the panel.
+    setTimeout(() => {
+      openSidebar(s);
+      drawFeederLines(s);
+    }, 900);
+  } catch (e) {
+    console.error('deep link failed', e);
+  }
+}
+window.addEventListener('hashchange', openSchoolFromHash);
+
 initApp();
+openSchoolFromHash();
+
