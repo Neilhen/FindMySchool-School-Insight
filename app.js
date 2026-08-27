@@ -60,6 +60,10 @@ function passesFilters(s) {
   // A school that has closed must not sit on the map looking like an option.
   if (s.closed && !activeFilters.closed) return false;
 
+  // Restrictive filters: only bite when switched on.
+  if (activeFilters.hasSpecialClass && !s.specialClasses) return false;
+  if (activeFilters.newSpecialClass && !s.specialClassesNew) return false;
+
   const irishOk = s.irish ? activeFilters.irish : true;
   const charterOk = s.charter ? activeFilters.charter : true;
   // Same shape as the Irish-medium toggle: turning "Boarding" off hides
@@ -325,6 +329,8 @@ function openSidebar(data) {
   if (data.attendanceType === 'Mixed') badgesHTML += `<span class="badge" style="background:#E0F2F1;color:#00695C;">Day + boarding</span>`;
   if (data.gaeltacht) badgesHTML += `<span class="badge" style="background:#F1F8E9;color:#33691E;">Gaeltacht</span>`;
   if (data.island) badgesHTML += `<span class="badge" style="background:#E1F5FE;color:#01579B;">Island school</span>`;
+  if (data.specialClasses) badgesHTML += `<span class="badge" style="background:#EDE7F6;color:#4527A0;font-weight:700;">${data.specialClasses} special class${data.specialClasses > 1 ? 'es' : ''}</span>`;
+  if (data.specialClassesNew) badgesHTML += `<span class="badge" style="background:#E8F5E9;color:#1B5E20;font-weight:700;">+${data.specialClassesNew} new ${data.specialClassYear || ''}</span>`;
   if (data.closed) badgesHTML += `<span class="badge" style="background:#FFEBEE;color:#B71C1C;font-weight:700;">⚠ CLOSED</span>`;
   sbBadges.innerHTML = badgesHTML;
   
@@ -373,6 +379,43 @@ function openSidebar(data) {
         locHTML += `<br><span style="font-size:11px; color:#E65100; font-weight:600;">${rule.label}</span>`;
       }
     }
+    // Would a bus place for THIS school be an eligible application or a
+    // concessionary one? You are only eligible for transport to your nearest
+    // suitable school; anywhere else is spare-capacity-only.
+    if (lastTransport && data.country !== 'US') {
+      const levels = schoolLevels(data).filter(l => TRANSPORT_RULES[l]);
+      for (const level of levels) {
+        const buckets = lastTransport.byLevel[level];
+        if (!buckets) continue;
+        const hit = Object.entries(buckets)
+          .find(([, v]) => v && v.school.id === data.id);
+        if (hit && hit[1].eligible) {
+          locHTML += `<br><span style="font-size:11px;color:#2E7D32;font-weight:700;">
+            🚌 Eligible for school transport here — it is your nearest
+            ${hit[0] === 'any' ? '' : hit[0] + ' '}${TRANSPORT_RULES[level].label.toLowerCase()} school
+            and ${hit[1].km.toFixed(1)} km away</span>`;
+        } else if (hit) {
+          locHTML += `<br><span style="font-size:11px;color:#777;">
+            🚌 Nearest ${TRANSPORT_RULES[level].label.toLowerCase()} school, but only
+            ${hit[1].km.toFixed(1)} km away — under the ${TRANSPORT_RULES[level].km} km
+            threshold, so no transport eligibility</span>`;
+        } else {
+          locHTML += `<br><span style="font-size:11px;color:#E65100;">
+            🚌 Not your nearest suitable ${TRANSPORT_RULES[level].label.toLowerCase()} school —
+            a bus place here would be concessionary only (spare seats, not guaranteed)</span>`;
+        }
+      }
+      // Children with special educational needs travel under a SEPARATE scheme
+      // whose rules are not distance-based in the same way. Now that the map
+      // shows special classes, a parent could easily read the line above as
+      // applying to their child. It does not.
+      if (data.specialClasses) {
+        locHTML += `<br><span style="font-size:11px;color:#4527A0;">
+          ℹ️ A child attending a special class travels under the separate
+          special educational needs transport scheme, which is not decided by
+          these distances. Check with the school and the NCSE.</span>`;
+      }
+    }
   }
   sbLoc.innerHTML = locHTML;
   
@@ -390,6 +433,21 @@ function openSidebar(data) {
     areaBits.push(`<strong>School district:</strong> ${data.district_name}` +
       `<div style="font-size:11px;color:#777">A district, <em>not an attendance zone</em>. ` +
       `NCES has published no national attendance boundaries since 2015-16.</div>`);
+  }
+  if (data.medianPrice) {
+    const chg = data.medianPriceChangePct;
+    areaBits.push(
+      `<strong>Local house prices:</strong> median ` +
+      `€${Number(data.medianPrice).toLocaleString()} (${data.medianPriceYear})` +
+      (chg != null
+        ? ` <span style="color:${chg >= 0 ? '#2E7D32' : '#C62828'};font-weight:600">` +
+          `${chg >= 0 ? '+' : ''}${chg}% since ${data.medianPriceEarlierYear}</span>`
+        : '') +
+      `<div style="font-size:11px;color:#777">Eircode area ${data.priceRoutingKey}` +
+      `${data.priceAreaName ? ' (' + data.priceAreaName + ')' : ''}` +
+      `${data.salesVolume ? ', ' + Number(data.salesVolume).toLocaleString() + ' sales' : ''}. ` +
+      `CSO stamp-duty filings for the whole Eircode district — not the streets ` +
+      `beside the school, and not a claim that the school moves the price.</div>`);
   }
   if (data.deprivationScore !== null && data.deprivationScore !== undefined) {
     const s = Number(data.deprivationScore);
@@ -439,6 +497,16 @@ function openSidebar(data) {
         data.femaleEnrolment !== null && data.femaleEnrolment !== undefined)
       e += ` — ${data.maleEnrolment} boys / ${data.femaleEnrolment} girls`;
     facts.push(e);
+  }
+  if (data.specialClassTypes && Object.keys(data.specialClassTypes).length) {
+    const types = Object.entries(data.specialClassTypes)
+      .sort((a, b) => b[1] - a[1])
+      .map(([k, n]) => `${n}× ${k}`).join(', ');
+    facts.push(`Special classes ${data.specialClassYear || ''}: ${types}`);
+    if (data.specialClassesPrevYear === 0 && data.specialClasses)
+      facts.push('First special class at this school');
+    else if (data.specialClassesPrevYear && data.specialClasses > data.specialClassesPrevYear)
+      facts.push(`Growing from ${data.specialClassesPrevYear} last year`);
   }
   if (data.gradeLow && data.gradeHigh) facts.push(`Grades: ${data.gradeLow}–${data.gradeHigh}`);
   if (data.languageMedium && data.languageMedium !== 'English Medium School') facts.push(data.languageMedium);
@@ -645,13 +713,18 @@ const activeFilters = {
   boys:true, girls:true, coed:true,
   feepaying:true, free:true, irish:true, charter:true,
   boarding:true, public:true, private:true,
-  closed:false            // closed schools are hidden until asked for
+  closed:false,           // closed schools are hidden until asked for
+  // These two are RESTRICTIVE rather than permissive: off means "don't care",
+  // on means "only show schools that have this". That is the opposite of the
+  // buttons above, so they start off.
+  hasSpecialClass:false, newSpecialClass:false
 };
 const btnCols = {
   preschool:'#16a34a', primary:'#0369a1', secondary:'#6b21a8', special:'#ea580c',
   boys:'#1e40af', girls:'#be185d', coed:'#6b21a8',
   feepaying:'#c2410c', free:'#15803d', irish:'#ca8a04', charter:'#ca8a04',
-  boarding:'#0f766e', public:'#0369a1', private:'#c2410c', closed:'#6b7280'
+  boarding:'#0f766e', public:'#0369a1', private:'#c2410c', closed:'#6b7280',
+  hasSpecialClass:'#4527A0', newSpecialClass:'#1B5E20'
 };
 
 Object.keys(activeFilters).forEach(k => {
@@ -709,6 +782,20 @@ const RADIUS_RULES = {
   '60050E': { km: null, label: 'distance breaks ties within each category' }
 };
 
+
+// OSRM's public demo server is rate-limited and sometimes simply does not
+// answer. Without a bound, the "Calculating driving times..." placeholder can
+// sit there forever. Every call to it goes through this.
+async function fetchWithTimeout(url, ms = 8000) {
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), ms);
+  try {
+    return await fetch(url, { signal: ctrl.signal });
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 function pinDistKm(lat, lng) {
   const dx = (homePin.getLatLng().lat - lat) * 111.32;
   const dy = (homePin.getLatLng().lng - lng) * 111.32 * Math.cos(53.3 * Math.PI / 180);
@@ -734,6 +821,7 @@ function setPin(lat, lng, label) {
 function clearPin() {
   if (homePin) map.removeLayer(homePin);
   homePin = null;
+  lastTransport = null;
   document.getElementById('pin-results').innerHTML = '';
   document.getElementById('pin-status').textContent = '';
   document.getElementById('pin-clear').style.display = 'none';
@@ -754,6 +842,11 @@ async function refreshNearest() {
       .filter(s => s.lat && s.lng && schoolLevels(s).includes(t))
       .filter(passesFilters)
       .map(s => ({ d: pinDistKm(s.lat, s.lng), s: s }))
+      // The client-side cache keeps every school loaded since the page opened,
+      // so without a cap a rural pin offers "nearest" special schools 650 km
+      // away in Dublin, left over from an earlier pan. Nothing beyond an hour's
+      // drive is a real option for a daily school run.
+      .filter(c => c.d <= 60)
       .sort((a, b) => a.d - b.d)
       .slice(0, 6);
     groupCands[t] = cands;
@@ -775,7 +868,7 @@ async function refreshNearest() {
     let dests = allCands.map((_, i) => i + 1).join(',');
     const url = `https://router.project-osrm.org/table/v1/driving/${coordsStr}?sources=0&destinations=${dests}`;
     
-    const res = await fetch(url);
+    const res = await fetchWithTimeout(url);
     const data = await res.json();
     
     if (data.code === 'Ok' && data.durations && data.durations[0]) {
@@ -785,7 +878,9 @@ async function refreshNearest() {
       });
     }
   } catch(e) {
-    console.error("OSRM failed, falling back to distance", e);
+    // Falling back to straight-line distance is fine; leaving the user staring
+    // at a spinner is not.
+    console.warn("OSRM unavailable, ordering by straight-line distance", e.name);
   }
 
   // 3. Render
@@ -823,6 +918,19 @@ async function refreshNearest() {
       drawFeederLines(s);
     };
   });
+
+  // School transport is Irish-scheme-specific, and it is computed from the
+  // database rather than from the markers currently on screen, so it runs
+  // after the list rather than as part of it.
+  const ll = homePin.getLatLng();
+  if (ll.lat > 51 && ll.lat < 56 && ll.lng > -11 && ll.lng < -5) {
+    try {
+      const t = await computeTransport(ll.lat, ll.lng);
+      div.insertAdjacentHTML('beforeend', renderTransport(t));
+    } catch (e) {
+      console.error('transport eligibility failed', e);
+    }
+  }
 }
 
 async function geocodePin() {
@@ -1073,5 +1181,192 @@ window.showBoundaryExplainer = function () {
   div.addEventListener('click', e => { if (e.target === div) div.remove(); });
   document.body.appendChild(div);
 };
+
+
+// ============================================================
+// SCHOOL TRANSPORT ELIGIBILITY  (Republic of Ireland)
+// ============================================================
+//
+// The School Transport Scheme is one of the few things about Irish school
+// choice that IS decided by distance, which makes it computable from data we
+// already hold — every school's coordinates plus the address pin.
+//
+// The rule: a child is ELIGIBLE if they live at least 3.2 km (primary) or
+// 4.8 km (post-primary) from their NEAREST SUITABLE school, and attend that
+// school. "Suitable" takes account of ethos and language of instruction, so a
+// family who want an Irish-medium or a minority-denomination school are
+// measured against the nearest school of that kind, not the nearest school
+// outright. Anyone attending a school that is not their nearest suitable one
+// can only apply for a concessionary seat — spare capacity, never guaranteed.
+//
+// Two honest limits, both stated in the UI rather than buried here:
+//   * Bus Éireann measures by ROAD. We shortlist on straight-line distance and
+//     then ask OSRM for the road distance, which is closer to their method but
+//     is still not their measurement.
+//   * Eligible does not mean seated. Seats depend on capacity, an application
+//     by the deadline, and the annual charge.
+//
+// Sources: Citizens Information, primary and post-primary school transport
+// schemes; Department of Education School Transport Scheme.
+
+const TRANSPORT_RULES = {
+  primary:   { km: 3.2, label: 'Primary' },
+  secondary: { km: 4.8, label: 'Post-primary' },
+};
+
+// Ethos groupings the scheme's "nearest suitable school" test can turn on.
+const ETHOS_CATEGORIES = [
+  { key: 'catholic',  label: 'Catholic',             match: e => e === 'Catholic' },
+  { key: 'minority',  label: 'Minority denomination', match: e => ['Church of Ireland','Presbyterian','Methodist','Quaker','Jewish','Muslim'].includes(e) },
+  { key: 'multi',     label: 'Multi-denominational',  match: e => e === 'Multi-denominational' || e === 'Inter-denominational' },
+];
+
+let lastTransport = null;   // cached so the sidebar can read it synchronously
+
+// Straight-line distance, km.
+function haversineKm(aLat, aLng, bLat, bLng) {
+  const R = 6371, toRad = d => d * Math.PI / 180;
+  const dLat = toRad(bLat - aLat), dLng = toRad(bLng - aLng);
+  const h = Math.sin(dLat / 2) ** 2 +
+            Math.cos(toRad(aLat)) * Math.cos(toRad(bLat)) * Math.sin(dLng / 2) ** 2;
+  return 2 * R * Math.asin(Math.sqrt(h));
+}
+
+// Candidate schools near the pin, straight from the database. Deliberately
+// ignores the user's filters: whether you are eligible for a bus is a fact
+// about geography, not about which pins you have chosen to display.
+async function schoolsNearPin(lat, lng) {
+  const pad = 0.14;                       // ~15 km north-south, ~9 km east-west
+  const { data, error } = await window.supabaseClient
+    .from('schools')
+    .select('id,name,type,levels,lat,lng,ethos,languageMedium,irish,closed,address,area')
+    .eq('country', 'IE')
+    .gte('lat', lat - pad).lte('lat', lat + pad)
+    .gte('lng', lng - pad * 1.7).lte('lng', lng + pad * 1.7)
+    .limit(1000);
+  if (error) { console.error('transport lookup failed', error); return []; }
+  return data.filter(s => !s.closed && s.lat && s.lng && s.type !== 'preschool');
+}
+
+// Ask OSRM for road distance to a handful of candidates. Bus Éireann measures
+// by road, so this is the closer approximation; if OSRM is unavailable we fall
+// back to straight line and say so.
+async function roadDistances(lat, lng, candidates) {
+  if (!candidates.length) return false;
+  try {
+    let coords = `${lng},${lat}`;
+    candidates.forEach(c => { coords += `;${c.s.lng},${c.s.lat}`; });
+    const dests = candidates.map((_, i) => i + 1).join(',');
+    const res = await fetchWithTimeout(
+      `https://router.project-osrm.org/table/v1/driving/${coords}` +
+      `?sources=0&destinations=${dests}&annotations=distance`);
+    const d = await res.json();
+    if (d.code === 'Ok' && d.distances && d.distances[0]) {
+      candidates.forEach((c, i) => {
+        const m = d.distances[0][i];
+        if (m != null) c.roadKm = m / 1000;
+      });
+      return true;
+    }
+  } catch (e) {
+    console.warn('OSRM road distance unavailable, using straight line', e);
+  }
+  return false;
+}
+
+async function computeTransport(lat, lng) {
+  const pool = await schoolsNearPin(lat, lng);
+  if (!pool.length) return null;
+
+  const result = { byLevel: {}, roadUsed: false, checkedAt: Date.now() };
+
+  // Shortlist the nearest few in every category we might need, then price them
+  // all through OSRM in a single request.
+  const shortlist = [];
+  for (const level of Object.keys(TRANSPORT_RULES)) {
+    const atLevel = pool
+      .filter(s => (Array.isArray(s.levels) && s.levels.length ? s.levels : [s.type]).includes(level))
+      .map(s => ({ s, straightKm: haversineKm(lat, lng, s.lat, s.lng) }))
+      .sort((a, b) => a.straightKm - b.straightKm);
+
+    const buckets = { any: atLevel.slice(0, 3) };
+    buckets.english = atLevel.filter(c => c.s.languageMedium !== 'Irish Medium School' && !c.s.irish).slice(0, 2);
+    buckets.irish   = atLevel.filter(c => c.s.languageMedium === 'Irish Medium School' || c.s.irish).slice(0, 2);
+    ETHOS_CATEGORIES.forEach(cat => {
+      buckets[cat.key] = atLevel.filter(c => cat.match(c.s.ethos)).slice(0, 2);
+    });
+    result.byLevel[level] = buckets;
+    Object.values(buckets).forEach(list => list.forEach(c => {
+      if (!shortlist.includes(c)) shortlist.push(c);
+    }));
+  }
+
+  result.roadUsed = await roadDistances(lat, lng, shortlist.slice(0, 24));
+
+  // Pick the nearest in each bucket on the best distance we have, and decide.
+  for (const [level, buckets] of Object.entries(result.byLevel)) {
+    const threshold = TRANSPORT_RULES[level].km;
+    for (const [key, list] of Object.entries(buckets)) {
+      const scored = list.map(c => ({ ...c, km: c.roadKm != null ? c.roadKm : c.straightKm }))
+                         .sort((a, b) => a.km - b.km);
+      const best = scored[0] || null;
+      buckets[key] = best ? {
+        school: best.s,
+        km: best.km,
+        isRoad: best.roadKm != null,
+        eligible: best.km >= threshold,
+      } : null;
+    }
+  }
+  lastTransport = result;
+  return result;
+}
+
+function renderTransport(result) {
+  if (!result) return '';
+  let html = '<div style="margin-top:10px;border-top:1px solid #e0e0e0;padding-top:8px">' +
+             '<div style="font-weight:700;font-size:12px;margin-bottom:5px">🚌 School transport eligibility</div>';
+
+  for (const [level, rule] of Object.entries(TRANSPORT_RULES)) {
+    const b = result.byLevel[level];
+    if (!b || !b.any) continue;
+    const n = b.any;
+    const ok = n.eligible;
+    html += `<div style="margin-bottom:7px">
+      <div style="font-weight:600">${rule.label} — needs ${rule.km} km</div>
+      <div style="color:#555">Nearest: <strong>${n.school.name}</strong>, ${n.km.toFixed(1)} km</div>
+      <div style="font-weight:700;color:${ok ? '#2E7D32' : '#C62828'}">
+        ${ok ? '✓ Likely eligible for transport to this school'
+             : '✗ Too close to qualify (' + (rule.km - n.km).toFixed(1) + ' km short)'}
+      </div>`;
+
+    // The exceptions: measured against the nearest school of the kind you want.
+    const alts = [
+      ['irish', 'Irish-medium'], ['english', 'English-medium'],
+      ...ETHOS_CATEGORIES.map(c => [c.key, c.label]),
+    ].map(([k, lab]) => [lab, b[k]])
+     .filter(([, v]) => v && v.school.id !== n.school.id);
+
+    if (alts.length) {
+      html += '<details style="margin-top:3px"><summary style="cursor:pointer;color:#1a237e;font-size:11px">' +
+              'If you need a particular ethos or language</summary><div style="font-size:11px;margin-top:3px">';
+      alts.forEach(([lab, v]) => {
+        html += `<div style="color:${v.eligible ? '#2E7D32' : '#777'}">
+          ${v.eligible ? '✓' : '·'} Nearest ${lab}: ${v.school.name} — ${v.km.toFixed(1)} km</div>`;
+      });
+      html += '</div></details>';
+    }
+    html += '</div>';
+  }
+
+  html += `<div style="font-size:10px;color:#888;line-height:1.4;margin-top:4px">
+    Distances are ${result.roadUsed ? 'by road (OSRM)' : 'straight-line — Bus Éireann measures by road, which is longer'}.
+    This is an indication, not a decision: the Department determines your nearest
+    <em>suitable</em> school, and eligibility is not a seat — places depend on capacity,
+    applying by the deadline and the annual charge.
+    <a href="https://www.gov.ie/en/service/07a71-school-transport/" target="_blank" rel="noopener">Scheme details ↗</a>
+  </div></div>`;
+  return html;
+}
 
 initApp();
