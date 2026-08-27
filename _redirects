@@ -1,0 +1,24 @@
+# One site, one address.
+#
+# The site answers on four hostnames: findaschool.ie and findmyschool.ie,
+# each with and without www. Left alone, that is four indexable copies of
+# 4,579 pages, and a search engine has to guess which is the real one. It
+# usually guesses, splits the ranking between them, and indexes fewer pages
+# than it otherwise would.
+#
+# So: findaschool.ie is the site. Everything else is a permanent redirect to
+# it, path preserved, so an old link to any hostname still lands on the page
+# the visitor wanted. The 301 (rather than 302) is what passes the accrued
+# ranking across, and the ! forces the rule even when a file of that name
+# exists on the alias.
+#
+# findmyschool.ie is kept and pointed here rather than dropped: it is the
+# name people are likelier to type from memory, and it costs nothing to own
+# the door as long as it opens into the same building.
+
+https://www.findaschool.ie/*    https://findaschool.ie/:splat    301!
+http://www.findaschool.ie/*     https://findaschool.ie/:splat    301!
+https://findmyschool.ie/*       https://findaschool.ie/:splat    301!
+http://findmyschool.ie/*        https://findaschool.ie/:splat    301!
+https://www.findmyschool.ie/*   https://findaschool.ie/:splat    301!
+http://www.findmyschool.ie/*    https://findaschool.ie/:splat    301!
