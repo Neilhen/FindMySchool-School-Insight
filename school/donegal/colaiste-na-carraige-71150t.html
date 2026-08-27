@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Coláiste Na Carraige","url":"https://www.findaschool.ie/school/donegal/colaiste-na-carraige-71150t.html","identifier":"71150T","address":{"@type":"PostalAddress","streetAddress":"Carrick, Co. Donegal","addressRegion":"Donegal","postalCode":"F94AE20","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":54.655322,"longitude":-8.633111},"telephone":"0749739071","email":"cnc@donegaletb.ie","numberOfStudents":210}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Coláiste Na Carraige</h1>
 <p class="lede">Coláiste Na Carraige is a secondary school in Donegal. 210 pupils, Multi-denominational ethos, 1 special class, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=71150T">See it on the map</a>
+  <a class="btn" href="/map.html#school=71150T">See it on the map</a>
   <button class="btn ghost" data-shortlist="71150T" data-name="Coláiste Na Carraige">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

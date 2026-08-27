@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"S N Neill Mor","url":"https://www.findaschool.ie/school/donegal/s-n-neill-mor-11843o.html","identifier":"11843O","address":{"@type":"PostalAddress","streetAddress":"Killybegs, Co. Donegal","addressRegion":"Donegal","postalCode":"F94FX76","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":54.638518,"longitude":-8.440521},"telephone":"0749731794","email":"office@niallmor.com","numberOfStudents":240}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>S N Neill Mor</h1>
 <p class="lede">S N Neill Mor is a primary school in Donegal. 240 pupils, Catholic ethos, 4 special classes, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=11843O">See it on the map</a>
+  <a class="btn" href="/map.html#school=11843O">See it on the map</a>
   <button class="btn ghost" data-shortlist="11843O" data-name="S N Neill Mor">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

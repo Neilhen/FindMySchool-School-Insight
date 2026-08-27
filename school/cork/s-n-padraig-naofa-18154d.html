@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"S N Padraig Naofa","url":"https://www.findaschool.ie/school/cork/s-n-padraig-naofa-18154d.html","identifier":"18154D","address":{"@type":"PostalAddress","streetAddress":"Dillon's Cross, Cork","addressRegion":"Cork","postalCode":"T23AX20","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":51.907566,"longitude":-8.454685},"telephone":"0214551593","email":"Office@stpatricksinfants.ie","numberOfStudents":86}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>S N Padraig Naofa</h1>
 <p class="lede">S N Padraig Naofa is a primary school in Dillon&#x27;s Cross. 86 pupils, Catholic ethos, 3 special classes, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=18154D">See it on the map</a>
+  <a class="btn" href="/map.html#school=18154D">See it on the map</a>
   <button class="btn ghost" data-shortlist="18154D" data-name="S N Padraig Naofa">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

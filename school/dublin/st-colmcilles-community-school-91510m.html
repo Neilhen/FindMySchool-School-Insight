@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"St. Colmcille's Community School","url":"https://www.findaschool.ie/school/dublin/st-colmcilles-community-school-91510m.html","identifier":"91510M","address":{"@type":"PostalAddress","streetAddress":"Scholarstown Rd, Knocklyon, Dublin 16","addressRegion":"Dublin","postalCode":"D16H298","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.278686,"longitude":-6.314793},"telephone":"014952888","email":"info@stcolmcilles.ie","numberOfStudents":727}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>St. Colmcille&#x27;s Community School</h1>
 <p class="lede">St. Colmcille&#x27;s Community School is a secondary school in Dublin. 727 pupils, Inter-denominational ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=91510M">See it on the map</a>
+  <a class="btn" href="/map.html#school=91510M">See it on the map</a>
   <button class="btn ghost" data-shortlist="91510M" data-name="St. Colmcille&#x27;s Community School">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

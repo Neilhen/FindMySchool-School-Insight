@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Deravoy National School","url":"https://www.findaschool.ie/school/monaghan/deravoy-national-school-00373p.html","identifier":"00373P","address":{"@type":"PostalAddress","streetAddress":"Deravoy, Emyvale, Co. Monaghan","addressRegion":"Monaghan","postalCode":"H18PY11","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":54.356397,"longitude":-7.024314},"telephone":"04787755","email":"deravoyns@gmail.com","numberOfStudents":71}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Deravoy National School</h1>
 <p class="lede">Deravoy National School is a primary school in Monaghan. 71 pupils, Catholic ethos, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=00373P">See it on the map</a>
+  <a class="btn" href="/map.html#school=00373P">See it on the map</a>
   <button class="btn ghost" data-shortlist="00373P" data-name="Deravoy National School">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

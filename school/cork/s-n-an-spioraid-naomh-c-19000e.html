@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"S N An Spioraid Naomh C","url":"https://www.findaschool.ie/school/cork/s-n-an-spioraid-naomh-c-19000e.html","identifier":"19000E","address":{"@type":"PostalAddress","streetAddress":"Curraheen Road, Bishopstown, Cork","addressRegion":"Cork","postalCode":"T12RR68","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":51.878682,"longitude":-8.528102},"telephone":"0214543305","email":"admin@bishopstowngirlsschool.ie","numberOfStudents":258}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>S N An Spioraid Naomh C</h1>
 <p class="lede">S N An Spioraid Naomh C is a primary school girls only in Cork. 258 pupils, Catholic ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=19000E">See it on the map</a>
+  <a class="btn" href="/map.html#school=19000E">See it on the map</a>
   <button class="btn ghost" data-shortlist="19000E" data-name="S N An Spioraid Naomh C">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

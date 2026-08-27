@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Gaelcholáiste Mhaigh Nuad","url":"https://www.findaschool.ie/school/kildare/gaelcholaiste-mhaigh-nuad-76554w.html","identifier":"76554W","address":{"@type":"PostalAddress","streetAddress":"Manor Mills, Maigh Nuad","addressRegion":"Kildare","postalCode":"W23V9P2","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.3818,"longitude":-6.593653},"telephone":"015054386","email":"michealoceoinin@kwetb.ie","numberOfStudents":154}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Gaelcholáiste Mhaigh Nuad</h1>
 <p class="lede">Gaelcholáiste Mhaigh Nuad is a secondary school irish-medium in Kildare. 154 pupils, Multi-denominational ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=76554W">See it on the map</a>
+  <a class="btn" href="/map.html#school=76554W">See it on the map</a>
   <button class="btn ghost" data-shortlist="76554W" data-name="Gaelcholáiste Mhaigh Nuad">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"J F K Memorial School","url":"https://www.findaschool.ie/school/limerick/j-f-k-memorial-school-18991s.html","identifier":"18991S","address":{"@type":"PostalAddress","streetAddress":"Ennis Road, Limerick","addressRegion":"Limerick","postalCode":"V94P9E8","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":52.666656,"longitude":-8.64462},"telephone":"061452090","email":"principal@jfkmemorialschool.com","numberOfStudents":218}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>J F K Memorial School</h1>
 <p class="lede">J F K Memorial School is a primary school in Limerick. 218 pupils, Catholic ethos, 1 special class.</p>
 <p class="actions">
-  <a class="btn" href="/#school=18991S">See it on the map</a>
+  <a class="btn" href="/map.html#school=18991S">See it on the map</a>
   <button class="btn ghost" data-shortlist="18991S" data-name="J F K Memorial School">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

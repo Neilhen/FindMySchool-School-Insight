@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Avondale Community College","url":"https://www.findaschool.ie/school/wicklow/avondale-community-college-70810h.html","identifier":"70810H","address":{"@type":"PostalAddress","streetAddress":"Rathdrum, Co Wicklow","addressRegion":"Wicklow","postalCode":"A67RR26","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":52.934487,"longitude":-6.236096},"telephone":"040446445","email":"AvondaleCC@kwetb.ie","numberOfStudents":644}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Avondale Community College</h1>
 <p class="lede">Avondale Community College is a secondary school in Wicklow. 644 pupils, Multi-denominational ethos, 2 special classes, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=70810H">See it on the map</a>
+  <a class="btn" href="/map.html#school=70810H">See it on the map</a>
   <button class="btn ghost" data-shortlist="70810H" data-name="Avondale Community College">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

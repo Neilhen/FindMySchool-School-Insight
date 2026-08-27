@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"S N Treasa Naomha","url":"https://www.findaschool.ie/school/carlow/s-n-treasa-naomha-17669i.html","identifier":"17669I","address":{"@type":"PostalAddress","streetAddress":"Tynock, Kiltegan, Co. Wicklow","addressRegion":"Carlow","postalCode":"W91TFN5","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":52.891832,"longitude":-6.61872},"telephone":"0596473210","email":"tynockschool@gmail.com","numberOfStudents":52}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>S N Treasa Naomha</h1>
 <p class="lede">S N Treasa Naomha is a primary school in Carlow. 52 pupils, Catholic ethos, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=17669I">See it on the map</a>
+  <a class="btn" href="/map.html#school=17669I">See it on the map</a>
   <button class="btn ghost" data-shortlist="17669I" data-name="S N Treasa Naomha">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

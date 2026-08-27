@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Gaelscoil An Teaghlaigh Naofa","url":"https://www.findaschool.ie/school/cork/gaelscoil-an-teaghlaigh-naofa-18292p.html","identifier":"18292P","address":{"@type":"PostalAddress","streetAddress":"Tory Top Road, Ballyphehane, Cork","addressRegion":"Cork","postalCode":"T12K039","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":51.883432,"longitude":-8.475412},"telephone":"0214311473","email":"teaghlaighnaofa@gmail.com","numberOfStudents":193}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Gaelscoil An Teaghlaigh Naofa</h1>
 <p class="lede">Gaelscoil An Teaghlaigh Naofa is a primary school irish-medium in Cork. 193 pupils, Catholic ethos, 2 special classes, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=18292P">See it on the map</a>
+  <a class="btn" href="/map.html#school=18292P">See it on the map</a>
   <button class="btn ghost" data-shortlist="18292P" data-name="Gaelscoil An Teaghlaigh Naofa">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

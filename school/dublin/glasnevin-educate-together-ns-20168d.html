@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Glasnevin Educate Together Ns","url":"https://www.findaschool.ie/school/dublin/glasnevin-educate-together-ns-20168d.html","identifier":"20168D","address":{"@type":"PostalAddress","streetAddress":"Griffith Avenue, Glasnevin, Dublin 11","addressRegion":"Dublin","postalCode":"D11A2YT","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.378755,"longitude":-6.269239},"telephone":"018572086","email":"scoilgetns@gmail.com","numberOfStudents":410}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Glasnevin Educate Together Ns</h1>
 <p class="lede">Glasnevin Educate Together Ns is a primary school in Dublin. 410 pupils, Multi-denominational ethos, 2 special classes.</p>
 <p class="actions">
-  <a class="btn" href="/#school=20168D">See it on the map</a>
+  <a class="btn" href="/map.html#school=20168D">See it on the map</a>
   <button class="btn ghost" data-shortlist="20168D" data-name="Glasnevin Educate Together Ns">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

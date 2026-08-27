@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Coláiste Pobail Fóla","url":"https://www.findaschool.ie/school/dublin/colaiste-pobail-fola-76594l.html","identifier":"76594L","address":{"@type":"PostalAddress","streetAddress":"Heritage Village, Garter's Lane, Saggart, Co. Dublin","addressRegion":"Dublin","postalCode":"D24HFK2","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.284093,"longitude":-6.437865},"telephone":"012551770","email":"info@cpfola.ie","numberOfStudents":758}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Coláiste Pobail Fóla</h1>
 <p class="lede">Coláiste Pobail Fóla is a secondary school in Dublin. 758 pupils, Multi-denominational ethos, 2 special classes.</p>
 <p class="actions">
-  <a class="btn" href="/#school=76594L">See it on the map</a>
+  <a class="btn" href="/map.html#school=76594L">See it on the map</a>
   <button class="btn ghost" data-shortlist="76594L" data-name="Coláiste Pobail Fóla">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

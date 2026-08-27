@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"St Patricks Jnr Mixed","url":"https://www.findaschool.ie/school/dublin/st-patricks-jnr-mixed-16333q.html","identifier":"16333Q","address":{"@type":"PostalAddress","streetAddress":"Tennis Court Lane, Skerries, Co. Dublin","addressRegion":"Dublin","postalCode":"K34D799","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.578049,"longitude":-6.109407},"telephone":"018490836","email":"admin@stps.ie","numberOfStudents":249}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>St Patricks Jnr Mixed</h1>
 <p class="lede">St Patricks Jnr Mixed is a primary school in Dublin. 249 pupils, Catholic ethos, 1 special class.</p>
 <p class="actions">
-  <a class="btn" href="/#school=16333Q">See it on the map</a>
+  <a class="btn" href="/map.html#school=16333Q">See it on the map</a>
   <button class="btn ghost" data-shortlist="16333Q" data-name="St Patricks Jnr Mixed">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

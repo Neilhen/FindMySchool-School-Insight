@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"St Josephs N S","url":"https://www.findaschool.ie/school/cavan/st-josephs-n-s-20172r.html","identifier":"20172R","address":{"@type":"PostalAddress","streetAddress":"Kingscourt, Co. Cavan","addressRegion":"Cavan","postalCode":"A82RD70","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.90134,"longitude":-6.805013},"telephone":"0429667528","email":"office@sjkns.net","numberOfStudents":377}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>St Josephs N S</h1>
 <p class="lede">St Josephs N S is a primary school in Cavan. 377 pupils, Catholic ethos, 4 special classes.</p>
 <p class="actions">
-  <a class="btn" href="/#school=20172R">See it on the map</a>
+  <a class="btn" href="/map.html#school=20172R">See it on the map</a>
   <button class="btn ghost" data-shortlist="20172R" data-name="St Josephs N S">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

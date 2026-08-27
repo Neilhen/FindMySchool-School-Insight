@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"St Johns","url":"https://www.findaschool.ie/school/tipperary/st-johns-01594n.html","identifier":"01594N","address":{"@type":"PostalAddress","streetAddress":"Golden Grove Road, Roscrea, Co. Tipperary","addressRegion":"Tipperary","postalCode":"E53N562","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":52.959953,"longitude":-7.799906},"telephone":"050523903","email":"scoileoinnaofa@gmail.com","numberOfStudents":163}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>St Johns</h1>
 <p class="lede">St Johns is a primary school in Tipperary. 163 pupils, Catholic ethos, 2 special classes, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=01594N">See it on the map</a>
+  <a class="btn" href="/map.html#school=01594N">See it on the map</a>
   <button class="btn ghost" data-shortlist="01594N" data-name="St Johns">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

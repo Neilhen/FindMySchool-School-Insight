@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Gorey Hill School","url":"https://www.findaschool.ie/school/wexford/gorey-hill-school-20580j.html","identifier":"20580J","address":{"@type":"PostalAddress","streetAddress":"Kilnahue Lane, Creagh Upper, Gorey Hill, Gorey","addressRegion":"Wexford","postalCode":null,"addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":52.35989,"longitude":-6.451869},"telephone":"0852166449","email":"goreyhillschool@wwetb.ie","numberOfStudents":37}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Gorey Hill School</h1>
 <p class="lede">Gorey Hill School is a special school in Gorey. 37 pupils, Multi-denominational ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=20580J">See it on the map</a>
+  <a class="btn" href="/map.html#school=20580J">See it on the map</a>
   <button class="btn ghost" data-shortlist="20580J" data-name="Gorey Hill School">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

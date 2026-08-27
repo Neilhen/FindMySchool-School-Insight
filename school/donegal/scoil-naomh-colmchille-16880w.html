@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Scoil Naomh Colmchille","url":"https://www.findaschool.ie/school/donegal/scoil-naomh-colmchille-16880w.html","identifier":"16880W","address":{"@type":"PostalAddress","streetAddress":"CRAIGTOWN, CARNDONAGH, CO DONEGAL","addressRegion":"Donegal","postalCode":"F93RY20","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":55.236366,"longitude":-7.227436},"telephone":"0749374022","email":"craigtownns@gmail.com","numberOfStudents":186}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Scoil Naomh Colmchille</h1>
 <p class="lede">Scoil Naomh Colmchille is a primary school in Donegal. 186 pupils, Catholic ethos, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=16880W">See it on the map</a>
+  <a class="btn" href="/map.html#school=16880W">See it on the map</a>
   <button class="btn ghost" data-shortlist="16880W" data-name="Scoil Naomh Colmchille">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

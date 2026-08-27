@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Cloneyhurke N S","url":"https://www.findaschool.ie/school/offaly/cloneyhurke-n-s-15923j.html","identifier":"15923J","address":{"@type":"PostalAddress","streetAddress":"Cloneyhurke, Portarlington, Co. Offaly","addressRegion":"Offaly","postalCode":"R32FT51","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.156598,"longitude":-7.273365},"telephone":"0578623271","email":"cloneyhurkens@gmail.com","numberOfStudents":18}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Cloneyhurke N S</h1>
 <p class="lede">Cloneyhurke N S is a primary school in Offaly. 18 pupils, Catholic ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=15923J">See it on the map</a>
+  <a class="btn" href="/map.html#school=15923J">See it on the map</a>
   <button class="btn ghost" data-shortlist="15923J" data-name="Cloneyhurke N S">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

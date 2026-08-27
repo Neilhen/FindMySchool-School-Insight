@@ -1,214 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IE">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ireland Schools Map</title>
-  <meta name="theme-color" content="#f8f9fa">
-  
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
-  
-  <!-- Leaflet CSS & JS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-  
-  <!-- MarkerCluster CSS & JS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.Default.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Find a School — every school in Ireland, with the detail that decides it</title>
+<meta name="description" content="All 4,234 schools in Ireland: ethos, enrolment, fees with the source they came from, NCSE special-class provision, school transport eligibility and what the area around each school is like.">
+<link rel="canonical" href="https://www.findaschool.ie/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Find a School">
+<meta property="og:title" content="Find a School — every school in Ireland, with the detail that decides it">
+<meta property="og:description" content="All 4,234 schools in Ireland: ethos, enrolment, fees with the source they came from, NCSE special-class provision, school transport eligibility and what the area around each school is like.">
+<meta property="og:url" content="https://www.findaschool.ie/">
+<meta name="twitter:card" content="summary">
+<link rel="stylesheet" href="/schools/pages.css">
 
-  <link rel="stylesheet" href="style.css" />
+
 </head>
 <body>
+<header class="site">
+  <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
+  <nav>
+    <a href="/map.html">Map</a>
+    <a href="/schools/">All schools</a>
+    <a href="/compare.html" id="nav-compare">Shortlist</a>
+  </nav>
+</header>
+<main>
+<section class="hero">
+  <h1>Every school in Ireland, and the detail that actually decides it</h1>
+  <p class="lede">4,234 primary, secondary, special and preschool options — with ethos,
+  enrolment, fees that carry a link to the page they came from, special-class provision,
+  and what the area around each one is like.</p>
+  <p class="herofind"><a class="btn" href="/schools/">Browse by county</a>
+     <a class="btn ghost" href="/map.html">Open the map</a></p>
+  <p class="thin">Use the search box above to jump straight to a school.</p>
+</section>
 
-<div id="ui-container">
-  <div class="panel">
-    <div class="title-main" id="app-title">Schools Map</div>
-    <div class="title-sub">Find schools in your area</div>
-    
-    <!-- Region Toggle -->
-    <div style="display:flex; gap: 4px; margin-top: 10px; background: #e0e6ed; padding: 4px; border-radius: 8px;">
-      <button id="region-ie" onclick="setRegion('IE')" class="filter-btn" style="flex:1; border:none; text-align:center; font-weight:600; background:#1a237e; color:white;">🇮🇪 Ireland</button>
-      <button id="region-us" onclick="setRegion('US')" class="filter-btn" style="flex:1; border:none; text-align:center; font-weight:600; background:transparent;">🇺🇸 USA</button>
-    </div>
-    <div style="display:flex; gap:8px; margin-top:8px; font-size:12px;">
-      <a href="/schools/" style="color:#1a237e; text-decoration:none;">Browse all schools</a>
-      <a href="/compare.html" id="nav-compare" style="color:#1a237e; text-decoration:none; margin-left:auto;">Shortlist</a>
-    </div>
-  </div>
+<section class="stats">
+  <div class="stat"><span class="v">4,234</span><span class="k">schools</span></div>
+  <div class="stat"><span class="v">1,995</span><span class="k">with a special class</span></div>
+  <div class="stat"><span class="v">547</span><span class="k">opening a new one</span></div>
+  <div class="stat"><span class="v">3,952</span><span class="k">with local house prices</span></div>
+  <div class="stat"><span class="v">99%</span><span class="k">checked against an official register</span></div>
+</section>
 
-  <div class="panel" id="search-box">
-    <input type="text" id="search-input" placeholder="Search for a school...">
-    <ul id="search-results"></ul>
-  </div>
+<section>
+  <h2>What you can find here that you cannot easily find elsewhere</h2>
+  <ul class="whats">
+    <li><strong>Fees with provenance.</strong> Where a fee-paying school publishes a figure,
+        it appears with the school year and a link to the page it was read from. Where one
+        does not, we say so instead of guessing.</li>
+    <li><strong>Special-class provision.</strong> Straight from the NCSE: how many classes,
+        of which type, and which schools are opening one for the first time.</li>
+    <li><strong>School transport eligibility.</strong> Drop a pin on the map and it works out
+        whether you would qualify — including the Irish-medium and minority-denomination
+        exceptions.</li>
+    <li><strong>The area, not just the school.</strong> Local house prices, the Pobal
+        deprivation index for the electoral division, and the Department's own planning area.</li>
+  </ul>
+</section>
 
+<section>
+  <h2>Browse by county</h2>
+  <div class="counties"><a class='ccard' href='/schools/county/carlow.html'><span class='cname'>Carlow</span><span class='ccount'>57</span></a><a class='ccard' href='/schools/county/cavan.html'><span class='cname'>Cavan</span><span class='ccount'>87</span></a><a class='ccard' href='/schools/county/clare.html'><span class='cname'>Clare</span><span class='ccount'>127</span></a><a class='ccard' href='/schools/county/cork.html'><span class='cname'>Cork</span><span class='ccount'>443</span></a><a class='ccard' href='/schools/county/donegal.html'><span class='cname'>Donegal</span><span class='ccount'>202</span></a><a class='ccard' href='/schools/county/dublin.html'><span class='cname'>Dublin</span><span class='ccount'>971</span></a><a class='ccard' href='/schools/county/galway.html'><span class='cname'>Galway</span><span class='ccount'>273</span></a><a class='ccard' href='/schools/county/kerry.html'><span class='cname'>Kerry</span><span class='ccount'>161</span></a><a class='ccard' href='/schools/county/kildare.html'><span class='cname'>Kildare</span><span class='ccount'>136</span></a><a class='ccard' href='/schools/county/kilkenny.html'><span class='cname'>Kilkenny</span><span class='ccount'>92</span></a><a class='ccard' href='/schools/county/laois.html'><span class='cname'>Laois</span><span class='ccount'>75</span></a><a class='ccard' href='/schools/county/leitrim.html'><span class='cname'>Leitrim</span><span class='ccount'>44</span></a><a class='ccard' href='/schools/county/limerick.html'><span class='cname'>Limerick</span><span class='ccount'>170</span></a><a class='ccard' href='/schools/county/longford.html'><span class='cname'>Longford</span><span class='ccount'>47</span></a><a class='ccard' href='/schools/county/louth.html'><span class='cname'>Louth</span><span class='ccount'>91</span></a><a class='ccard' href='/schools/county/mayo.html'><span class='cname'>Mayo</span><span class='ccount'>181</span></a><a class='ccard' href='/schools/county/meath.html'><span class='cname'>Meath</span><span class='ccount'>141</span></a><a class='ccard' href='/schools/county/monaghan.html'><span class='cname'>Monaghan</span><span class='ccount'>76</span></a><a class='ccard' href='/schools/county/offaly.html'><span class='cname'>Offaly</span><span class='ccount'>79</span></a><a class='ccard' href='/schools/county/roscommon.html'><span class='cname'>Roscommon</span><span class='ccount'>97</span></a><a class='ccard' href='/schools/county/sligo.html'><span class='cname'>Sligo</span><span class='ccount'>77</span></a><a class='ccard' href='/schools/county/tipperary.html'><span class='cname'>Tipperary</span><span class='ccount'>187</span></a><a class='ccard' href='/schools/county/waterford.html'><span class='cname'>Waterford</span><span class='ccount'>93</span></a><a class='ccard' href='/schools/county/westmeath.html'><span class='cname'>Westmeath</span><span class='ccount'>90</span></a><a class='ccard' href='/schools/county/wexford.html'><span class='cname'>Wexford</span><span class='ccount'>127</span></a><a class='ccard' href='/schools/county/wicklow.html'><span class='cname'>Wicklow</span><span class='ccount'>110</span></a></div>
+</section>
 
-  <div class="panel" id="pin-box">
-    <span class="filter-label">📍 Check an address</span>
-    <div style="display:flex; gap:6px; margin-top:4px;">
-      <input type="text" id="pin-input" placeholder="Address or Eircode..."
-             style="flex:1; padding:8px 10px; border-radius:8px; border:1px solid var(--border); font-size:13px; outline:none;">
-      <button id="pin-go" class="filter-btn" style="border:1px solid #1a237e; background:#1a237e; color:#fff;">Find</button>
-    </div>
-    <div style="display:flex; gap:6px; margin-top:6px;">
-      <button id="pin-drop" class="filter-btn" style="border:1px solid #666;">Drop pin on map</button>
-      <button id="pin-clear" class="filter-btn" style="border:1px solid #999; display:none;">Clear pin</button>
-    </div>
-    <div id="pin-status" style="font-size:11px; color:#777; margin-top:5px;"></div>
-    <div id="pin-results" style="max-height:290px; overflow-y:auto; margin-top:6px; font-size:12px;"></div>
-  </div>
-
-  <div class="panel">
-    <div class="collapsible-header" id="filters-header">
-      <span>Filters & Layers</span>
-      <span id="filters-icon">▼</span>
-    </div>
-    <div class="collapsible-content" id="filters-content">
-      
-      <div class="filter-group">
-        <span class="filter-label">Level</span>
-        <div class="filter-btns">
-          <button class="filter-btn" id="f-preschool" onclick="toggleFilter('preschool')">Pre-school</button>
-          <button class="filter-btn" id="f-primary" onclick="toggleFilter('primary')">Primary</button>
-          <button class="filter-btn" id="f-secondary" onclick="toggleFilter('secondary')">Secondary</button>
-          <button class="filter-btn" id="f-special" onclick="toggleFilter('special')">Special</button>
-        </div>
-      </div>
-      
-      <div class="filter-group">
-        <span class="filter-label">Gender</span>
-        <div class="filter-btns">
-          <button class="filter-btn" id="f-boys" onclick="toggleFilter('boys')">Boys</button>
-          <button class="filter-btn" id="f-girls" onclick="toggleFilter('girls')">Girls</button>
-          <button class="filter-btn" id="f-coed" onclick="toggleFilter('coed')">Co-ed</button>
-        </div>
-      </div>
-      
-      <div class="filter-group">
-        <span class="filter-label">Fees</span>
-        <div class="filter-btns">
-          <button class="filter-btn" id="f-feepaying" onclick="toggleFilter('feepaying')">Fee-paying</button>
-          <button class="filter-btn" id="f-free" onclick="toggleFilter('free')">Free</button>
-        </div>
-      </div>
-      
-      <div class="filter-group">
-        <span class="filter-label">Denomination / ethos</span>
-        <select id="f-ethos" style="width:100%;padding:6px;border:1px solid #ccc;border-radius:4px;font-size:12px;">
-          <option value="">Any denomination</option>
-          <option value="Catholic">Catholic</option>
-          <option value="Multi-denominational">Multi-denominational</option>
-          <option value="Inter-denominational">Inter-denominational</option>
-          <option value="Church of Ireland">Church of Ireland</option>
-          <option value="Nonsectarian">Nonsectarian (US public)</option>
-          <option value="__other">Other / minority faith</option>
-        </select>
-      </div>
-
-      <div class="filter-group" id="ie-filters">
-        <span class="filter-label">Special (IE)</span>
-        <div class="filter-btns">
-          <button class="filter-btn" id="f-irish" onclick="toggleFilter('irish')">★ Irish-medium</button>
-          <button class="filter-btn" id="f-boarding" onclick="toggleFilter('boarding')">Boarding</button>
-        </div>
-      </div>
-
-      <div class="filter-group">
-        <span class="filter-label">Special-class provision</span>
-        <div class="filter-btns">
-          <button class="filter-btn" id="f-hasSpecialClass" onclick="toggleFilter('hasSpecialClass')">Has a special class</button>
-          <button class="filter-btn" id="f-newSpecialClass" onclick="toggleFilter('newSpecialClass')">Opening a new one</button>
-        </div>
-        <div style="font-size:10px;color:#777;margin-top:4px;line-height:1.35">
-          NCSE sanctioned classes. Turning one on shows only schools that have it.
-        </div>
-      </div>
-
-      <div class="filter-group" id="us-filters" style="display:none;">
-        <span class="filter-label">Sector (US)</span>
-        <div class="filter-btns">
-          <button class="filter-btn" id="f-public" onclick="toggleFilter('public')">Public</button>
-          <button class="filter-btn" id="f-private" onclick="toggleFilter('private')">Private</button>
-          <button class="filter-btn" id="f-charter" onclick="toggleFilter('charter')">Charter</button>
-        </div>
-      </div>
-
-      <div class="filter-group">
-        <span class="filter-label">Boundary layers</span>
-        <div class="filter-btns">
-          <button class="filter-btn" id="f-layer-spa" onclick="toggleBoundaryLayer('spa')">Planning areas (IE)</button>
-          <button class="filter-btn" id="f-layer-district" onclick="toggleBoundaryLayer('district')">School districts (US)</button>
-        </div>
-        <div style="font-size:10px;color:#777;margin-top:4px;line-height:1.35">
-          Neither layer is a catchment. Ireland has no catchment areas in law;
-          the US stopped publishing attendance boundaries in 2016.
-          <a href="#" onclick="showBoundaryExplainer();return false;">Why →</a>
-        </div>
-      </div>
-
-      <div class="filter-group">
-        <span class="filter-label">Closed schools</span>
-        <div class="filter-btns">
-          <button class="filter-btn" id="f-closed" onclick="toggleFilter('closed')">Show closed</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div id="sidebar">
-  <div id="sidebar-header">
-    <div style="flex:1">
-      <div class="sb-name" id="sb-name">School Name</div>
-      <div class="sb-badges" id="sb-badges"></div>
-    </div>
-    <button id="close-sidebar">✕</button>
-  </div>
-  <div id="sidebar-content">
-    <div class="sb-section">
-      <div class="sb-section-title">Tuition / Status</div>
-      <div id="sb-fee" class="sb-fee-val">Free</div>
-    </div>
-    <div class="sb-section">
-      <div class="sb-section-title">Location</div>
-      <div id="sb-location" class="sb-text">Location</div>
-    </div>
-    <div class="sb-section" id="sb-area-section" style="display:none">
-      <div class="sb-section-title">Area context</div>
-      <div id="sb-area" class="sb-text"></div>
-    </div>
-    <div class="sb-section" id="sb-contact-section" style="display:none">
-      <div class="sb-section-title">Contact</div>
-      <div id="sb-contact" class="sb-text"></div>
-    </div>
-    <div class="sb-section">
-      <div class="sb-section-title">Notes</div>
-      <div id="sb-notes" class="sb-text">Notes</div>
-    </div>
-    <div class="sb-section" id="sb-feeder-section" style="display:none;">
-      <div class="sb-section-title" id="sb-feeder-title">Feeder Schools</div>
-      <ul class="feeder-list" id="sb-feeder-list"></ul>
-    </div>
-    <div class="sb-section" id="sb-admissions-section" style="display:none;">
-      <div class="sb-section-title">🎟 Admissions (published policy)</div>
-      <div id="sb-admissions" class="sb-text"></div>
-    </div>
-    <div class="sb-section" id="sb-links-section">
-      <div class="sb-section-title">📎 Resources</div>
-      <ul class="resource-list" id="sb-links-list"></ul>
-    </div>
-  </div>
-</div>
-
-<div id="map"></div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Turf.js/6.5.0/turf.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase.js"></script>
+<section class="prov">
+  <h2>One thing worth being clear about</h2>
+  <p><strong>Ireland has no school catchment areas.</strong> Under the Education (Admission to
+  Schools) Act 2018 every school sets its own oversubscription criteria and a child may apply
+  to any school in the country. Nothing on this site tells you whether a child will get a
+  place — for that you need the school's own admissions policy. What the map shows is the
+  Department's <em>planning areas</em>, which govern where capacity gets built.</p>
+</section>
+</main>
+<footer class="site">
+  <p><strong>Where this comes from.</strong> School details are from the
+  Department of Education's schools register (CC BY 4.0). Special-class provision
+  is from the National Council for Special Education's open data. Area deprivation
+  is the Pobal HP Deprivation Index 2022. House prices are CSO median residential
+  sale prices by Eircode district. Fees are read from each school's own website
+  and carry a link to the page they came from.</p>
+  <p><strong>What this is not.</strong> Ireland has no school catchment areas.
+  Under the Education (Admission to Schools) Act 2018 every school sets its own
+  oversubscription criteria and a child may apply to any school in the country.
+  Nothing here tells you whether a child will get a place.</p>
+  <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
+</footer>
 <script src="/schools/shortlist.js" defer></script>
-<script src="app.js"></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

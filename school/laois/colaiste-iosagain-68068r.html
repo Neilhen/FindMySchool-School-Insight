@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Coláiste Íosagáin","url":"https://www.findaschool.ie/school/laois/colaiste-iosagain-68068r.html","identifier":"68068R","address":{"@type":"PostalAddress","streetAddress":"Portarlington, Co. Laois","addressRegion":"Laois","postalCode":"R32HV25","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.161459,"longitude":-7.205456},"telephone":"0578623407","email":"secretary@colaisteiosagainport.ie","numberOfStudents":1182}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Coláiste Íosagáin</h1>
 <p class="lede">Coláiste Íosagáin is a secondary school in Laois. 1182 pupils, Catholic ethos, 3 special classes.</p>
 <p class="actions">
-  <a class="btn" href="/#school=68068R">See it on the map</a>
+  <a class="btn" href="/map.html#school=68068R">See it on the map</a>
   <button class="btn ghost" data-shortlist="68068R" data-name="Coláiste Íosagáin">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

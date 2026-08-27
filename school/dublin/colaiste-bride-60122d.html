@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Coláiste Bríde","url":"https://www.findaschool.ie/school/dublin/colaiste-bride-60122d.html","identifier":"60122D","address":{"@type":"PostalAddress","streetAddress":"New Road, Clondalkin, Dublin 22","addressRegion":"Dublin","postalCode":"D22C6Y2","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.317418,"longitude":-6.38961},"telephone":"014591158","email":"info@colaistebride.com","numberOfStudents":993}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Coláiste Bríde</h1>
 <p class="lede">Coláiste Bríde is a secondary school girls only in Dublin. 993 pupils, Catholic ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=60122D">See it on the map</a>
+  <a class="btn" href="/map.html#school=60122D">See it on the map</a>
   <button class="btn ghost" data-shortlist="60122D" data-name="Coláiste Bríde">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

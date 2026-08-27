@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"S N Corrabha","url":"https://www.findaschool.ie/school/cavan/s-n-corrabha-16959m.html","identifier":"16959M","address":{"@type":"PostalAddress","streetAddress":"Curravagh, Glangevlin, Co. Cavan","addressRegion":"Cavan","postalCode":"N41CV06","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":54.195316,"longitude":-7.924671},"telephone":"0719643290","email":"curravaghns@gmail.com","numberOfStudents":20}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>S N Corrabha</h1>
 <p class="lede">S N Corrabha is a primary school in Cavan. 20 pupils, Catholic ethos, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=16959M">See it on the map</a>
+  <a class="btn" href="/map.html#school=16959M">See it on the map</a>
   <button class="btn ghost" data-shortlist="16959M" data-name="S N Corrabha">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

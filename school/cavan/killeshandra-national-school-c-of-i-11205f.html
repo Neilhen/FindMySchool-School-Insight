@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Killeshandra National School ( C Of I)","url":"https://www.findaschool.ie/school/cavan/killeshandra-national-school-c-of-i-11205f.html","identifier":"11205F","address":{"@type":"PostalAddress","streetAddress":"Main Street, Killeshandra, Co. Cavan","addressRegion":"Cavan","postalCode":"H12Y2N1","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":54.012871,"longitude":-7.528214},"telephone":"0494334822","email":"office@killeshandranscoi.com","numberOfStudents":48}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Killeshandra National School ( C Of I)</h1>
 <p class="lede">Killeshandra National School ( C Of I) is a primary school in Cavan. 48 pupils, Church of Ireland ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=11205F">See it on the map</a>
+  <a class="btn" href="/map.html#school=11205F">See it on the map</a>
   <button class="btn ghost" data-shortlist="11205F" data-name="Killeshandra National School ( C Of I)">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

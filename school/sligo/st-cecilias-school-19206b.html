@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"St. Cecilia's School","url":"https://www.findaschool.ie/school/sligo/st-cecilias-school-19206b.html","identifier":"19206B","address":{"@type":"PostalAddress","streetAddress":"Cregg, Sligo","addressRegion":"Sligo","postalCode":"F91X283","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":54.304752,"longitude":-8.514206},"telephone":"0719177907","email":"stcecilias@stceciliasschool.ie","numberOfStudents":93}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>St. Cecilia&#x27;s School</h1>
 <p class="lede">St. Cecilia&#x27;s School is a special school in Sligo. 93 pupils, Catholic ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=19206B">See it on the map</a>
+  <a class="btn" href="/map.html#school=19206B">See it on the map</a>
   <button class="btn ghost" data-shortlist="19206B" data-name="St. Cecilia&#x27;s School">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Gaelscoil Mhuscraí","url":"https://www.findaschool.ie/school/cork/gaelscoil-mhuscrai-20151j.html","identifier":"20151J","address":{"@type":"PostalAddress","streetAddress":"Sean Íochtarach, An Bhlárna, Co. Chorcaí","addressRegion":"Cork","postalCode":"T23EA29","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":51.93322,"longitude":-8.562697},"telephone":"0214516874","email":"oifig@gaelscoilmhuscrai.ie","numberOfStudents":195}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Gaelscoil Mhuscraí</h1>
 <p class="lede">Gaelscoil Mhuscraí is a primary school irish-medium in Cork. 195 pupils, Catholic ethos, 2 special classes.</p>
 <p class="actions">
-  <a class="btn" href="/#school=20151J">See it on the map</a>
+  <a class="btn" href="/map.html#school=20151J">See it on the map</a>
   <button class="btn ghost" data-shortlist="20151J" data-name="Gaelscoil Mhuscraí">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

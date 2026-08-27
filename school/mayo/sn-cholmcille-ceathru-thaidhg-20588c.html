@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Sn Cholmcille, Ceathrú Thaidhg","url":"https://www.findaschool.ie/school/mayo/sn-cholmcille-ceathru-thaidhg-20588c.html","identifier":"20588C","address":{"@type":"PostalAddress","streetAddress":"Ceathrú Thaidhg, Béal an Átha, Co. Mhaigh Eo","addressRegion":"Mayo","postalCode":"F26HP11","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":54.311562,"longitude":-9.818564},"telephone":"09788953","email":"oifig@ceathruthaidhg.ie","numberOfStudents":26}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Sn Cholmcille, Ceathrú Thaidhg</h1>
 <p class="lede">Sn Cholmcille, Ceathrú Thaidhg is a primary school irish-medium in Mayo. 26 pupils, Catholic ethos, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=20588C">See it on the map</a>
+  <a class="btn" href="/map.html#school=20588C">See it on the map</a>
   <button class="btn ghost" data-shortlist="20588C" data-name="Sn Cholmcille, Ceathrú Thaidhg">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

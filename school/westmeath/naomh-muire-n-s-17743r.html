@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Naomh Muire N S","url":"https://www.findaschool.ie/school/westmeath/naomh-muire-n-s-17743r.html","identifier":"17743R","address":{"@type":"PostalAddress","streetAddress":"Finea, Mullingar, Co. Westmeath","addressRegion":"Westmeath","postalCode":"N91YN53","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.777406,"longitude":-7.375905},"telephone":"0436681384","email":"info@stmarysnsfinea.com","numberOfStudents":12}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Naomh Muire N S</h1>
 <p class="lede">Naomh Muire N S is a primary school in Westmeath. 12 pupils, Catholic ethos, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=17743R">See it on the map</a>
+  <a class="btn" href="/map.html#school=17743R">See it on the map</a>
   <button class="btn ghost" data-shortlist="17743R" data-name="Naomh Muire N S">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

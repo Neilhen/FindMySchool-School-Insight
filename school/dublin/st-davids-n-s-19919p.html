@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"St Davids N S","url":"https://www.findaschool.ie/school/dublin/st-davids-n-s-19919p.html","identifier":"19919P","address":{"@type":"PostalAddress","streetAddress":"Kilmore Road, Artane, Dublin 5","addressRegion":"Dublin","postalCode":"D05E510","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.385812,"longitude":-6.217246},"telephone":"018487979","email":"stdavidsbns@gmail.com","numberOfStudents":308}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>St Davids N S</h1>
 <p class="lede">St Davids N S is a primary school in Dublin. 308 pupils, Catholic ethos, 5 special classes, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=19919P">See it on the map</a>
+  <a class="btn" href="/map.html#school=19919P">See it on the map</a>
   <button class="btn ghost" data-shortlist="19919P" data-name="St Davids N S">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

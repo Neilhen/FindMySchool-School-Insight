@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Darndale Ns Junior","url":"https://www.findaschool.ie/school/dublin/darndale-ns-junior-19454u.html","identifier":"19454U","address":{"@type":"PostalAddress","streetAddress":"OUR LADY IMMAC JUN NS, DARNDALE, MALAHIDE ROAD, DUBLIN 17","addressRegion":"Dublin","postalCode":"D17TR25","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.401339,"longitude":-6.193453},"telephone":"018476643","email":"ddalejnr@gmail.com","numberOfStudents":159}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Darndale Ns Junior</h1>
 <p class="lede">Darndale Ns Junior is a primary school in Dublin. 159 pupils, Catholic ethos, 1 special class, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=19454U">See it on the map</a>
+  <a class="btn" href="/map.html#school=19454U">See it on the map</a>
   <button class="btn ghost" data-shortlist="19454U" data-name="Darndale Ns Junior">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

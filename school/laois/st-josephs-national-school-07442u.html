@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"St Josephs National School","url":"https://www.findaschool.ie/school/laois/st-josephs-national-school-07442u.html","identifier":"07442U","address":{"@type":"PostalAddress","streetAddress":"Borrin-in-Ossory, Co. Laois","addressRegion":"Laois","postalCode":"R32FP79","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":52.938271,"longitude":-7.633928},"telephone":"050541331","email":"borrisinossoryns@gmail.com","numberOfStudents":95}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>St Josephs National School</h1>
 <p class="lede">St Josephs National School is a primary school in Laois. 95 pupils, Catholic ethos, 3 special classes.</p>
 <p class="actions">
-  <a class="btn" href="/#school=07442U">See it on the map</a>
+  <a class="btn" href="/map.html#school=07442U">See it on the map</a>
   <button class="btn ghost" data-shortlist="07442U" data-name="St Josephs National School">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

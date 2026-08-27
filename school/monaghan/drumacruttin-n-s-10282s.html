@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Drumacruttin N S","url":"https://www.findaschool.ie/school/monaghan/drumacruttin-n-s-10282s.html","identifier":"10282S","address":{"@type":"PostalAddress","streetAddress":"Drumacrutten, Dunraymond, Co. Monaghan","addressRegion":"Monaghan","postalCode":"H18YD83","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":54.195841,"longitude":-6.940518},"telephone":"04771186","email":"drumacruttinns@gmail.com","numberOfStudents":15}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Drumacruttin N S</h1>
 <p class="lede">Drumacruttin N S is a primary school in Monaghan. 15 pupils, Church of Ireland ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=10282S">See it on the map</a>
+  <a class="btn" href="/map.html#school=10282S">See it on the map</a>
   <button class="btn ghost" data-shortlist="10282S" data-name="Drumacruttin N S">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

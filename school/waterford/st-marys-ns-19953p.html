@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"St Marys Ns","url":"https://www.findaschool.ie/school/waterford/st-marys-ns-19953p.html","identifier":"19953P","address":{"@type":"PostalAddress","streetAddress":"Youghal Road, Dungarvan, Co. Waterford","addressRegion":"Waterford","postalCode":"X35TN99","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":52.087567,"longitude":-7.62577},"telephone":"05841346","email":"principal@stmarysdungarvan.ie","numberOfStudents":237}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>St Marys Ns</h1>
 <p class="lede">St Marys Ns is a primary school in Waterford. 237 pupils, Catholic ethos, 2 special classes, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=19953P">See it on the map</a>
+  <a class="btn" href="/map.html#school=19953P">See it on the map</a>
   <button class="btn ghost" data-shortlist="19953P" data-name="St Marys Ns">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

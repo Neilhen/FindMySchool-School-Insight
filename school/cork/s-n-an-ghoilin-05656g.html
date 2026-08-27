@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"S N An Ghoilin","url":"https://www.findaschool.ie/school/cork/s-n-an-ghoilin-05656g.html","identifier":"05656G","address":{"@type":"PostalAddress","streetAddress":"Goleen, Co. Cork","addressRegion":"Cork","postalCode":"P81YW27","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":51.492536,"longitude":-9.7134},"telephone":"02835660","email":"mgoleenns@gmail.com","numberOfStudents":32}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>S N An Ghoilin</h1>
 <p class="lede">S N An Ghoilin is a primary school in Cork. 32 pupils, Catholic ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=05656G">See it on the map</a>
+  <a class="btn" href="/map.html#school=05656G">See it on the map</a>
   <button class="btn ghost" data-shortlist="05656G" data-name="S N An Ghoilin">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

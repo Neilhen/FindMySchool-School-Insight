@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Tralee Educate Together Ns","url":"https://www.findaschool.ie/school/kerry/tralee-educate-together-ns-20158a.html","identifier":"20158A","address":{"@type":"PostalAddress","streetAddress":"Collis Sandes House, Kileen, Oakpark, Tralee","addressRegion":"Kerry","postalCode":"V92Y5VC","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":52.287045,"longitude":-9.690585},"telephone":"0667180506","email":"info@tralee-educate-together.com","numberOfStudents":88}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Tralee Educate Together Ns</h1>
 <p class="lede">Tralee Educate Together Ns is a primary school in Kerry. 88 pupils, Multi-denominational ethos, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=20158A">See it on the map</a>
+  <a class="btn" href="/map.html#school=20158A">See it on the map</a>
   <button class="btn ghost" data-shortlist="20158A" data-name="Tralee Educate Together Ns">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Dromaili S N","url":"https://www.findaschool.ie/school/cavan/dromaili-s-n-11541v.html","identifier":"11541V","address":{"@type":"PostalAddress","streetAddress":"Drumelis, Cavan, Co. Cavan","addressRegion":"Cavan","postalCode":"H12DW77","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":54.002994,"longitude":-7.383981},"telephone":"0494332011","email":"Office@farnhamschool.com","numberOfStudents":213}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Dromaili S N</h1>
 <p class="lede">Dromaili S N is a primary school in Cavan. 213 pupils, Catholic ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=11541V">See it on the map</a>
+  <a class="btn" href="/map.html#school=11541V">See it on the map</a>
   <button class="btn ghost" data-shortlist="11541V" data-name="Dromaili S N">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

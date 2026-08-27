@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Scoil Na Mbraithre Sn","url":"https://www.findaschool.ie/school/louth/scoil-na-mbraithre-sn-17059e.html","identifier":"17059E","address":{"@type":"PostalAddress","streetAddress":"Sunday's Gate, Drogheda, Co. Louth","addressRegion":"Louth","postalCode":"A92Y927","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.718069,"longitude":-6.349869},"telephone":"0419833620","email":"principal.sungate@gmail.com","numberOfStudents":359}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Scoil Na Mbraithre Sn</h1>
 <p class="lede">Scoil Na Mbraithre Sn is a primary school in Louth. 359 pupils, Catholic ethos, 1 special class, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=17059E">See it on the map</a>
+  <a class="btn" href="/map.html#school=17059E">See it on the map</a>
   <button class="btn ghost" data-shortlist="17059E" data-name="Scoil Na Mbraithre Sn">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

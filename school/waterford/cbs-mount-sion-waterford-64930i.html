@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"C.B.S. Mount Sion, Waterford","url":"https://www.findaschool.ie/school/waterford/cbs-mount-sion-waterford-64930i.html","identifier":"64930I","address":{"@type":"PostalAddress","streetAddress":"Barrack Street, Waterford City","addressRegion":"Waterford","postalCode":"X91FK30","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":52.256072,"longitude":-7.116872},"telephone":"051377378","email":"info@mountsioncbssecondary.ie","numberOfStudents":494}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>C.B.S. Mount Sion, Waterford</h1>
 <p class="lede">C.B.S. Mount Sion, Waterford is a secondary school boys only in Waterford. 494 pupils, Catholic ethos, 3 special classes, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=64930I">See it on the map</a>
+  <a class="btn" href="/map.html#school=64930I">See it on the map</a>
   <button class="btn ghost" data-shortlist="64930I" data-name="C.B.S. Mount Sion, Waterford">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

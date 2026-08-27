@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"San Carlo Junior Ns","url":"https://www.findaschool.ie/school/kildare/san-carlo-junior-ns-19653d.html","identifier":"19653D","address":{"@type":"PostalAddress","streetAddress":"Confey, Leixlip","addressRegion":"Kildare","postalCode":"W23E9D0","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.370553,"longitude":-6.487352},"telephone":"016243155","email":"sancarlojns@gmail.com","numberOfStudents":265}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>San Carlo Junior Ns</h1>
 <p class="lede">San Carlo Junior Ns is a primary school in Kildare. 265 pupils, Catholic ethos, 2 special classes.</p>
 <p class="actions">
-  <a class="btn" href="/#school=19653D">See it on the map</a>
+  <a class="btn" href="/map.html#school=19653D">See it on the map</a>
   <button class="btn ghost" data-shortlist="19653D" data-name="San Carlo Junior Ns">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

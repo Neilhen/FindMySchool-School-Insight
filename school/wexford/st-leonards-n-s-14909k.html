@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"St Leonards N S","url":"https://www.findaschool.ie/school/wexford/st-leonards-n-s-14909k.html","identifier":"14909K","address":{"@type":"PostalAddress","streetAddress":"St. Leonards, Ballycullane, New Ross, Co. Wexford","addressRegion":"Wexford","postalCode":"Y34KP84","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":52.259629,"longitude":-6.804218},"telephone":"051562570","email":"stleonardsns@gmail.com","numberOfStudents":112}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>St Leonards N S</h1>
 <p class="lede">St Leonards N S is a primary school in Wexford. 112 pupils, Catholic ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=14909K">See it on the map</a>
+  <a class="btn" href="/map.html#school=14909K">See it on the map</a>
   <button class="btn ghost" data-shortlist="14909K" data-name="St Leonards N S">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

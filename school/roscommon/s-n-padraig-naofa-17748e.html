@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"S N Padraig Naofa","url":"https://www.findaschool.ie/school/roscommon/s-n-padraig-naofa-17748e.html","identifier":"17748E","address":{"@type":"PostalAddress","streetAddress":"Dúngar (Frenchpark), An Caisleáin Riabhach, Co. Ros Comáin","addressRegion":"Roscommon","postalCode":"F45FD34","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.869818,"longitude":-8.409728},"telephone":"0949870337","email":"principal@frenchparkns.com","numberOfStudents":104}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>S N Padraig Naofa</h1>
 <p class="lede">S N Padraig Naofa is a primary school in Roscommon. 104 pupils, Catholic ethos, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=17748E">See it on the map</a>
+  <a class="btn" href="/map.html#school=17748E">See it on the map</a>
   <button class="btn ghost" data-shortlist="17748E" data-name="S N Padraig Naofa">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

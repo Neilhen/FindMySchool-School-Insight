@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Carrickleck N S","url":"https://www.findaschool.ie/school/meath/carrickleck-n-s-14348t.html","identifier":"14348T","address":{"@type":"PostalAddress","streetAddress":"Carrickleck, Kingscourt, Co. Meath","addressRegion":"Meath","postalCode":"A82XK71","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.874533,"longitude":-6.764391},"telephone":"0429667746","email":"carrickleckns@gmail.com","numberOfStudents":26}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Carrickleck N S</h1>
 <p class="lede">Carrickleck N S is a primary school in Meath. 26 pupils, Catholic ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=14348T">See it on the map</a>
+  <a class="btn" href="/map.html#school=14348T">See it on the map</a>
   <button class="btn ghost" data-shortlist="14348T" data-name="Carrickleck N S">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

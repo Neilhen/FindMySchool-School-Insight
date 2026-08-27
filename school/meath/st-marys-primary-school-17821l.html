@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"St. Mary's Primary School","url":"https://www.findaschool.ie/school/meath/st-marys-primary-school-17821l.html","identifier":"17821L","address":{"@type":"PostalAddress","streetAddress":"Johnstown Road, Enfield, Co. Meath","addressRegion":"Meath","postalCode":"A83X316","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.413541,"longitude":-6.832224},"telephone":"0469541949","email":"office@enfieldps.ie","numberOfStudents":543}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>St. Mary&#x27;s Primary School</h1>
 <p class="lede">St. Mary&#x27;s Primary School is a primary school in Meath. 543 pupils, Catholic ethos, 3 special classes.</p>
 <p class="actions">
-  <a class="btn" href="/#school=17821L">See it on the map</a>
+  <a class="btn" href="/map.html#school=17821L">See it on the map</a>
   <button class="btn ghost" data-shortlist="17821L" data-name="St. Mary&#x27;s Primary School">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

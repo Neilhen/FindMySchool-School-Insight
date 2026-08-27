@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Coláiste Mhuirlinne/Merlin College","url":"https://www.findaschool.ie/school/galway/colaiste-mhuirlinnemerlin-college-76096s.html","identifier":"76096S","address":{"@type":"PostalAddress","streetAddress":"c/o Galway-Roscommon ETB, Doughiska Road, Galway","addressRegion":"Galway","postalCode":"H91309Y","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.282535,"longitude":-8.984878},"telephone":"091769000","email":"john.cleary@gretb.ie","numberOfStudents":710}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Coláiste Mhuirlinne/Merlin College</h1>
 <p class="lede">Coláiste Mhuirlinne/Merlin College is a secondary school in Galway. 710 pupils, Multi-denominational ethos, 3 special classes, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=76096S">See it on the map</a>
+  <a class="btn" href="/map.html#school=76096S">See it on the map</a>
   <button class="btn ghost" data-shortlist="76096S" data-name="Coláiste Mhuirlinne/Merlin College">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

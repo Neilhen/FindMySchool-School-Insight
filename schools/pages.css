@@ -13,6 +13,23 @@ footer.site{border-bottom:none;border-top:1px solid var(--line);display:block;
   color:var(--soft);font-size:13px;margin-top:48px}
 .brand{font-weight:800;color:var(--brand);text-decoration:none;font-size:18px}
 header.site nav{display:flex;gap:16px;margin-left:auto}
+.sitesearch{position:relative;flex:1 1 260px;max-width:420px;margin:0}
+.sitesearch input{width:100%;padding:8px 12px;border:1px solid var(--line);border-radius:8px;
+  background:var(--sunk);color:var(--ink);font-size:14px}
+.sitesearch input:focus{outline:2px solid var(--brand);outline-offset:1px;background:var(--bg)}
+#q-results{display:none;position:absolute;top:calc(100% + 5px);left:0;right:0;z-index:40;
+  background:var(--bg);border:1px solid var(--line);border-radius:8px;overflow:hidden;
+  box-shadow:0 8px 26px -12px rgba(0,0,0,.45);max-height:340px;overflow-y:auto}
+#q-results.open{display:block}
+.q-hit{display:block;padding:8px 12px;text-decoration:none;color:var(--ink);
+  border-bottom:1px solid var(--line)}
+.q-hit:last-child{border-bottom:none}
+.q-hit:hover,.q-hit.on{background:var(--sunk)}
+.q-name{display:block;font-weight:600;font-size:14px}
+.q-meta{display:block;font-size:12px;color:var(--faint)}
+.q-none{padding:12px;color:var(--faint);font-size:13px}
+@media (max-width:720px){.sitesearch{order:3;flex-basis:100%;max-width:none}
+  header.site nav{margin-left:0}}
 header.site a{color:var(--ink);text-decoration:none;font-size:14px}
 header.site a:hover{text-decoration:underline}
 main{max-width:820px;margin:0 auto;padding:24px 20px 0}
@@ -42,5 +59,22 @@ ul.listing .thin{display:block}
 ul.cols{columns:2;column-gap:28px}
 ul.cols li{break-inside:avoid}
 .prov{color:var(--soft);font-size:.9rem}
+.hero{padding:12px 0 4px}
+.hero h1{max-width:16ch}
+.herofind{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 6px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1px;
+  background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden;margin:8px 0 4px}
+.stat{background:var(--bg);padding:14px 16px;display:flex;flex-direction:column;gap:2px}
+.stat .v{font-size:1.5rem;font-weight:800;color:var(--brand);line-height:1.1}
+.stat .k{font-size:.78rem;color:var(--faint);line-height:1.3}
+ul.whats{list-style:none;padding:0;display:grid;gap:12px}
+ul.whats li{padding-left:18px;position:relative}
+ul.whats li:before{content:"→";position:absolute;left:0;color:var(--brand)}
+.counties{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.ccard{display:flex;justify-content:space-between;align-items:baseline;gap:8px;
+  padding:10px 12px;border:1px solid var(--line);border-radius:8px;text-decoration:none;color:var(--ink)}
+.ccard:hover{border-color:var(--brand);background:var(--sunk)}
+.cname{font-weight:600;font-size:14px}
+.ccount{font-size:12px;color:var(--faint)}
 @media (max-width:640px){ul.listing,ul.cols{columns:1}
   table.facts th{width:44%}}

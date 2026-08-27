@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Cill Cleithe N S","url":"https://www.findaschool.ie/school/westmeath/cill-cleithe-n-s-17806p.html","identifier":"17806P","address":{"@type":"PostalAddress","streetAddress":"Kilcleagh, Castledaly, Moate, Co. Westmeath","addressRegion":"Westmeath","postalCode":"N37K8V0","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.374368,"longitude":-7.807846},"telephone":"0906481026","email":"office@kilcleaghns.com","numberOfStudents":99}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Cill Cleithe N S</h1>
 <p class="lede">Cill Cleithe N S is a primary school in Westmeath. 99 pupils, Catholic ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=17806P">See it on the map</a>
+  <a class="btn" href="/map.html#school=17806P">See it on the map</a>
   <button class="btn ghost" data-shortlist="17806P" data-name="Cill Cleithe N S">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

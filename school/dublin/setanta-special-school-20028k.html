@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Setanta Special School","url":"https://www.findaschool.ie/school/dublin/setanta-special-school-20028k.html","identifier":"20028K","address":{"@type":"PostalAddress","streetAddress":"Limekiln Road, Greenhills, Dublin 12","addressRegion":"Dublin","postalCode":"A94C6Y0","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.305056,"longitude":-6.328394},"telephone":"012884594","email":"principal@setantaschool.ie","numberOfStudents":68}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Setanta Special School</h1>
 <p class="lede">Setanta Special School is a special school in Templeogue. 68 pupils, Multi-denominational ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=20028K">See it on the map</a>
+  <a class="btn" href="/map.html#school=20028K">See it on the map</a>
   <button class="btn ghost" data-shortlist="20028K" data-name="Setanta Special School">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

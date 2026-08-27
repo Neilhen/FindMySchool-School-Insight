@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Letterkenny Educate Together Ns","url":"https://www.findaschool.ie/school/donegal/letterkenny-educate-together-ns-20235p.html","identifier":"20235P","address":{"@type":"PostalAddress","streetAddress":"Kiltoy, Letterkenny, Co. Donegal","addressRegion":"Donegal","postalCode":"F92XCW9","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":54.960659,"longitude":-7.70714},"telephone":"0749103794","email":"info@letterkennyetns.ie","numberOfStudents":420}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Letterkenny Educate Together Ns</h1>
 <p class="lede">Letterkenny Educate Together Ns is a primary school in Donegal. 420 pupils, Multi-denominational ethos, 5 special classes, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=20235P">See it on the map</a>
+  <a class="btn" href="/map.html#school=20235P">See it on the map</a>
   <button class="btn ghost" data-shortlist="20235P" data-name="Letterkenny Educate Together Ns">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"S N Naomh Padraig Mxd","url":"https://www.findaschool.ie/school/kilkenny/s-n-naomh-padraig-mxd-17628r.html","identifier":"17628R","address":{"@type":"PostalAddress","streetAddress":"BAILE HAOL, CO KILKENNY","addressRegion":"Kilkenny","postalCode":"R95EK00","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":52.464919,"longitude":-7.199656},"telephone":"0567768915","email":"scoil@ballyhale.com","numberOfStudents":173}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>S N Naomh Padraig Mxd</h1>
 <p class="lede">S N Naomh Padraig Mxd is a primary school in Kilkenny. 173 pupils, Catholic ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=17628R">See it on the map</a>
+  <a class="btn" href="/map.html#school=17628R">See it on the map</a>
   <button class="btn ghost" data-shortlist="17628R" data-name="S N Naomh Padraig Mxd">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

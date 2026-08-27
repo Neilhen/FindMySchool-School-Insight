@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Kilchreest Central Sch","url":"https://www.findaschool.ie/school/galway/kilchreest-central-sch-19544v.html","identifier":"19544V","address":{"@type":"PostalAddress","streetAddress":"Lackabaun, Kilchreest, Loughrea, Co. Galway","addressRegion":"Galway","postalCode":"H62N766","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.166089,"longitude":-8.674876},"telephone":"091840112","email":"francisoconnor3@gmail.com","numberOfStudents":110}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Kilchreest Central Sch</h1>
 <p class="lede">Kilchreest Central Sch is a primary school in Galway. 110 pupils, Catholic ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=19544V">See it on the map</a>
+  <a class="btn" href="/map.html#school=19544V">See it on the map</a>
   <button class="btn ghost" data-shortlist="19544V" data-name="Kilchreest Central Sch">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

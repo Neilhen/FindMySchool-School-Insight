@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Donabate/Portrane Educate Together Ns","url":"https://www.findaschool.ie/school/dublin/donabateportrane-educate-together-ns-20161m.html","identifier":"20161M","address":{"@type":"PostalAddress","streetAddress":"Ballisk Common, Beaverstown Road, Donabate, Co. Dublin","addressRegion":"Dublin","postalCode":"K36HX03","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.49171,"longitude":-6.1457},"telephone":"018434573","email":"susan.clarke@dpetns.ie","numberOfStudents":414}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Donabate/Portrane Educate Together Ns</h1>
 <p class="lede">Donabate/Portrane Educate Together Ns is a primary school in Dublin. 414 pupils, Multi-denominational ethos, 2 special classes.</p>
 <p class="actions">
-  <a class="btn" href="/#school=20161M">See it on the map</a>
+  <a class="btn" href="/map.html#school=20161M">See it on the map</a>
   <button class="btn ghost" data-shortlist="20161M" data-name="Donabate/Portrane Educate Together Ns">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

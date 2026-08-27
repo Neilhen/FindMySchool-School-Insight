@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"St Patricks Ns","url":"https://www.findaschool.ie/school/dublin/st-patricks-ns-20130b.html","identifier":"20130B","address":{"@type":"PostalAddress","streetAddress":"St. Patrick's National School, Diswellstown Lawn, Castleknock, Dublin 15","addressRegion":"Dublin","postalCode":"D15PH21","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.369075,"longitude":-6.387988},"telephone":"018249930","email":"info@stpatricksns.ie","numberOfStudents":867}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>St Patricks Ns</h1>
 <p class="lede">St Patricks Ns is a primary school in St. Patrick&#x27;s National School. 867 pupils, Catholic ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=20130B">See it on the map</a>
+  <a class="btn" href="/map.html#school=20130B">See it on the map</a>
   <button class="btn ghost" data-shortlist="20130B" data-name="St Patricks Ns">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

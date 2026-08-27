@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Holy Child Killiney","url":"https://www.findaschool.ie/school/dublin/holy-child-killiney-60250m.html","identifier":"60250M","address":{"@type":"PostalAddress","streetAddress":"Military Road, Killiney, Co. Dublin","addressRegion":"Dublin","postalCode":"A96XP82","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.252851,"longitude":-6.114771},"telephone":"012823120","email":"admin@holychildkilliney.ie","numberOfStudents":382}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Holy Child Killiney</h1>
 <p class="lede">Holy Child Killiney is a secondary school girls only in Killiney. 382 pupils, Catholic ethos, fees €7,660 (2026/27).</p>
 <p class="actions">
-  <a class="btn" href="/#school=60250M">See it on the map</a>
+  <a class="btn" href="/map.html#school=60250M">See it on the map</a>
   <button class="btn ghost" data-shortlist="60250M" data-name="Holy Child Killiney">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

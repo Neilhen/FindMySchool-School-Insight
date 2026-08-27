@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Sn M An Croi Gan Smal","url":"https://www.findaschool.ie/school/galway/sn-m-an-croi-gan-smal-18490t.html","identifier":"18490T","address":{"@type":"PostalAddress","streetAddress":"LEENANE, CO GALWAY","addressRegion":"Galway","postalCode":"H91C6H9","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.598636,"longitude":-9.692812},"telephone":"09542366","email":"info@leenanens.ie","numberOfStudents":27}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Sn M An Croi Gan Smal</h1>
 <p class="lede">Sn M An Croi Gan Smal is a primary school in Galway. 27 pupils, Catholic ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=18490T">See it on the map</a>
+  <a class="btn" href="/map.html#school=18490T">See it on the map</a>
   <button class="btn ghost" data-shortlist="18490T" data-name="Sn M An Croi Gan Smal">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

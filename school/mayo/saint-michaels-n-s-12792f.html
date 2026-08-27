@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Saint Michaels N S","url":"https://www.findaschool.ie/school/mayo/saint-michaels-n-s-12792f.html","identifier":"12792F","address":{"@type":"PostalAddress","streetAddress":"Church Road, Ballina, Co. Mayo","addressRegion":"Mayo","postalCode":"F26D6F8","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":54.10787,"longitude":-9.153289},"telephone":"09670279","email":"stmichaelsnschurchrd@gmail.com","numberOfStudents":17}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Saint Michaels N S</h1>
 <p class="lede">Saint Michaels N S is a primary school in Mayo. 17 pupils, Church of Ireland ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=12792F">See it on the map</a>
+  <a class="btn" href="/map.html#school=12792F">See it on the map</a>
   <button class="btn ghost" data-shortlist="12792F" data-name="Saint Michaels N S">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

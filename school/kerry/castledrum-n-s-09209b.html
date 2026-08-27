@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Castledrum N S","url":"https://www.findaschool.ie/school/kerry/castledrum-n-s-09209b.html","identifier":"09209B","address":{"@type":"PostalAddress","streetAddress":"Castledrum, Castlemain, Co. Kerry","addressRegion":"Kerry","postalCode":"V93DF79","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":52.174254,"longitude":-9.771852},"telephone":"0669766256","email":"castledrumns69@gmail.com","numberOfStudents":107}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Castledrum N S</h1>
 <p class="lede">Castledrum N S is a primary school in Kerry. 107 pupils, Catholic ethos, 1 special class.</p>
 <p class="actions">
-  <a class="btn" href="/#school=09209B">See it on the map</a>
+  <a class="btn" href="/map.html#school=09209B">See it on the map</a>
   <button class="btn ghost" data-shortlist="09209B" data-name="Castledrum N S">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

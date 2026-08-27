@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Coola Post Primary School","url":"https://www.findaschool.ie/school/sligo/coola-post-primary-school-72310u.html","identifier":"72310U","address":{"@type":"PostalAddress","streetAddress":"Riverstown, Via Boyle, Co Sligo","addressRegion":"Sligo","postalCode":"F52XE71","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":54.154045,"longitude":-8.374023},"telephone":"0719165365","email":"coolapps@msletb.ie","numberOfStudents":514}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Coola Post Primary School</h1>
 <p class="lede">Coola Post Primary School is a secondary school in Sligo. 514 pupils, Multi-denominational ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=72310U">See it on the map</a>
+  <a class="btn" href="/map.html#school=72310U">See it on the map</a>
   <button class="btn ghost" data-shortlist="72310U" data-name="Coola Post Primary School">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Árdscoil Uí Urmoltaigh","url":"https://www.findaschool.ie/school/cork/ardscoil-ui-urmoltaigh-62050o.html","identifier":"62050O","address":{"@type":"PostalAddress","streetAddress":"Bandon, Co Cork","addressRegion":"Cork","postalCode":"P72C983","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":51.747025,"longitude":-8.74419},"telephone":"0238844227","email":"office@hamiltonhighschool.ie","numberOfStudents":399}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Árdscoil Uí Urmoltaigh</h1>
 <p class="lede">Árdscoil Uí Urmoltaigh is a secondary school boys only in Cork. 399 pupils, Catholic ethos, 1 special class.</p>
 <p class="actions">
-  <a class="btn" href="/#school=62050O">See it on the map</a>
+  <a class="btn" href="/map.html#school=62050O">See it on the map</a>
   <button class="btn ghost" data-shortlist="62050O" data-name="Árdscoil Uí Urmoltaigh">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

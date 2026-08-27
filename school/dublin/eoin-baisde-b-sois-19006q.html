@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Eoin Baisde B Sois","url":"https://www.findaschool.ie/school/dublin/eoin-baisde-b-sois-19006q.html","identifier":"19006Q","address":{"@type":"PostalAddress","streetAddress":"Seafield Road, Clontarf, Dublin 3","addressRegion":"Dublin","postalCode":"D03TD21","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.363916,"longitude":-6.197803},"telephone":"018336539","email":"info@belgrovejbs.ie","numberOfStudents":294}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Eoin Baisde B Sois</h1>
 <p class="lede">Eoin Baisde B Sois is a primary school boys only in Dublin. 294 pupils, Catholic ethos, 1 special class.</p>
 <p class="actions">
-  <a class="btn" href="/#school=19006Q">See it on the map</a>
+  <a class="btn" href="/map.html#school=19006Q">See it on the map</a>
   <button class="btn ghost" data-shortlist="19006Q" data-name="Eoin Baisde B Sois">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

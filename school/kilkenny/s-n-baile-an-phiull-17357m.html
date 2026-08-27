@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"S N Baile An Phiull","url":"https://www.findaschool.ie/school/kilkenny/s-n-baile-an-phiull-17357m.html","identifier":"17357M","address":{"@type":"PostalAddress","streetAddress":"Kildalton, Piltown, Co. Kilkenny","addressRegion":"Kilkenny","postalCode":"E32DE27","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":52.352827,"longitude":-7.324821},"telephone":"051643498","email":"principal@piltownns.ie","numberOfStudents":254}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>S N Baile An Phiull</h1>
 <p class="lede">S N Baile An Phiull is a primary school in Kilkenny. 254 pupils, Catholic ethos, 2 special classes.</p>
 <p class="actions">
-  <a class="btn" href="/#school=17357M">See it on the map</a>
+  <a class="btn" href="/map.html#school=17357M">See it on the map</a>
   <button class="btn ghost" data-shortlist="17357M" data-name="S N Baile An Phiull">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

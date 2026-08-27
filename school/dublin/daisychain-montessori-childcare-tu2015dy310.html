@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Daisychain Montessori & Childcare","url":"https://www.findaschool.ie/school/dublin/daisychain-montessori-childcare-tu2015dy310.html","identifier":"TU2015DY310","address":{"@type":"PostalAddress","streetAddress":"Tower House, Milltown Shopping Centre, Milltown, Dublin 6, Co. Dublin","addressRegion":"Dublin 6","postalCode":null,"addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.313642,"longitude":-6.246444}}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Daisychain Montessori &amp; Childcare</h1>
 <p class="lede">Daisychain Montessori &amp; Childcare is a preschool / early years in Dublin 6. Fee-paying.</p>
 <p class="actions">
-  <a class="btn" href="/#school=TU2015DY310">See it on the map</a>
+  <a class="btn" href="/map.html#school=TU2015DY310">See it on the map</a>
   <button class="btn ghost" data-shortlist="TU2015DY310" data-name="Daisychain Montessori &amp; Childcare">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

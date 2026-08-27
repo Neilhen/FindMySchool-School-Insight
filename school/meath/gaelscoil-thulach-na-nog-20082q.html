@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Gaelscoil Thulach Na Nóg","url":"https://www.findaschool.ie/school/meath/gaelscoil-thulach-na-nog-20082q.html","identifier":"20082Q","address":{"@type":"PostalAddress","streetAddress":"Bóthar Rúisc, Dún Búinne, Co. na Mí","addressRegion":"Meath","postalCode":"A86EP04","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.41507,"longitude":-6.473615},"telephone":"018252858","email":"office@tulach.ie","numberOfStudents":360}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Gaelscoil Thulach Na Nóg</h1>
 <p class="lede">Gaelscoil Thulach Na Nóg is a primary school irish-medium in Meath. 360 pupils, Inter-denominational ethos, 3 special classes.</p>
 <p class="actions">
-  <a class="btn" href="/#school=20082Q">See it on the map</a>
+  <a class="btn" href="/map.html#school=20082Q">See it on the map</a>
   <button class="btn ghost" data-shortlist="20082Q" data-name="Gaelscoil Thulach Na Nóg">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

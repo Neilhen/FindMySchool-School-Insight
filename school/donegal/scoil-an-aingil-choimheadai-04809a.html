@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Scoil An Aingil Choimheadai","url":"https://www.findaschool.ie/school/donegal/scoil-an-aingil-choimheadai-04809a.html","identifier":"04809A","address":{"@type":"PostalAddress","streetAddress":"An Céideadh,, Ailt An Chorráin, Leitir Ceanainn, Co Dhún na nGall","addressRegion":"Donegal","postalCode":"F94W084","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":54.997504,"longitude":-8.418846},"telephone":"0749542268","email":"saac.ceideadh@gmail.com","numberOfStudents":14}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Scoil An Aingil Choimheadai</h1>
 <p class="lede">Scoil An Aingil Choimheadai is a primary school irish-medium in Donegal. 14 pupils, Catholic ethos, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=04809A">See it on the map</a>
+  <a class="btn" href="/map.html#school=04809A">See it on the map</a>
   <button class="btn ghost" data-shortlist="04809A" data-name="Scoil An Aingil Choimheadai">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

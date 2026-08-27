@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Rosary College","url":"https://www.findaschool.ie/school/dublin/rosary-college-60841m.html","identifier":"60841M","address":{"@type":"PostalAddress","streetAddress":"Armagh Road, Crumlin, Dublin 12","addressRegion":"Dublin","postalCode":"D12R726","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.31868,"longitude":-6.307467},"telephone":"014555824","email":"office@rosarycollege.ie","numberOfStudents":250}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Rosary College</h1>
 <p class="lede">Rosary College is a secondary school in Dublin. 250 pupils, Catholic ethos, 2 special classes, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=60841M">See it on the map</a>
+  <a class="btn" href="/map.html#school=60841M">See it on the map</a>
   <button class="btn ghost" data-shortlist="60841M" data-name="Rosary College">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

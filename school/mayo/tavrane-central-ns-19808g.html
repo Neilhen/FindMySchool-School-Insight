@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Tavrane Central Ns","url":"https://www.findaschool.ie/school/mayo/tavrane-central-ns-19808g.html","identifier":"19808G","address":{"@type":"PostalAddress","streetAddress":"KILKELLY, BALLYHAUNIS","addressRegion":"Mayo","postalCode":"F35A461","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.878279,"longitude":-8.776448},"telephone":"0858065834","email":"tavranens@gmail.com","numberOfStudents":11}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Tavrane Central Ns</h1>
 <p class="lede">Tavrane Central Ns is a primary school in Mayo. 11 pupils, Catholic ethos, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=19808G">See it on the map</a>
+  <a class="btn" href="/map.html#school=19808G">See it on the map</a>
   <button class="btn ghost" data-shortlist="19808G" data-name="Tavrane Central Ns">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

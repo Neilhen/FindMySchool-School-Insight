@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Carrakennedy N S","url":"https://www.findaschool.ie/school/mayo/carrakennedy-n-s-15866a.html","identifier":"15866A","address":{"@type":"PostalAddress","streetAddress":"Liscarney, Westport, Co. Mayo","addressRegion":"Mayo","postalCode":"F28RF74","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.704804,"longitude":-9.56566},"telephone":"09821442","email":"admin@carrakennedyns.com","numberOfStudents":32}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Carrakennedy N S</h1>
 <p class="lede">Carrakennedy N S is a primary school in Mayo. 32 pupils, Catholic ethos, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=15866A">See it on the map</a>
+  <a class="btn" href="/map.html#school=15866A">See it on the map</a>
   <button class="btn ghost" data-shortlist="15866A" data-name="Carrakennedy N S">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

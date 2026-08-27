@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Marino College","url":"https://www.findaschool.ie/school/dublin/marino-college-70250s.html","identifier":"70250S","address":{"@type":"PostalAddress","streetAddress":"14-20 Marino Mart, Fairview, Dublin 3","addressRegion":"Dublin","postalCode":"D03DR72","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.36441,"longitude":-6.231585},"telephone":"018332100","email":"info@marino.cdetb.ie","numberOfStudents":297}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Marino College</h1>
 <p class="lede">Marino College is a secondary school in Dublin. 297 pupils, Multi-denominational ethos, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=70250S">See it on the map</a>
+  <a class="btn" href="/map.html#school=70250S">See it on the map</a>
   <button class="btn ghost" data-shortlist="70250S" data-name="Marino College">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

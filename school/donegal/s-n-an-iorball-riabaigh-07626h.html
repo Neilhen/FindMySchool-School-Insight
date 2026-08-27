@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"S N An Iorball Riabaigh","url":"https://www.findaschool.ie/school/donegal/s-n-an-iorball-riabaigh-07626h.html","identifier":"07626H","address":{"@type":"PostalAddress","streetAddress":"Urblereagh, Malin Head, Co. Donegal","addressRegion":"Donegal","postalCode":"F93PN44","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":55.33606,"longitude":-7.287818},"telephone":"0749370237","email":"urblereaghschool@gmail.com","numberOfStudents":40}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>S N An Iorball Riabaigh</h1>
 <p class="lede">S N An Iorball Riabaigh is a primary school in Donegal. 40 pupils, Catholic ethos, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=07626H">See it on the map</a>
+  <a class="btn" href="/map.html#school=07626H">See it on the map</a>
   <button class="btn ghost" data-shortlist="07626H" data-name="S N An Iorball Riabaigh">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

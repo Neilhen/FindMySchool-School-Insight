@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Coláiste An Átha","url":"https://www.findaschool.ie/school/wexford/colaiste-an-atha-71650q.html","identifier":"71650Q","address":{"@type":"PostalAddress","streetAddress":"Kilmuckridge, Gorey, Co Wexford","addressRegion":"Wexford","postalCode":"Y25C952","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":52.511678,"longitude":-6.286493},"telephone":"0539130169","email":"colaisteanatha@wwetb.ie","numberOfStudents":349}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Coláiste An Átha</h1>
 <p class="lede">Coláiste An Átha is a secondary school in Wexford. 349 pupils, Multi-denominational ethos, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=71650Q">See it on the map</a>
+  <a class="btn" href="/map.html#school=71650Q">See it on the map</a>
   <button class="btn ghost" data-shortlist="71650Q" data-name="Coláiste An Átha">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

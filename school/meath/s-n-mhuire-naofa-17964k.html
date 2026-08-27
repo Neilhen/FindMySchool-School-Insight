@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"S N Mhuire Naofa","url":"https://www.findaschool.ie/school/meath/s-n-mhuire-naofa-17964k.html","identifier":"17964K","address":{"@type":"PostalAddress","streetAddress":"Rathfeigh, Tara, Co. Meath","addressRegion":"Meath","postalCode":"C15F220","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.589986,"longitude":-6.501704},"telephone":"0419825156","email":"rathfeighns@outlook.com","numberOfStudents":81}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>S N Mhuire Naofa</h1>
 <p class="lede">S N Mhuire Naofa is a primary school in Meath. 81 pupils, Catholic ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=17964K">See it on the map</a>
+  <a class="btn" href="/map.html#school=17964K">See it on the map</a>
   <button class="btn ghost" data-shortlist="17964K" data-name="S N Mhuire Naofa">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

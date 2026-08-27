@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"S N Leitirgeis","url":"https://www.findaschool.ie/school/galway/s-n-leitirgeis-09833w.html","identifier":"09833W","address":{"@type":"PostalAddress","streetAddress":"Lettergesh West, Renvyle, Co. Galway","addressRegion":"Galway","postalCode":"H91K2H9","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.598585,"longitude":-9.912787},"telephone":"09543900","email":"office@lettergeshns.ie","numberOfStudents":39}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>S N Leitirgeis</h1>
 <p class="lede">S N Leitirgeis is a primary school in Galway. 39 pupils, Catholic ethos, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=09833W">See it on the map</a>
+  <a class="btn" href="/map.html#school=09833W">See it on the map</a>
   <button class="btn ghost" data-shortlist="09833W" data-name="S N Leitirgeis">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

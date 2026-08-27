@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"S N Cruabanai","url":"https://www.findaschool.ie/school/cavan/s-n-cruabanai-08453h.html","identifier":"08453H","address":{"@type":"PostalAddress","streetAddress":"Crubany, Co. Cavan","addressRegion":"Cavan","postalCode":"H12NY64","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.965353,"longitude":-7.321645},"telephone":"0494362202","email":"crubanynationalschool@gmail.com","numberOfStudents":174}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>S N Cruabanai</h1>
 <p class="lede">S N Cruabanai is a primary school in Cavan. 174 pupils, Catholic ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=08453H">See it on the map</a>
+  <a class="btn" href="/map.html#school=08453H">See it on the map</a>
   <button class="btn ghost" data-shortlist="08453H" data-name="S N Cruabanai">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

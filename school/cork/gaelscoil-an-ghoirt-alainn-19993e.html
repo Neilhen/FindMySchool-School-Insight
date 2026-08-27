@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Gaelscoil An Ghoirt Alainn","url":"https://www.findaschool.ie/school/cork/gaelscoil-an-ghoirt-alainn-19993e.html","identifier":"19993E","address":{"@type":"PostalAddress","streetAddress":"Aibhinne Murmont, Gort Álainn, Corcaigh","addressRegion":"Cork","postalCode":"T23EF20","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":51.909034,"longitude":-8.443741},"telephone":"0214551955","email":"gaelscoilga@gortalainn.ie","numberOfStudents":393}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Gaelscoil An Ghoirt Alainn</h1>
 <p class="lede">Gaelscoil An Ghoirt Alainn is a primary school irish-medium in Cork. 393 pupils, Multi-denominational ethos, 1 special class.</p>
 <p class="actions">
-  <a class="btn" href="/#school=19993E">See it on the map</a>
+  <a class="btn" href="/map.html#school=19993E">See it on the map</a>
   <button class="btn ghost" data-shortlist="19993E" data-name="Gaelscoil An Ghoirt Alainn">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

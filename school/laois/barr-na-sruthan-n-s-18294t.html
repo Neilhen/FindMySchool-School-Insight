@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Barr Na Sruthan N S","url":"https://www.findaschool.ie/school/laois/barr-na-sruthan-n-s-18294t.html","identifier":"18294T","address":{"@type":"PostalAddress","streetAddress":"BARR NA SRUTHAN, MOUNTMELLICK, CO LAOIS","addressRegion":"Laois","postalCode":"R32AX96","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.085147,"longitude":-7.36593},"telephone":"0578644020","email":"barnashronens@yahoo.ie","numberOfStudents":91}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Barr Na Sruthan N S</h1>
 <p class="lede">Barr Na Sruthan N S is a primary school in Laois. 91 pupils, Catholic ethos, 2 special classes, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=18294T">See it on the map</a>
+  <a class="btn" href="/map.html#school=18294T">See it on the map</a>
   <button class="btn ghost" data-shortlist="18294T" data-name="Barr Na Sruthan N S">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

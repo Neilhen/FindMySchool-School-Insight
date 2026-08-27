@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Christian Brothers Secondary School","url":"https://www.findaschool.ie/school/cork/christian-brothers-secondary-school-62360g.html","identifier":"62360G","address":{"@type":"PostalAddress","streetAddress":"Castleredmond,, Midleton,, Co. Cork.","addressRegion":"Cork","postalCode":"P25C951","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":51.907227,"longitude":-8.170279},"telephone":"0214631555","email":"office@midletoncbs.ie","numberOfStudents":957}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Christian Brothers Secondary School</h1>
 <p class="lede">Christian Brothers Secondary School is a secondary school boys only in Castleredmond. 957 pupils, Catholic ethos, 4 special classes.</p>
 <p class="actions">
-  <a class="btn" href="/#school=62360G">See it on the map</a>
+  <a class="btn" href="/map.html#school=62360G">See it on the map</a>
   <button class="btn ghost" data-shortlist="62360G" data-name="Christian Brothers Secondary School">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

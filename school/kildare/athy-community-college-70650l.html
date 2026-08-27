@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Athy Community College","url":"https://www.findaschool.ie/school/kildare/athy-community-college-70650l.html","identifier":"70650L","address":{"@type":"PostalAddress","streetAddress":"Tomard, Athy, Co Kildare","addressRegion":"Kildare","postalCode":"R14KT50","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.001559,"longitude":-6.986399},"telephone":"0598631795","email":"mail@athycollege.ie","numberOfStudents":646}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Athy Community College</h1>
 <p class="lede">Athy Community College is a secondary school in Kildare. 646 pupils, Multi-denominational ethos, 3 special classes, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=70650L">See it on the map</a>
+  <a class="btn" href="/map.html#school=70650L">See it on the map</a>
   <button class="btn ghost" data-shortlist="70650L" data-name="Athy Community College">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

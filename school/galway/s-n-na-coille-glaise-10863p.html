@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"S N Na Coille Glaise","url":"https://www.findaschool.ie/school/galway/s-n-na-coille-glaise-10863p.html","identifier":"10863P","address":{"@type":"PostalAddress","streetAddress":"Kilglass, Ahascragh, Ballinasloe, Co. Galway","addressRegion":"Galway","postalCode":"H53PC94","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.413868,"longitude":-8.349222},"telephone":"0909688881","email":"kilglass@hotmail.com","numberOfStudents":135}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>S N Na Coille Glaise</h1>
 <p class="lede">S N Na Coille Glaise is a primary school in Galway. 135 pupils, Catholic ethos, 2 special classes, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=10863P">See it on the map</a>
+  <a class="btn" href="/map.html#school=10863P">See it on the map</a>
   <button class="btn ghost" data-shortlist="10863P" data-name="S N Na Coille Glaise">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Scoil Phadraig","url":"https://www.findaschool.ie/school/donegal/scoil-phadraig-18520c.html","identifier":"18520C","address":{"@type":"PostalAddress","streetAddress":"Rashenny, Clonmany, Co. Donegal","addressRegion":"Donegal","postalCode":"F93PY90","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":55.279526,"longitude":-7.34922},"telephone":"0749376310","email":"office@rashennyns.ie","numberOfStudents":121}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Scoil Phadraig</h1>
 <p class="lede">Scoil Phadraig is a primary school in Rashenny. 121 pupils, Catholic ethos, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=18520C">See it on the map</a>
+  <a class="btn" href="/map.html#school=18520C">See it on the map</a>
   <button class="btn ghost" data-shortlist="18520C" data-name="Scoil Phadraig">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

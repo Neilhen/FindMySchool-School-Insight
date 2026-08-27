@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Scoil Naomh Caitriona","url":"https://www.findaschool.ie/school/cork/scoil-naomh-caitriona-18253f.html","identifier":"18253F","address":{"@type":"PostalAddress","streetAddress":"Bishopstown Avenue West, Model Farm Road, Cork","addressRegion":"Cork","postalCode":"T12TF74","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":51.886685,"longitude":-8.516124},"telephone":"0214546868","email":"office@stcathns.com","numberOfStudents":414}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Scoil Naomh Caitriona</h1>
 <p class="lede">Scoil Naomh Caitriona is a primary school girls only in Cork. 414 pupils, Catholic ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=18253F">See it on the map</a>
+  <a class="btn" href="/map.html#school=18253F">See it on the map</a>
   <button class="btn ghost" data-shortlist="18253F" data-name="Scoil Naomh Caitriona">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

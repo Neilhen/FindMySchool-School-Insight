@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Ballaghkeene N S","url":"https://www.findaschool.ie/school/wexford/ballaghkeene-n-s-14668o.html","identifier":"14668O","address":{"@type":"PostalAddress","streetAddress":"The Ballagh, Enniscorthy, Co. Wexford","addressRegion":"Wexford","postalCode":"Y21K577","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":52.481409,"longitude":-6.42867},"telephone":"0539136500","email":"secretary@ballaghkeenens.ie","numberOfStudents":150}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Ballaghkeene N S</h1>
 <p class="lede">Ballaghkeene N S is a primary school in Wexford. 150 pupils, Catholic ethos, 1 special class, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=14668O">See it on the map</a>
+  <a class="btn" href="/map.html#school=14668O">See it on the map</a>
   <button class="btn ghost" data-shortlist="14668O" data-name="Ballaghkeene N S">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

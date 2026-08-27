@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Gaelscoil Durlas Eile","url":"https://www.findaschool.ie/school/tipperary/gaelscoil-durlas-eile-19968f.html","identifier":"19968F","address":{"@type":"PostalAddress","streetAddress":"Bóthar na Naomh, Durlas, Co. Thiobraid Árann","addressRegion":"Tipperary","postalCode":"E41A668","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":52.6793,"longitude":-7.823918},"telephone":"050421497","email":"oifig@gaelscoildurlas.ie","numberOfStudents":194}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Gaelscoil Durlas Eile</h1>
 <p class="lede">Gaelscoil Durlas Eile is a primary school irish-medium in Tipperary. 194 pupils, Catholic ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=19968F">See it on the map</a>
+  <a class="btn" href="/map.html#school=19968F">See it on the map</a>
   <button class="btn ghost" data-shortlist="19968F" data-name="Gaelscoil Durlas Eile">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

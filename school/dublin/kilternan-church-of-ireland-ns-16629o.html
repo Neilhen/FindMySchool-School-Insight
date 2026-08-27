@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Kilternan Church Of Ireland Ns","url":"https://www.findaschool.ie/school/dublin/kilternan-church-of-ireland-ns-16629o.html","identifier":"16629O","address":{"@type":"PostalAddress","streetAddress":"Glebe Road, Enniskerry Road, Kilternan, Dublin 18","addressRegion":"Dublin","postalCode":"D18A599","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.24278,"longitude":-6.200168},"telephone":"012953235","email":"secretary@kcoins.ie","numberOfStudents":206}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Kilternan Church Of Ireland Ns</h1>
 <p class="lede">Kilternan Church Of Ireland Ns is a primary school in Kilternan. 206 pupils, Church of Ireland ethos, 2 special classes.</p>
 <p class="actions">
-  <a class="btn" href="/#school=16629O">See it on the map</a>
+  <a class="btn" href="/map.html#school=16629O">See it on the map</a>
   <button class="btn ghost" data-shortlist="16629O" data-name="Kilternan Church Of Ireland Ns">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

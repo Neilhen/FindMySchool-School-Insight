@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Ballinamore Community School","url":"https://www.findaschool.ie/school/leitrim/ballinamore-community-school-91519h.html","identifier":"91519H","address":{"@type":"PostalAddress","streetAddress":"BALLINAMORE, CO LEITRIM","addressRegion":"Leitrim","postalCode":"N41F6A2","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":54.058382,"longitude":-7.792269},"telephone":"0719644049","email":"office@ballinamorecs.ie","numberOfStudents":336}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Ballinamore Community School</h1>
 <p class="lede">Ballinamore Community School is a secondary school in Leitrim. 336 pupils, Multi-denominational ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=91519H">See it on the map</a>
+  <a class="btn" href="/map.html#school=91519H">See it on the map</a>
   <button class="btn ghost" data-shortlist="91519H" data-name="Ballinamore Community School">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

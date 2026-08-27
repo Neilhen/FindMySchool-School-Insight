@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Ballyroe Central N S","url":"https://www.findaschool.ie/school/kildare/ballyroe-central-n-s-19425n.html","identifier":"19425N","address":{"@type":"PostalAddress","streetAddress":"ATHY, CO KILDARE","addressRegion":"Kildare","postalCode":"R14DX61","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":52.961879,"longitude":-6.933549},"telephone":"0598632522","email":"office@scoilnaomhtreasa.ie","numberOfStudents":18}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Ballyroe Central N S</h1>
 <p class="lede">Ballyroe Central N S is a primary school in Kildare. 18 pupils, Catholic ethos, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=19425N">See it on the map</a>
+  <a class="btn" href="/map.html#school=19425N">See it on the map</a>
   <button class="btn ghost" data-shortlist="19425N" data-name="Ballyroe Central N S">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"S N Aibhistin Naofa","url":"https://www.findaschool.ie/school/clare/s-n-aibhistin-naofa-17847g.html","identifier":"17847G","address":{"@type":"PostalAddress","streetAddress":"Fanaleen, Kilshanny, Co. Clare","addressRegion":"Clare","postalCode":"V95XF75","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":52.983497,"longitude":-9.301113},"telephone":"0657071344","email":"kilshannyns@gmail.com","numberOfStudents":21}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>S N Aibhistin Naofa</h1>
 <p class="lede">S N Aibhistin Naofa is a primary school in Clare. 21 pupils, Catholic ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=17847G">See it on the map</a>
+  <a class="btn" href="/map.html#school=17847G">See it on the map</a>
   <button class="btn ghost" data-shortlist="17847G" data-name="S N Aibhistin Naofa">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

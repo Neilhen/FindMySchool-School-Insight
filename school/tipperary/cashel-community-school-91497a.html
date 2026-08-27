@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Cashel Community School","url":"https://www.findaschool.ie/school/tipperary/cashel-community-school-91497a.html","identifier":"91497A","address":{"@type":"PostalAddress","streetAddress":"Dualla Road,, Cashel,, Co Tipperary.","addressRegion":"Tipperary","postalCode":"E25YT50","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":52.518963,"longitude":-7.88187},"telephone":"062 61167","email":"bmo@cashelcommunityschool.ie","numberOfStudents":885}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Cashel Community School</h1>
 <p class="lede">Cashel Community School is a secondary school in Tipperary. 885 pupils, Inter-denominational ethos, 3 special classes.</p>
 <p class="actions">
-  <a class="btn" href="/#school=91497A">See it on the map</a>
+  <a class="btn" href="/map.html#school=91497A">See it on the map</a>
   <button class="btn ghost" data-shortlist="91497A" data-name="Cashel Community School">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

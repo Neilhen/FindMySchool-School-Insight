@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Kilcrumreragh N S","url":"https://www.findaschool.ie/school/westmeath/kilcrumreragh-n-s-16961w.html","identifier":"16961W","address":{"@type":"PostalAddress","streetAddress":"Kilcrumreragh, Rosemount, Moate","addressRegion":"Westmeath","postalCode":"N37HN96","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.425458,"longitude":-7.64493},"telephone":"0906436220","email":"rosemountns@hotmail.com","numberOfStudents":104}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Kilcrumreragh N S</h1>
 <p class="lede">Kilcrumreragh N S is a primary school in Westmeath. 104 pupils, Catholic ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=16961W">See it on the map</a>
+  <a class="btn" href="/map.html#school=16961W">See it on the map</a>
   <button class="btn ghost" data-shortlist="16961W" data-name="Kilcrumreragh N S">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

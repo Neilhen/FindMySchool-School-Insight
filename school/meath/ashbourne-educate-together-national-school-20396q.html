@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Ashbourne Educate Together National School","url":"https://www.findaschool.ie/school/meath/ashbourne-educate-together-national-school-20396q.html","identifier":"20396Q","address":{"@type":"PostalAddress","streetAddress":"Ashbourne Educate Together, Killegland, Ashbourne, Co. Meath","addressRegion":"Meath","postalCode":"A84A4X6","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.510978,"longitude":-6.411479},"telephone":"018357493","email":"office@ashbourneetns.ie","numberOfStudents":410}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Ashbourne Educate Together National School</h1>
 <p class="lede">Ashbourne Educate Together National School is a primary school in Meath. 410 pupils, Multi-denominational ethos, 2 special classes.</p>
 <p class="actions">
-  <a class="btn" href="/#school=20396Q">See it on the map</a>
+  <a class="btn" href="/map.html#school=20396Q">See it on the map</a>
   <button class="btn ghost" data-shortlist="20396Q" data-name="Ashbourne Educate Together National School">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

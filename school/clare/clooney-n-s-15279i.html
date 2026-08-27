@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Clooney N S","url":"https://www.findaschool.ie/school/clare/clooney-n-s-15279i.html","identifier":"15279I","address":{"@type":"PostalAddress","streetAddress":"Carrahan, Tulla, Co. Clare","addressRegion":"Clare","postalCode":"V95WC56","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":52.871172,"longitude":-8.86151},"telephone":"0656835806","email":"clooneyns@gmail.com","numberOfStudents":48}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Clooney N S</h1>
 <p class="lede">Clooney N S is a primary school in Clare. 48 pupils, Catholic ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=15279I">See it on the map</a>
+  <a class="btn" href="/map.html#school=15279I">See it on the map</a>
   <button class="btn ghost" data-shortlist="15279I" data-name="Clooney N S">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

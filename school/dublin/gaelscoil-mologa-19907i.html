@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Gaelscoil Mologa","url":"https://www.findaschool.ie/school/dublin/gaelscoil-mologa-19907i.html","identifier":"19907I","address":{"@type":"PostalAddress","streetAddress":"Bóthar Thigh Chláir,, Cros Araild, Baile Átha Cliath 6W","addressRegion":"Dublin","postalCode":"D6WEA22","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.31735,"longitude":-6.285358},"telephone":"014923888","email":"scoilmologa6w@gmail.com","numberOfStudents":229}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Gaelscoil Mologa</h1>
 <p class="lede">Gaelscoil Mologa is a primary school irish-medium in Harold&#x27;s Cross. 229 pupils, Catholic ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=19907I">See it on the map</a>
+  <a class="btn" href="/map.html#school=19907I">See it on the map</a>
   <button class="btn ghost" data-shortlist="19907I" data-name="Gaelscoil Mologa">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

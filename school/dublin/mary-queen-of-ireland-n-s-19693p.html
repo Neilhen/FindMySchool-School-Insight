@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Mary Queen Of Ireland N S","url":"https://www.findaschool.ie/school/dublin/mary-queen-of-ireland-n-s-19693p.html","identifier":"19693P","address":{"@type":"PostalAddress","streetAddress":"TOBERBURR, CO DUBLIN","addressRegion":"Dublin","postalCode":"K67E718","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.452576,"longitude":-6.29255},"telephone":"018404629","email":"secretary@maryqueenofireland.com","numberOfStudents":95}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Mary Queen Of Ireland N S</h1>
 <p class="lede">Mary Queen Of Ireland N S is a primary school in Dublin. 95 pupils, Catholic ethos, 2 special classes, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=19693P">See it on the map</a>
+  <a class="btn" href="/map.html#school=19693P">See it on the map</a>
   <button class="btn ghost" data-shortlist="19693P" data-name="Mary Queen Of Ireland N S">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

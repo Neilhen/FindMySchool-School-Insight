@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Sonas Special Primary Junior School","url":"https://www.findaschool.ie/school/cork/sonas-special-primary-junior-school-20162o.html","identifier":"20162O","address":{"@type":"PostalAddress","streetAddress":"Carrigaline Education Campus, Ardnacloghy, Co. Cork","addressRegion":"Cork","postalCode":"P43EF95","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":51.825579,"longitude":-8.400147},"telephone":"0214373164","email":"admin@sonascork.ie","numberOfStudents":48}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Sonas Special Primary Junior School</h1>
 <p class="lede">Sonas Special Primary Junior School is a special school in Co. Cork. 48 pupils.</p>
 <p class="actions">
-  <a class="btn" href="/#school=20162O">See it on the map</a>
+  <a class="btn" href="/map.html#school=20162O">See it on the map</a>
   <button class="btn ghost" data-shortlist="20162O" data-name="Sonas Special Primary Junior School">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

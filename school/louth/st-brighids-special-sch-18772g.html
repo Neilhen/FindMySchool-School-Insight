@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"St Brighids Special Sch","url":"https://www.findaschool.ie/school/louth/st-brighids-special-sch-18772g.html","identifier":"18772G","address":{"@type":"PostalAddress","streetAddress":"Ard Easmuinn, Dundalk, Co. Louth","addressRegion":"Louth","postalCode":"A91YP20","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":54.006053,"longitude":-6.417707},"telephone":"0429335238","email":"info@stbrigids.net","numberOfStudents":104}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>St Brighids Special Sch</h1>
 <p class="lede">St Brighids Special Sch is a special school in Co. Louth. 104 pupils, Catholic ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=18772G">See it on the map</a>
+  <a class="btn" href="/map.html#school=18772G">See it on the map</a>
   <button class="btn ghost" data-shortlist="18772G" data-name="St Brighids Special Sch">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

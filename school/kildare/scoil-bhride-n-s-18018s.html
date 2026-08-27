@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Scoil Bhride N S","url":"https://www.findaschool.ie/school/kildare/scoil-bhride-n-s-18018s.html","identifier":"18018S","address":{"@type":"PostalAddress","streetAddress":"Rathangan, Co. Kildare","addressRegion":"Kildare","postalCode":"R51FP93","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.222896,"longitude":-6.988994},"telephone":"045524540","email":"info@bunscoilbhride.ie","numberOfStudents":286}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Scoil Bhride N S</h1>
 <p class="lede">Scoil Bhride N S is a primary school girls only in Kildare. 286 pupils, Catholic ethos, 1 special class.</p>
 <p class="actions">
-  <a class="btn" href="/#school=18018S">See it on the map</a>
+  <a class="btn" href="/map.html#school=18018S">See it on the map</a>
   <button class="btn ghost" data-shortlist="18018S" data-name="Scoil Bhride N S">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Presentation Primary School","url":"https://www.findaschool.ie/school/limerick/presentation-primary-school-20018h.html","identifier":"20018H","address":{"@type":"PostalAddress","streetAddress":"Sexton Street, Limerick","addressRegion":"Limerick","postalCode":"V94P028","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":52.659298,"longitude":-8.622314},"telephone":"061412494","email":"info@preslimerick.ie","numberOfStudents":279}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Presentation Primary School</h1>
 <p class="lede">Presentation Primary School is a primary school in Limerick. 279 pupils, Catholic ethos, 2 special classes, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=20018H">See it on the map</a>
+  <a class="btn" href="/map.html#school=20018H">See it on the map</a>
   <button class="btn ghost" data-shortlist="20018H" data-name="Presentation Primary School">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"S N Cnoc Na Croighe","url":"https://www.findaschool.ie/school/cork/s-n-cnoc-na-croighe-18549d.html","identifier":"18549D","address":{"@type":"PostalAddress","streetAddress":"CNOC NA GROIGHE, MALLOW, CO CORK","addressRegion":"Cork","postalCode":"P51YA36","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":52.123808,"longitude":-9.210284},"telephone":"0647756237","email":"office@knocknagreens.ie","numberOfStudents":83}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>S N Cnoc Na Croighe</h1>
 <p class="lede">S N Cnoc Na Croighe is a primary school in Cork. 83 pupils, Catholic ethos, 1 special class.</p>
 <p class="actions">
-  <a class="btn" href="/#school=18549D">See it on the map</a>
+  <a class="btn" href="/map.html#school=18549D">See it on the map</a>
   <button class="btn ghost" data-shortlist="18549D" data-name="S N Cnoc Na Croighe">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

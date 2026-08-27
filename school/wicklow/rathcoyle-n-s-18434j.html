@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Rathcoyle N S","url":"https://www.findaschool.ie/school/wicklow/rathcoyle-n-s-18434j.html","identifier":"18434J","address":{"@type":"PostalAddress","streetAddress":"Rathcoyle Upper, Rathdangan, Kiltegan, Co. Wicklow","addressRegion":"Wicklow","postalCode":"W91PN26","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":52.916742,"longitude":-6.52498},"telephone":"0596473355","email":"info@rathcoylens.com","numberOfStudents":50}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Rathcoyle N S</h1>
 <p class="lede">Rathcoyle N S is a primary school in Wicklow. 50 pupils, Catholic ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=18434J">See it on the map</a>
+  <a class="btn" href="/map.html#school=18434J">See it on the map</a>
   <button class="btn ghost" data-shortlist="18434J" data-name="Rathcoyle N S">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

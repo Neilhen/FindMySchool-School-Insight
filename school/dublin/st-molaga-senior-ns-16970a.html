@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"St Molaga Senior Ns","url":"https://www.findaschool.ie/school/dublin/st-molaga-senior-ns-16970a.html","identifier":"16970A","address":{"@type":"PostalAddress","streetAddress":"Bremore, Balbriggan, Co. Dublin","addressRegion":"Dublin","postalCode":"K32Y662","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.61583,"longitude":-6.19042},"telephone":"018413133","email":"stmolaga@gmail.com","numberOfStudents":422}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>St Molaga Senior Ns</h1>
 <p class="lede">St Molaga Senior Ns is a primary school in Dublin. 422 pupils, Catholic ethos, 2 special classes.</p>
 <p class="actions">
-  <a class="btn" href="/#school=16970A">See it on the map</a>
+  <a class="btn" href="/map.html#school=16970A">See it on the map</a>
   <button class="btn ghost" data-shortlist="16970A" data-name="St Molaga Senior Ns">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

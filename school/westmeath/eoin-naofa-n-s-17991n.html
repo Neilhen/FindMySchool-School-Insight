@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Eoin Naofa N S","url":"https://www.findaschool.ie/school/westmeath/eoin-naofa-n-s-17991n.html","identifier":"17991N","address":{"@type":"PostalAddress","streetAddress":"High Street, Ballymore, Co. Westmeath","addressRegion":"Westmeath","postalCode":"N91HY28","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.49046,"longitude":-7.67917},"telephone":"0449356537","email":"reception@eoinnaofans.ie","numberOfStudents":100}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Eoin Naofa N S</h1>
 <p class="lede">Eoin Naofa N S is a primary school in Westmeath. 100 pupils, Catholic ethos, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=17991N">See it on the map</a>
+  <a class="btn" href="/map.html#school=17991N">See it on the map</a>
   <button class="btn ghost" data-shortlist="17991N" data-name="Eoin Naofa N S">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

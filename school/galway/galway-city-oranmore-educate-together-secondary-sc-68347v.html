@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Galway City & Oranmore Educate Together Secondary School","url":"https://www.findaschool.ie/school/galway/galway-city-oranmore-educate-together-secondary-sc-68347v.html","identifier":"68347V","address":{"@type":"PostalAddress","streetAddress":"Newtownsmith, Galway City Centre, Galway","addressRegion":"Galway","postalCode":"H91DP11","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.274795,"longitude":-9.054039},"telephone":"091 394262","email":"admin@galwayetss.ie","numberOfStudents":379}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Galway City &amp; Oranmore Educate Together Secondary School</h1>
 <p class="lede">Galway City &amp; Oranmore Educate Together Secondary School is a secondary school in Galway. 379 pupils, Multi-denominational ethos, 2 special classes.</p>
 <p class="actions">
-  <a class="btn" href="/#school=68347V">See it on the map</a>
+  <a class="btn" href="/map.html#school=68347V">See it on the map</a>
   <button class="btn ghost" data-shortlist="68347V" data-name="Galway City &amp; Oranmore Educate Together Secondary School">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

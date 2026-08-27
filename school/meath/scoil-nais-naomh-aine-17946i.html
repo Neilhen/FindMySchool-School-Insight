@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Scoil Nais Naomh Aine","url":"https://www.findaschool.ie/school/meath/scoil-nais-naomh-aine-17946i.html","identifier":"17946I","address":{"@type":"PostalAddress","streetAddress":"Maio, Tierworker, Co. Meath","addressRegion":"Meath","postalCode":"A82AP80","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.851066,"longitude":-6.914479},"telephone":"0469242325","email":"stannesmaions@gmail.com","numberOfStudents":12}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Scoil Nais Naomh Aine</h1>
 <p class="lede">Scoil Nais Naomh Aine is a primary school in Meath. 12 pupils, Catholic ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=17946I">See it on the map</a>
+  <a class="btn" href="/map.html#school=17946I">See it on the map</a>
   <button class="btn ghost" data-shortlist="17946I" data-name="Scoil Nais Naomh Aine">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

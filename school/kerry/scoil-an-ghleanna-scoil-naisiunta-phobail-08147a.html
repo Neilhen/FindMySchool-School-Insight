@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Scoil An Ghleanna Scoil Náisiúnta Phobail","url":"https://www.findaschool.ie/school/kerry/scoil-an-ghleanna-scoil-naisiunta-phobail-08147a.html","identifier":"08147A","address":{"@type":"PostalAddress","streetAddress":"Athghort, An Gleann, Baile an Sceilg, Co. Chiarraí","addressRegion":"Kerry","postalCode":"V23KV63","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":51.843473,"longitude":-10.327301},"telephone":"0669479330","email":"priomhoide@scoilanghleannapsn.ie","numberOfStudents":29}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Scoil An Ghleanna Scoil Náisiúnta Phobail</h1>
 <p class="lede">Scoil An Ghleanna Scoil Náisiúnta Phobail is a primary school irish-medium in Kerry. 29 pupils, Multi-denominational ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=08147A">See it on the map</a>
+  <a class="btn" href="/map.html#school=08147A">See it on the map</a>
   <button class="btn ghost" data-shortlist="08147A" data-name="Scoil An Ghleanna Scoil Náisiúnta Phobail">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

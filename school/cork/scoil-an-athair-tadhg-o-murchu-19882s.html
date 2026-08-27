@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Scoil An Athair Tadhg O Murchu","url":"https://www.findaschool.ie/school/cork/scoil-an-athair-tadhg-o-murchu-19882s.html","identifier":"19882S","address":{"@type":"PostalAddress","streetAddress":"Dúglas, Corcaigh","addressRegion":"Cork","postalCode":"T12D702","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":51.877362,"longitude":-8.443538},"telephone":"0214364193","email":"oifig@gaelscoilnaduglaise.ie","numberOfStudents":424}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Scoil An Athair Tadhg O Murchu</h1>
 <p class="lede">Scoil An Athair Tadhg O Murchu is a primary school irish-medium in Cork. 424 pupils, Catholic ethos, 2 special classes.</p>
 <p class="actions">
-  <a class="btn" href="/#school=19882S">See it on the map</a>
+  <a class="btn" href="/map.html#school=19882S">See it on the map</a>
   <button class="btn ghost" data-shortlist="19882S" data-name="Scoil An Athair Tadhg O Murchu">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

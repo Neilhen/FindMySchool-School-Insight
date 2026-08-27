@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"S N Pairc Na Slinne","url":"https://www.findaschool.ie/school/galway/s-n-pairc-na-slinne-17242s.html","identifier":"17242S","address":{"@type":"PostalAddress","streetAddress":"MAGH GLAS, BAILE LOCHA RIACH, CO NA GAILLIMHE","addressRegion":"Galway","postalCode":"H62FC62","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.07096,"longitude":-8.463811},"telephone":"0909749317","email":"slatefieldns@yahoo.ie","numberOfStudents":13}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>S N Pairc Na Slinne</h1>
 <p class="lede">S N Pairc Na Slinne is a primary school in Galway. 13 pupils, Catholic ethos, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=17242S">See it on the map</a>
+  <a class="btn" href="/map.html#school=17242S">See it on the map</a>
   <button class="btn ghost" data-shortlist="17242S" data-name="S N Pairc Na Slinne">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

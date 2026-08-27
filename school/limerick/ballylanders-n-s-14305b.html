@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Ballylanders N S","url":"https://www.findaschool.ie/school/limerick/ballylanders-n-s-14305b.html","identifier":"14305B","address":{"@type":"PostalAddress","streetAddress":"Main Street, Ballylanders, KIlmallock, Co. Limerick","addressRegion":"Limerick","postalCode":"V35R9X8","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":52.370869,"longitude":-8.346502},"telephone":"06246889","email":"ballylandersns@live.ie","numberOfStudents":128}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Ballylanders N S</h1>
 <p class="lede">Ballylanders N S is a primary school in Limerick. 128 pupils, Catholic ethos, 1 special class, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=14305B">See it on the map</a>
+  <a class="btn" href="/map.html#school=14305B">See it on the map</a>
   <button class="btn ghost" data-shortlist="14305B" data-name="Ballylanders N S">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

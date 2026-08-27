@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Holy Family Senior N S","url":"https://www.findaschool.ie/school/dublin/holy-family-senior-n-s-19877c.html","identifier":"19877C","address":{"@type":"PostalAddress","streetAddress":"Forest Fields, River Valley, Swords, Co. Dublin","addressRegion":"Dublin","postalCode":"K67V9V2","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.451819,"longitude":-6.241494},"telephone":"018406334","email":"secretary@holyfamilysns.ie","numberOfStudents":624}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Holy Family Senior N S</h1>
 <p class="lede">Holy Family Senior N S is a primary school in Dublin. 624 pupils, Catholic ethos, 2 special classes.</p>
 <p class="actions">
-  <a class="btn" href="/#school=19877C">See it on the map</a>
+  <a class="btn" href="/map.html#school=19877C">See it on the map</a>
   <button class="btn ghost" data-shortlist="19877C" data-name="Holy Family Senior N S">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

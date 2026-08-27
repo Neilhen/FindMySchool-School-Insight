@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Kildare Town Community School","url":"https://www.findaschool.ie/school/kildare/kildare-town-community-school-91530s.html","identifier":"91530S","address":{"@type":"PostalAddress","streetAddress":"Dunmurry Road, Kildare Town","addressRegion":"Kildare","postalCode":"R51D288","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.169755,"longitude":-6.914606},"telephone":"045535228","email":"info@ktcs.ie","numberOfStudents":1014}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Kildare Town Community School</h1>
 <p class="lede">Kildare Town Community School is a secondary school in Kildare. 1014 pupils, Multi-denominational ethos, 2 special classes.</p>
 <p class="actions">
-  <a class="btn" href="/#school=91530S">See it on the map</a>
+  <a class="btn" href="/map.html#school=91530S">See it on the map</a>
   <button class="btn ghost" data-shortlist="91530S" data-name="Kildare Town Community School">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

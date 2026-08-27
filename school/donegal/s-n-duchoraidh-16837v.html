@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"S N Duchoraidh","url":"https://www.findaschool.ie/school/donegal/s-n-duchoraidh-16837v.html","identifier":"16837V","address":{"@type":"PostalAddress","streetAddress":"DUCHORAIDH, CO DHUN NA NGALL","addressRegion":"Donegal","postalCode":"F94YP28","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":54.90788,"longitude":-8.20721},"telephone":"0749546315","email":"office@doocharyns.com","numberOfStudents":4}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>S N Duchoraidh</h1>
 <p class="lede">S N Duchoraidh is a primary school irish-medium in Donegal. 4 pupils, Catholic ethos, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=16837V">See it on the map</a>
+  <a class="btn" href="/map.html#school=16837V">See it on the map</a>
   <button class="btn ghost" data-shortlist="16837V" data-name="S N Duchoraidh">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

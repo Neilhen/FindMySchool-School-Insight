@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Coláiste Shliabh na mBan","url":"https://www.findaschool.ie/school/tipperary/colaiste-shliabh-na-mban-19687u.html","identifier":"19687U","address":{"@type":"PostalAddress","streetAddress":"Ferryhouse, Clonmel, Co. Tipperary","addressRegion":"Tipperary","postalCode":"E91RF38","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":52.359053,"longitude":-7.651922},"telephone":"0526183067","email":"jjohnston@tipperaryetb.ie","numberOfStudents":12}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Coláiste Shliabh na mBan</h1>
 <p class="lede">Coláiste Shliabh na mBan is a special school in Co. Tipperary. 12 pupils, Catholic ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=19687U">See it on the map</a>
+  <a class="btn" href="/map.html#school=19687U">See it on the map</a>
   <button class="btn ghost" data-shortlist="19687U" data-name="Coláiste Shliabh na mBan">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

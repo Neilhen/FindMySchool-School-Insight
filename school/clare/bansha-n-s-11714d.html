@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Bansha N S","url":"https://www.findaschool.ie/school/clare/bansha-n-s-11714d.html","identifier":"11714D","address":{"@type":"PostalAddress","streetAddress":"Bansha, Kilkee, Co. Clare","addressRegion":"Clare","postalCode":"V15HK30","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":52.697585,"longitude":-9.589918},"telephone":"0852384968","email":"banshans@banshaschool.com","numberOfStudents":7}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Bansha N S</h1>
 <p class="lede">Bansha N S is a primary school in Clare. 7 pupils, Catholic ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=11714D">See it on the map</a>
+  <a class="btn" href="/map.html#school=11714D">See it on the map</a>
   <button class="btn ghost" data-shortlist="11714D" data-name="Bansha N S">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

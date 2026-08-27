@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Drumlease N S","url":"https://www.findaschool.ie/school/leitrim/drumlease-n-s-15382b.html","identifier":"15382B","address":{"@type":"PostalAddress","streetAddress":"Drumlease, Dromahair, Co. Leitrim","addressRegion":"Leitrim","postalCode":"F91T946","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":54.228587,"longitude":-8.293219},"telephone":"0719164586","email":"drumleasens.ias@gmail.com","numberOfStudents":152}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Drumlease N S</h1>
 <p class="lede">Drumlease N S is a primary school in Leitrim. 152 pupils, Catholic ethos, 2 special classes.</p>
 <p class="actions">
-  <a class="btn" href="/#school=15382B">See it on the map</a>
+  <a class="btn" href="/map.html#school=15382B">See it on the map</a>
   <button class="btn ghost" data-shortlist="15382B" data-name="Drumlease N S">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

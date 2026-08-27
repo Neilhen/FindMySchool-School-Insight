@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Largy College","url":"https://www.findaschool.ie/school/monaghan/largy-college-72171j.html","identifier":"72171J","address":{"@type":"PostalAddress","streetAddress":"Analore Rd, Clones, Co Monaghan","addressRegion":"Monaghan","postalCode":"H23FP82","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":54.17959,"longitude":-7.225329},"telephone":"04751132","email":"info@largy.ie","numberOfStudents":505}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Largy College</h1>
 <p class="lede">Largy College is a secondary school in Monaghan. 505 pupils, Inter-denominational ethos, 2 special classes, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=72171J">See it on the map</a>
+  <a class="btn" href="/map.html#school=72171J">See it on the map</a>
   <button class="btn ghost" data-shortlist="72171J" data-name="Largy College">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

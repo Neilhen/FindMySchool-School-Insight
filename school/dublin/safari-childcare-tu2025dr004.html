@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Safari Childcare","url":"https://www.findaschool.ie/school/dublin/safari-childcare-tu2025dr004.html","identifier":"TU2025DR004","address":{"@type":"PostalAddress","streetAddress":"50/51 Patrick Street(cid:9), Dunlaoighre, Co. Dublin","addressRegion":"Dun Laoghaire","postalCode":null,"addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.277551,"longitude":-6.141961}}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Safari Childcare</h1>
 <p class="lede">Safari Childcare is a preschool / early years in Dun Laoghaire. Fee-paying.</p>
 <p class="actions">
-  <a class="btn" href="/#school=TU2025DR004">See it on the map</a>
+  <a class="btn" href="/map.html#school=TU2025DR004">See it on the map</a>
   <button class="btn ghost" data-shortlist="TU2025DR004" data-name="Safari Childcare">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

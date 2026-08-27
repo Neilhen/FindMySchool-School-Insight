@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Roscommon Community College","url":"https://www.findaschool.ie/school/roscommon/roscommon-community-college-72290r.html","identifier":"72290R","address":{"@type":"PostalAddress","streetAddress":"Lisnamult, Roscommon, Co. Roscommon","addressRegion":"Roscommon","postalCode":"F42P959","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.625255,"longitude":-8.199884},"telephone":"0906626670","email":"info.roscommon@gretb.ie","numberOfStudents":603}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Roscommon Community College</h1>
 <p class="lede">Roscommon Community College is a secondary school in Roscommon. 603 pupils, Multi-denominational ethos, 2 special classes, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=72290R">See it on the map</a>
+  <a class="btn" href="/map.html#school=72290R">See it on the map</a>
   <button class="btn ghost" data-shortlist="72290R" data-name="Roscommon Community College">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

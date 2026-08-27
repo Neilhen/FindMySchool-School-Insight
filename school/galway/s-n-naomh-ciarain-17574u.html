@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"S N Naomh Ciarain","url":"https://www.findaschool.ie/school/galway/s-n-naomh-ciarain-17574u.html","identifier":"17574U","address":{"@type":"PostalAddress","streetAddress":"Cill Chiaráin, Conamara, Co. na Gaillimhe","addressRegion":"Galway","postalCode":"H91T650","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.326924,"longitude":-9.734273},"telephone":"09533613","email":"scoilnaomhciaran@gmail.com","numberOfStudents":22}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>S N Naomh Ciarain</h1>
 <p class="lede">S N Naomh Ciarain is a primary school irish-medium in Galway. 22 pupils, Catholic ethos, 1 special class, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=17574U">See it on the map</a>
+  <a class="btn" href="/map.html#school=17574U">See it on the map</a>
   <button class="btn ghost" data-shortlist="17574U" data-name="S N Naomh Ciarain">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

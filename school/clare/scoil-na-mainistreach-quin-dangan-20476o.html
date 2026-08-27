@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Scoil Na Mainistreach Quin Dangan","url":"https://www.findaschool.ie/school/clare/scoil-na-mainistreach-quin-dangan-20476o.html","identifier":"20476O","address":{"@type":"PostalAddress","streetAddress":"Newline Road, Quin, Co Clare","addressRegion":"Clare","postalCode":"V95P659","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":52.81728,"longitude":-8.860632},"telephone":"0656825785","email":"quindanganns@gmail.com","numberOfStudents":331}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Scoil Na Mainistreach Quin Dangan</h1>
 <p class="lede">Scoil Na Mainistreach Quin Dangan is a primary school in Clare. 331 pupils, Catholic ethos, 2 special classes.</p>
 <p class="actions">
-  <a class="btn" href="/#school=20476O">See it on the map</a>
+  <a class="btn" href="/map.html#school=20476O">See it on the map</a>
   <button class="btn ghost" data-shortlist="20476O" data-name="Scoil Na Mainistreach Quin Dangan">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

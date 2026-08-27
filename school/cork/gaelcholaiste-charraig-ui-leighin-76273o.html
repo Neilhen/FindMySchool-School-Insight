@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Gaelcholáiste Charraig Ui Leighin","url":"https://www.findaschool.ie/school/cork/gaelcholaiste-charraig-ui-leighin-76273o.html","identifier":"76273O","address":{"@type":"PostalAddress","streetAddress":"Gaelcholáiste Charraig Uí Leighin, Árd na Cloiche, Carraig Uí Leighin","addressRegion":"Cork","postalCode":"P43XV78","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":51.826142,"longitude":-8.401942},"telephone":"021 4372901","email":"eolascul@corketb.ie","numberOfStudents":302}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Gaelcholáiste Charraig Ui Leighin</h1>
 <p class="lede">Gaelcholáiste Charraig Ui Leighin is a secondary school irish-medium in Cork. 302 pupils, Multi-denominational ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=76273O">See it on the map</a>
+  <a class="btn" href="/map.html#school=76273O">See it on the map</a>
   <button class="btn ghost" data-shortlist="76273O" data-name="Gaelcholáiste Charraig Ui Leighin">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

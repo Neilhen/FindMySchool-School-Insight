@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Corr A Chrainn National School","url":"https://www.findaschool.ie/school/monaghan/corr-a-chrainn-national-school-18028v.html","identifier":"18028V","address":{"@type":"PostalAddress","streetAddress":"Corracrin, Emyvale, Co. Monaghan","addressRegion":"Monaghan","postalCode":"H18XH29","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":54.317332,"longitude":-6.962953},"telephone":"04787551","email":"corracrinns2019@gmail.com","numberOfStudents":202}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Corr A Chrainn National School</h1>
 <p class="lede">Corr A Chrainn National School is a primary school in Monaghan. 202 pupils, Catholic ethos, 2 special classes.</p>
 <p class="actions">
-  <a class="btn" href="/#school=18028V">See it on the map</a>
+  <a class="btn" href="/map.html#school=18028V">See it on the map</a>
   <button class="btn ghost" data-shortlist="18028V" data-name="Corr A Chrainn National School">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

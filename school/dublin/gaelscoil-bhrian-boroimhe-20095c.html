@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Gaelscoil Bhrian Bóroimhe","url":"https://www.findaschool.ie/school/dublin/gaelscoil-bhrian-boroimhe-20095c.html","identifier":"20095C","address":{"@type":"PostalAddress","streetAddress":"Coill na nÚll, Sord, Co. Átha Cliath","addressRegion":"Dublin","postalCode":"K67T3H2","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.471827,"longitude":-6.246233},"telephone":"018902799","email":"oifig@gsbb.ie","numberOfStudents":441}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Gaelscoil Bhrian Bóroimhe</h1>
 <p class="lede">Gaelscoil Bhrian Bóroimhe is a primary school irish-medium in Dublin. 441 pupils, Inter-denominational ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=20095C">See it on the map</a>
+  <a class="btn" href="/map.html#school=20095C">See it on the map</a>
   <button class="btn ghost" data-shortlist="20095C" data-name="Gaelscoil Bhrian Bóroimhe">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

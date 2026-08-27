@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"S N Moin Na Gcaor","url":"https://www.findaschool.ie/school/wexford/s-n-moin-na-gcaor-18308e.html","identifier":"18308E","address":{"@type":"PostalAddress","streetAddress":"Ballysimon, Enniscorthy, Co. Wexford","addressRegion":"Wexford","postalCode":"Y21TR52","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":52.525902,"longitude":-6.479602},"telephone":"0539234453","email":"info@monageerns.ie","numberOfStudents":125}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>S N Moin Na Gcaor</h1>
 <p class="lede">S N Moin Na Gcaor is a primary school in Wexford. 125 pupils, Catholic ethos, 1 special class.</p>
 <p class="actions">
-  <a class="btn" href="/#school=18308E">See it on the map</a>
+  <a class="btn" href="/map.html#school=18308E">See it on the map</a>
   <button class="btn ghost" data-shortlist="18308E" data-name="S N Moin Na Gcaor">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

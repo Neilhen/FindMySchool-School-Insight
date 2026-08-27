@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Pembroke Montessori","url":"https://www.findaschool.ie/school/dublin/pembroke-montessori-tu2015dr185.html","identifier":"TU2015DR185","address":{"@type":"PostalAddress","streetAddress":"52 Pembroke Road, Ballsbridge, Dublin 4, Co. Dublin","addressRegion":"Dublin 4","postalCode":null,"addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.329195,"longitude":-6.231332}}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Pembroke Montessori</h1>
 <p class="lede">Pembroke Montessori is a preschool / early years in Dublin 4. Fee-paying.</p>
 <p class="actions">
-  <a class="btn" href="/#school=TU2015DR185">See it on the map</a>
+  <a class="btn" href="/map.html#school=TU2015DR185">See it on the map</a>
   <button class="btn ghost" data-shortlist="TU2015DR185" data-name="Pembroke Montessori">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

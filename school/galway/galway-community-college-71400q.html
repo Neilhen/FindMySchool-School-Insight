@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Galway Community College","url":"https://www.findaschool.ie/school/galway/galway-community-college-71400q.html","identifier":"71400Q","address":{"@type":"PostalAddress","streetAddress":"Moneenageisha, Wellpark, Galway","addressRegion":"Galway","postalCode":"H91K642","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.283283,"longitude":-9.033399},"telephone":"091755464","email":"brian.melia@gretb.ie","numberOfStudents":395}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Galway Community College</h1>
 <p class="lede">Galway Community College is a secondary school in Galway. 395 pupils, Inter-denominational ethos, 2 special classes, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=71400Q">See it on the map</a>
+  <a class="btn" href="/map.html#school=71400Q">See it on the map</a>
   <button class="btn ghost" data-shortlist="71400Q" data-name="Galway Community College">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

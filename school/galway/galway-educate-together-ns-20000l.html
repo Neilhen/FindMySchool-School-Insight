@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Galway Educate Together Ns","url":"https://www.findaschool.ie/school/galway/galway-educate-together-ns-20000l.html","identifier":"20000L","address":{"@type":"PostalAddress","streetAddress":"Thomas Hynes Road, Newcastle, Galway","addressRegion":"Galway","postalCode":"H91HV07","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.283985,"longitude":-9.070824},"telephone":"091527887","email":"admin@getns.ie","numberOfStudents":373}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Galway Educate Together Ns</h1>
 <p class="lede">Galway Educate Together Ns is a primary school in Galway. 373 pupils, Multi-denominational ethos, 3 special classes.</p>
 <p class="actions">
-  <a class="btn" href="/#school=20000L">See it on the map</a>
+  <a class="btn" href="/map.html#school=20000L">See it on the map</a>
   <button class="btn ghost" data-shortlist="20000L" data-name="Galway Educate Together Ns">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

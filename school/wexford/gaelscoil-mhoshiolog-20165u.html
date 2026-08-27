@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Gaelscoil Mhoshiolog","url":"https://www.findaschool.ie/school/wexford/gaelscoil-mhoshiolog-20165u.html","identifier":"20165U","address":{"@type":"PostalAddress","streetAddress":"An Chraobach, Bóthar Charn an Bhua, Guaire, Co. Loch Garman","addressRegion":"Wexford","postalCode":"Y25VP62","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":52.67452,"longitude":-6.315917},"telephone":"0539484028","email":"eolasgm@gmail.com","numberOfStudents":152}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Gaelscoil Mhoshiolog</h1>
 <p class="lede">Gaelscoil Mhoshiolog is a primary school irish-medium in Wexford. 152 pupils, Multi-denominational ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=20165U">See it on the map</a>
+  <a class="btn" href="/map.html#school=20165U">See it on the map</a>
   <button class="btn ghost" data-shortlist="20165U" data-name="Gaelscoil Mhoshiolog">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

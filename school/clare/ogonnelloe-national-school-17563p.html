@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Ogonnelloe National School","url":"https://www.findaschool.ie/school/clare/ogonnelloe-national-school-17563p.html","identifier":"17563P","address":{"@type":"PostalAddress","streetAddress":"OGONNELLOE, SCARIFF, CO CLARE","addressRegion":"Clare","postalCode":"V94N599","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":52.872283,"longitude":-8.458389},"telephone":"061923144","email":"office@ogonnelloens.com","numberOfStudents":101}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Ogonnelloe National School</h1>
 <p class="lede">Ogonnelloe National School is a primary school in Clare. 101 pupils, Catholic ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=17563P">See it on the map</a>
+  <a class="btn" href="/map.html#school=17563P">See it on the map</a>
   <button class="btn ghost" data-shortlist="17563P" data-name="Ogonnelloe National School">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

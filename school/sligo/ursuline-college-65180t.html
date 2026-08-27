@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Ursuline College","url":"https://www.findaschool.ie/school/sligo/ursuline-college-65180t.html","identifier":"65180T","address":{"@type":"PostalAddress","streetAddress":"Finisklin, Sligo","addressRegion":"Sligo","postalCode":"F91FW54","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":54.275742,"longitude":-8.487785},"telephone":"0719161653","email":"colm.mcintyre@ursulinecollegesligo.ie","numberOfStudents":603}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Ursuline College</h1>
 <p class="lede">Ursuline College is a secondary school girls only in Sligo. 603 pupils, Catholic ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=65180T">See it on the map</a>
+  <a class="btn" href="/map.html#school=65180T">See it on the map</a>
   <button class="btn ghost" data-shortlist="65180T" data-name="Ursuline College">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

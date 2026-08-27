@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Gaelscoil Chluain Meala","url":"https://www.findaschool.ie/school/tipperary/gaelscoil-chluain-meala-20007c.html","identifier":"20007C","address":{"@type":"PostalAddress","streetAddress":"Baile Gaelach, Cluain Meala, Co. Thiobraid Árainn","addressRegion":"Tipperary","postalCode":"E91WT78","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":52.352055,"longitude":-7.713156},"telephone":"0526127271","email":"eolas@gaelscoilchluainmeala.ie","numberOfStudents":315}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Gaelscoil Chluain Meala</h1>
 <p class="lede">Gaelscoil Chluain Meala is a primary school irish-medium in Tipperary. 315 pupils, Catholic ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=20007C">See it on the map</a>
+  <a class="btn" href="/map.html#school=20007C">See it on the map</a>
   <button class="btn ghost" data-shortlist="20007C" data-name="Gaelscoil Chluain Meala">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

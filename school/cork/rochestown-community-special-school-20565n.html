@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Rochestown Community Special School","url":"https://www.findaschool.ie/school/cork/rochestown-community-special-school-20565n.html","identifier":"20565N","address":{"@type":"PostalAddress","streetAddress":"Garryduff Sports Centre, Garryduff, Cork City","addressRegion":"Cork","postalCode":"T12ER22","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":51.869149,"longitude":-8.397431},"telephone":"0212038414","email":"rcssoffice@corketb.ie","numberOfStudents":66}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Rochestown Community Special School</h1>
 <p class="lede">Rochestown Community Special School is a special school in Cork City. 66 pupils, Multi-denominational ethos.</p>
 <p class="actions">
-  <a class="btn" href="/#school=20565N">See it on the map</a>
+  <a class="btn" href="/map.html#school=20565N">See it on the map</a>
   <button class="btn ghost" data-shortlist="20565N" data-name="Rochestown Community Special School">
     ☆ Add to shortlist</button>
 </p>
@@ -60,5 +66,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

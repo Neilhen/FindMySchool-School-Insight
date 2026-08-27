@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -27,7 +33,7 @@
 <main><h1>Every school in Ireland</h1>
 <p class="lede">4,234 schools, from the Department of Education's register,
 with special-class provision from the NCSE and area context you can check.
-Browse by county, or <a href="/">use the map</a>.</p>
+Browse by county, or <a href="/map.html">use the map</a>.</p>
 <section><h2>By county</h2><ul class="listing"><li><a href='/schools/county/carlow.html'>Carlow</a><span class='thin'>57 schools</span></li><li><a href='/schools/county/cavan.html'>Cavan</a><span class='thin'>87 schools</span></li><li><a href='/schools/county/clare.html'>Clare</a><span class='thin'>127 schools</span></li><li><a href='/schools/county/cork.html'>Cork</a><span class='thin'>443 schools</span></li><li><a href='/schools/county/donegal.html'>Donegal</a><span class='thin'>202 schools</span></li><li><a href='/schools/county/dublin.html'>Dublin</a><span class='thin'>971 schools</span></li><li><a href='/schools/county/galway.html'>Galway</a><span class='thin'>273 schools</span></li><li><a href='/schools/county/kerry.html'>Kerry</a><span class='thin'>161 schools</span></li><li><a href='/schools/county/kildare.html'>Kildare</a><span class='thin'>136 schools</span></li><li><a href='/schools/county/kilkenny.html'>Kilkenny</a><span class='thin'>92 schools</span></li><li><a href='/schools/county/laois.html'>Laois</a><span class='thin'>75 schools</span></li><li><a href='/schools/county/leitrim.html'>Leitrim</a><span class='thin'>44 schools</span></li><li><a href='/schools/county/limerick.html'>Limerick</a><span class='thin'>170 schools</span></li><li><a href='/schools/county/longford.html'>Longford</a><span class='thin'>47 schools</span></li><li><a href='/schools/county/louth.html'>Louth</a><span class='thin'>91 schools</span></li><li><a href='/schools/county/mayo.html'>Mayo</a><span class='thin'>181 schools</span></li><li><a href='/schools/county/meath.html'>Meath</a><span class='thin'>141 schools</span></li><li><a href='/schools/county/monaghan.html'>Monaghan</a><span class='thin'>76 schools</span></li><li><a href='/schools/county/offaly.html'>Offaly</a><span class='thin'>79 schools</span></li><li><a href='/schools/county/roscommon.html'>Roscommon</a><span class='thin'>97 schools</span></li><li><a href='/schools/county/sligo.html'>Sligo</a><span class='thin'>77 schools</span></li><li><a href='/schools/county/tipperary.html'>Tipperary</a><span class='thin'>187 schools</span></li><li><a href='/schools/county/waterford.html'>Waterford</a><span class='thin'>93 schools</span></li><li><a href='/schools/county/westmeath.html'>Westmeath</a><span class='thin'>90 schools</span></li><li><a href='/schools/county/wexford.html'>Wexford</a><span class='thin'>127 schools</span></li><li><a href='/schools/county/wicklow.html'>Wicklow</a><span class='thin'>110 schools</span></li></ul></section></main>
 <footer class="site">
   <p><strong>Where this comes from.</strong> School details are from the
@@ -43,5 +49,6 @@ Browse by county, or <a href="/">use the map</a>.</p>
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>

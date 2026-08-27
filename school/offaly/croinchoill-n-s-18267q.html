@@ -14,12 +14,18 @@
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/schools/pages.css">
 <script type='application/ld+json'>{"@context":"https://schema.org","@type":"School","name":"Croinchoill N S","url":"https://www.findaschool.ie/school/offaly/croinchoill-n-s-18267q.html","identifier":"18267Q","address":{"@type":"PostalAddress","streetAddress":"Crinkill, BIRR, CO OFFALY","addressRegion":"Offaly","postalCode":"R42P585","addressCountry":"IE"},"geo":{"@type":"GeoCoordinates","latitude":53.080165,"longitude":-7.89607},"telephone":"0579120803","email":"office@crinkillns.ie","numberOfStudents":243}</script>
+
 </head>
 <body>
 <header class="site">
   <a class="brand" href="/">Find a School</a>
+  <form class="sitesearch" role="search" onsubmit="return false">
+    <input type="search" id="q" autocomplete="off" placeholder="Search 4,234 schools by name or area"
+           aria-label="Search schools">
+    <div id="q-results" role="listbox"></div>
+  </form>
   <nav>
-    <a href="/">Map</a>
+    <a href="/map.html">Map</a>
     <a href="/schools/">All schools</a>
     <a href="/compare.html" id="nav-compare">Shortlist</a>
   </nav>
@@ -32,7 +38,7 @@
 <h1>Croinchoill N S</h1>
 <p class="lede">Croinchoill N S is a primary school in Offaly. 243 pupils, Catholic ethos, 1 special class, DEIS.</p>
 <p class="actions">
-  <a class="btn" href="/#school=18267Q">See it on the map</a>
+  <a class="btn" href="/map.html#school=18267Q">See it on the map</a>
   <button class="btn ghost" data-shortlist="18267Q" data-name="Croinchoill N S">
     ☆ Add to shortlist</button>
 </p>
@@ -66,5 +72,6 @@
   <p class="thin">Last updated 2026-08-27. Corrections welcome.</p>
 </footer>
 <script src="/schools/shortlist.js" defer></script>
+<script src="/schools/search.js" defer></script>
 </body>
 </html>
