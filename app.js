@@ -76,6 +76,7 @@ function passesFilters(s) {
   // Restrictive filters: only bite when switched on.
   if (activeFilters.hasSpecialClass && !s.specialClasses) return false;
   if (activeFilters.newSpecialClass && !s.specialClassesNew) return false;
+  if (activeFilters.oversubscribed && !s.oversubscribed) return false;
 
   const irishOk = s.irish ? activeFilters.irish : true;
   const charterOk = s.charter ? activeFilters.charter : true;
@@ -344,6 +345,10 @@ function openSidebar(data) {
   if (data.island) badgesHTML += `<span class="badge" style="background:#E1F5FE;color:#01579B;">Island school</span>`;
   if (data.specialClasses) badgesHTML += `<span class="badge" style="background:#EDE7F6;color:#4527A0;font-weight:700;">${data.specialClasses} special class${data.specialClasses > 1 ? 'es' : ''}</span>`;
   if (data.specialClassesNew) badgesHTML += `<span class="badge" style="background:#E8F5E9;color:#1B5E20;font-weight:700;">+${data.specialClassesNew} new ${data.specialClassYear || ''}</span>`;
+  if (data.applicationsPerPlace)
+    badgesHTML += `<span class="badge" style="background:#FFEBEE;color:#B71C1C;font-weight:700;">${data.applicationsPerPlace}× applicants per place</span>`;
+  else if (data.oversubscribed)
+    badgesHTML += `<span class="badge" style="background:#FDF3E3;color:#7a5410;font-weight:700;">Oversubscribed</span>`;
   if (data.closed) badgesHTML += `<span class="badge" style="background:#FFEBEE;color:#B71C1C;font-weight:700;">⚠ CLOSED</span>`;
   sbBadges.innerHTML = badgesHTML;
   
@@ -509,6 +514,33 @@ function openSidebar(data) {
     areaSec.style.display = 'block';
   } else {
     areaSec.style.display = 'none';
+  }
+
+  // ---- Getting in ----------------------------------------------------------
+  // The only question that actually decides a place in a country with no
+  // catchments. Read from the school's own Annual Admission Notice, and always
+  // shown with a link back to it.
+  if (data.admissionsNoticeUrl) {
+    const denom = data.placesLastYear || data.placesOffered;
+    const bits = [];
+    if (data.applicationsPerPlace && data.applicationsLastYear && denom) {
+      const r = data.applicationsPerPlace;
+      const label = r >= 3 ? 'Very hard' : r >= 1.8 ? 'Hard' : r > 1 ? 'Competitive' : 'Not oversubscribed';
+      const col = r >= 1.8 ? '#B71C1C' : r > 1 ? '#7a5410' : '#1B5E20';
+      bits.push(`<strong style="color:${col}">${label}.</strong> ` +
+        `${data.applicationsLastYear.toLocaleString()} applications for ${denom.toLocaleString()} places` +
+        (data.waitingList ? `, ${data.waitingList.toLocaleString()} on the waiting list` : '') + '.');
+    } else if (data.oversubscribed) {
+      bits.push('<strong style="color:#7a5410">Oversubscribed last year.</strong>');
+    } else if (data.placesOffered) {
+      bits.push('<strong style="color:#1B5E20">Not oversubscribed last year.</strong>');
+    }
+    if (data.admissionsClosesOn)
+      bits.push(`<strong>Applications close ${data.admissionsClosesOn}</strong>` +
+                (data.admissionsOpensOn ? ` (open from ${data.admissionsOpensOn})` : ''));
+    bits.push(`<a href="${data.admissionsNoticeUrl}" target="_blank" rel="noopener nofollow">Annual Admission Notice ↗</a>`);
+    areaBits.push('<strong>Getting in</strong><div style="font-size:12px;line-height:1.5">' +
+                  bits.join('<br>') + '</div>');
   }
 
   // ---- Contact -------------------------------------------------------------
@@ -756,14 +788,14 @@ const activeFilters = {
   // These two are RESTRICTIVE rather than permissive: off means "don't care",
   // on means "only show schools that have this". That is the opposite of the
   // buttons above, so they start off.
-  hasSpecialClass:false, newSpecialClass:false
+  hasSpecialClass:false, newSpecialClass:false, oversubscribed:false
 };
 const btnCols = {
   preschool:'#16a34a', primary:'#0369a1', secondary:'#6b21a8', special:'#ea580c',
   boys:'#1e40af', girls:'#be185d', coed:'#6b21a8',
   feepaying:'#c2410c', free:'#15803d', irish:'#ca8a04', charter:'#ca8a04',
   boarding:'#0f766e', public:'#0369a1', private:'#c2410c', closed:'#6b7280',
-  hasSpecialClass:'#4527A0', newSpecialClass:'#1B5E20'
+  hasSpecialClass:'#4527A0', newSpecialClass:'#1B5E20', oversubscribed:'#B71C1C'
 };
 
 Object.keys(activeFilters).forEach(k => {

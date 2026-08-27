@@ -28,7 +28,10 @@
 
 <div id="ui-container">
   <div class="panel">
-    <div class="title-main" id="app-title">Schools Map</div>
+    <!-- A real <h1>, not a styled div: this page has one subject and both a
+         screen reader and a crawler should be told what it is. The class keeps
+         it looking exactly as it did. -->
+    <h1 class="title-main" id="app-title">School map of Ireland and the USA</h1>
     <div class="title-sub">Find schools in your area</div>
     
     <!-- Region Toggle -->
@@ -116,6 +119,16 @@
         <div class="filter-btns">
           <button class="filter-btn" id="f-irish" onclick="toggleFilter('irish')">★ Irish-medium</button>
           <button class="filter-btn" id="f-boarding" onclick="toggleFilter('boarding')">Boarding</button>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-label">Admissions</span>
+        <div class="filter-btns">
+          <button class="filter-btn" id="f-oversubscribed" onclick="toggleFilter('oversubscribed')">Oversubscribed</button>
+        </div>
+        <div style="font-size:10px;color:#777;margin-top:4px;line-height:1.35">
+          Schools whose Annual Admission Notice shows more applicants than places.
         </div>
       </div>
 

@@ -73,6 +73,9 @@ h1, h2, h3, .title-main, .sb-name, .sb-fee-val, .filter-label {
 
 /* Title Panel */
 .title-main {
+  /* Also used on the map's <h1>; zero the browser's default heading margin so
+     turning that div into a real heading does not move the panel. */
+  margin: 0;
   font-size: 22px;
   font-weight: 700;
   color: var(--primary);

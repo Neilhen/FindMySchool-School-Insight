@@ -59,6 +59,21 @@ ul.listing .thin{display:block}
 ul.cols{columns:2;column-gap:28px}
 ul.cols li{break-inside:avoid}
 .prov{color:var(--soft);font-size:.9rem}
+table.cal{border-collapse:collapse;width:100%;font-size:.92rem}
+table.cal th{text-align:left;font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--faint);padding:9px 12px;border-bottom:1px solid var(--line);background:var(--sunk)}
+table.cal td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+table.cal td.when{white-space:nowrap;font-variant-numeric:tabular-nums;color:var(--soft)}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;margin-bottom:22px}
+h3.calmonth{margin:22px 0 8px;font-size:1.02rem;color:var(--soft);font-weight:600;letter-spacing:.01em}
+.verdict{padding:11px 14px;border-radius:7px;margin:0 0 12px;font-size:.97rem;border:1px solid}
+.verdict.stop{background:#fdecec;border-color:#f0bcbc;color:#8d1c1c}
+.verdict.warn{background:#fdf3e3;border-color:#f0d9ac;color:#7a5410}
+.verdict.go{background:#eaf5ec;border-color:#c2e0c9;color:#1d5b2b}
+@media (prefers-color-scheme:dark){
+  .verdict.stop{background:#2a1113;border-color:#5a2226;color:#f0b4b4}
+  .verdict.warn{background:#2b2110;border-color:#5b4720;color:#e6c489}
+  .verdict.go{background:#12251a;border-color:#265234;color:#a6d7b3}}
 .hero{padding:12px 0 4px}
 .hero h1{max-width:16ch}
 .herofind{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 6px}
