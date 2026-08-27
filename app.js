@@ -40,12 +40,55 @@ let loadedSchoolIds = new Set();
 const feederMap = {};
 const secondaryToPrimaryMap = {};
 
+// A school's level(s). US K-12 schools genuinely belong to two levels at once,
+// so the data carries a `levels` array; Irish rows only ever have one, and fall
+// back to `type`. Filtering on the array is what makes a K-12 school show up
+// for a family with both a 5-year-old and a 15-year-old.
+function schoolLevels(s) {
+  if (Array.isArray(s.levels) && s.levels.length) return s.levels;
+  return [s.type];
+}
+
+// The denomination dropdown. '' means no filter; '__other' means anything
+// outside the five common values, which is how minority-faith schools stay
+// findable without giving each one its own menu entry.
+let ethosFilter = '';
+const COMMON_ETHOS = ['Catholic', 'Multi-denominational', 'Inter-denominational',
+                      'Church of Ireland', 'Nonsectarian'];
+
 function passesFilters(s) {
+  // A school that has closed must not sit on the map looking like an option.
+  if (s.closed && !activeFilters.closed) return false;
+
   const irishOk = s.irish ? activeFilters.irish : true;
   const charterOk = s.charter ? activeFilters.charter : true;
-  return s.type === 'preschool'
-    ? activeFilters.preschool && irishOk && charterOk
-    : activeFilters[s.type] && activeFilters[s.gender] && activeFilters[s.fees] && irishOk && charterOk;
+  // Same shape as the Irish-medium toggle: turning "Boarding" off hides
+  // schools that take boarders, it does not restrict the map to them.
+  const takesBoarders = s.attendanceType === 'Boarding' || s.attendanceType === 'Mixed';
+  const boardingOk = takesBoarders ? activeFilters.boarding : true;
+
+  // US sector buttons only bite on US rows.
+  if (s.country === 'US' && s.sector) {
+    if (s.sector === 'public' && !activeFilters.public) return false;
+    if (s.sector === 'private' && !activeFilters.private) return false;
+  }
+
+  if (ethosFilter) {
+    const e = s.ethos || '';
+    if (ethosFilter === '__other') {
+      if (!e || COMMON_ETHOS.includes(e)) return false;
+    } else if (e !== ethosFilter) {
+      return false;
+    }
+  }
+
+  if (s.type === 'preschool') return activeFilters.preschool && irishOk && charterOk;
+
+  // gender may legitimately be null on US public rows where NCES publishes no
+  // counts -- an unknown must not be silently dropped from every view.
+  const genderOk = s.gender ? activeFilters[s.gender] : true;
+  const levelOk = schoolLevels(s).some(l => activeFilters[l]);
+  return levelOk && genderOk && activeFilters[s.fees] && irishOk && charterOk && boardingOk;
 }
 
 async function initApp() {
@@ -76,22 +119,62 @@ async function initApp() {
   await schoolsLoading;
 }
 
+// PostgREST caps any single response at 1,000 rows no matter what .limit()
+// says. The table now holds 126,000 schools, so in a dense view (New York has
+// 2,287 inside one screen) a single request silently returned an arbitrary
+// 1,000 of them and the rest simply were not on the map. For a tool someone
+// uses to pick a school that is a correctness bug, not a performance one, so we
+// page through the results and say so plainly when a view is too dense to load
+// in full.
+const PAGE_SIZE = 1000;
+const MAX_PAGES = 4;          // 4,000 schools per view
+
+function setDensityNotice(text) {
+  let el = document.getElementById('density-notice');
+  if (!text) { if (el) el.remove(); return; }
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'density-notice';
+    el.style.cssText = 'position:absolute;bottom:14px;left:50%;transform:translateX(-50%);' +
+      'z-index:1200;background:#fff8e1;border:1px solid #ffe082;color:#7a5b00;' +
+      'padding:6px 12px;border-radius:16px;font-size:12px;box-shadow:0 2px 8px rgba(0,0,0,.15)';
+    document.getElementById('map').appendChild(el);
+  }
+  el.textContent = text;
+}
+
 async function fetchSchoolsInBounds() {
   const bounds = map.getBounds();
-  const { data, error } = await window.supabaseClient
+  const south = bounds.getSouthWest().lat - 0.05;
+  const north = bounds.getNorthEast().lat + 0.05;
+  const west = bounds.getSouthWest().lng - 0.05;
+  const east = bounds.getNorthEast().lng + 0.05;
+
+  const query = () => window.supabaseClient
     .from('schools')
     .select('*')
-    .gte('lat', bounds.getSouthWest().lat - 0.05)
-    .lte('lat', bounds.getNorthEast().lat + 0.05)
-    .gte('lng', bounds.getSouthWest().lng - 0.05)
-    .lte('lng', bounds.getNorthEast().lng + 0.05)
-    .limit(1000);
-    
-  if (error) {
-    console.error("Supabase error:", error);
-    return;
+    .gte('lat', south).lte('lat', north)
+    .gte('lng', west).lte('lng', east);
+
+  let data = [];
+  let truncated = false;
+  for (let page = 0; page < MAX_PAGES; page++) {
+    const { data: rows, error } = await query()
+      .order('id')
+      .range(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE - 1);
+    if (error) {
+      console.error("Supabase error:", error);
+      return;
+    }
+    data = data.concat(rows);
+    if (rows.length < PAGE_SIZE) break;
+    if (page === MAX_PAGES - 1) truncated = true;
   }
-  
+
+  setDensityNotice(truncated
+    ? `Showing ${data.length.toLocaleString()} schools — zoom in to see them all`
+    : '');
+
   data.forEach(s => {
     if (!loadedSchoolIds.has(s.id)) {
       loadedSchoolIds.add(s.id);
@@ -228,17 +311,48 @@ function openSidebar(data) {
     <span class="badge ${gClass}">${gLabel}</span>
     <span class="badge ${data.fees==='feepaying'?'b-fee':'b-fre'}">${data.fees==='feepaying'?'Fee-paying':'Free'}</span>
   `;
-  if(data.ethos && data.ethos !== 'Unknown') badgesHTML += `<span class="badge" style="background:#FFF3E0;color:#E65100;">${data.ethos}</span>`;
+  if(data.ethos && data.ethos !== 'Unknown' && data.ethos !== 'Other/Unknown') badgesHTML += `<span class="badge" style="background:#FFF3E0;color:#E65100;">${data.ethos}</span>`;
   if(data.irish) badgesHTML += `<span class="badge b-iri">★ Irish-medium</span>`;
   if(data.charter) badgesHTML += `<span class="badge" style="background:#FFF3E0;color:#E65100;">★ Charter</span>`;
   if(data.deis) badgesHTML += `<span class="badge" style="background:#E8F5E9;color:#2E7D32;font-weight:700;">✓ DEIS</span>`;
+  // A K-12 school is both primary and secondary; say so rather than making the
+  // reader guess from a single "Primary" badge.
+  if (Array.isArray(data.levels) && data.levels.length > 1)
+    badgesHTML += `<span class="badge" style="background:#EDE7F6;color:#4527A0;">Primary + Secondary</span>`;
+  if (data.sector === 'private') badgesHTML += `<span class="badge" style="background:#FFF3E0;color:#E65100;">Private</span>`;
+  if (data.sector === 'public') badgesHTML += `<span class="badge" style="background:#E3F2FD;color:#0D47A1;">Public</span>`;
+  if (data.attendanceType === 'Boarding') badgesHTML += `<span class="badge" style="background:#E0F2F1;color:#00695C;">Boarding</span>`;
+  if (data.attendanceType === 'Mixed') badgesHTML += `<span class="badge" style="background:#E0F2F1;color:#00695C;">Day + boarding</span>`;
+  if (data.gaeltacht) badgesHTML += `<span class="badge" style="background:#F1F8E9;color:#33691E;">Gaeltacht</span>`;
+  if (data.island) badgesHTML += `<span class="badge" style="background:#E1F5FE;color:#01579B;">Island school</span>`;
+  if (data.closed) badgesHTML += `<span class="badge" style="background:#FFEBEE;color:#B71C1C;font-weight:700;">⚠ CLOSED</span>`;
   sbBadges.innerHTML = badgesHTML;
   
-  sbFee.textContent = data.fees === 'feepaying'
-    ? (data.annualFee ? `€${data.annualFee.toLocaleString()} / year` : 'Fee-paying — amount to be confirmed')
-    : 'Free';
-  if (data.feeYear) sbFee.textContent += ` (${data.feeYear}${data.feeSource ? ', ' + data.feeSource : ''})`;
-  if (data.feeNote) sbFee.textContent += ` (${data.feeNote})`;
+  // Fees carry their provenance. A figure without a year and a link is not
+  // shown as a figure -- this map gets used for property decisions, and an
+  // undated number of unknown origin is worse than an honest blank.
+  let feeHTML;
+  if (data.fees !== 'feepaying') {
+    feeHTML = data.country === 'US'
+      ? 'Free — US public schools charge no tuition'
+      : 'Free';
+  } else if (data.annualFee) {
+    feeHTML = `€${data.annualFee.toLocaleString()} / year`;
+    if (data.feeYear) feeHTML += ` <span style="color:#555;font-weight:400">(${data.feeYear})</span>`;
+    if (data.feeSource && /^https?:/.test(data.feeSource))
+      feeHTML += ` <a href="${data.feeSource}" target="_blank" rel="noopener" style="font-size:11px">source ↗</a>`;
+    else if (data.feeSource)
+      feeHTML += ` <span style="font-size:11px;color:#777">${data.feeSource}</span>`;
+  } else {
+    feeHTML = 'Fee-paying — amount not confirmed';
+  }
+  if (data.feeNote)
+    feeHTML += `<div style="font-size:11px;color:#E65100;font-weight:400;margin-top:3px">${data.feeNote}</div>`;
+  if (data.feeConfidence && data.annualFee)
+    feeHTML += `<div style="font-size:10px;color:#888;font-weight:400">Confidence: ${data.feeConfidence}</div>`;
+  if (data.feeLegacyAmount && !data.annualFee)
+    feeHTML += `<div style="font-size:10px;color:#888;font-weight:400">An older uncited figure of €${data.feeLegacyAmount.toLocaleString()} was on file; it is not shown because it could not be traced to a published page.</div>`;
+  sbFee.innerHTML = feeHTML;
   
   let locHTML = data.area || '';
   if (data.address) locHTML += `<br><span style="color:#666">${data.address}</span>`;
@@ -262,18 +376,93 @@ function openSidebar(data) {
   }
   sbLoc.innerHTML = locHTML;
   
+  // ---- Area context: planning area / district / deprivation ---------------
+  const areaSec = document.getElementById('sb-area-section');
+  const areaDiv = document.getElementById('sb-area');
+  const areaBits = [];
+  if (data.planningArea) {
+    areaBits.push(`<strong>School Planning Area:</strong> ${data.planningArea}` +
+      `<div style="font-size:11px;color:#777">How the Department plans capacity. ` +
+      `<em>Not a catchment</em> — in Ireland you may apply to any school.</div>`);
+  }
+  if (data.localAuthority) areaBits.push(`<strong>Local authority:</strong> ${data.localAuthority}`);
+  if (data.district_name && data.country === 'US') {
+    areaBits.push(`<strong>School district:</strong> ${data.district_name}` +
+      `<div style="font-size:11px;color:#777">A district, <em>not an attendance zone</em>. ` +
+      `NCES has published no national attendance boundaries since 2015-16.</div>`);
+  }
+  if (data.deprivationScore !== null && data.deprivationScore !== undefined) {
+    const s = Number(data.deprivationScore);
+    const col = s >= 10 ? '#2E7D32' : s <= -10 ? '#C62828' : '#555';
+    areaBits.push(
+      `<strong>Pobal deprivation index (2022):</strong> ` +
+      `<span style="color:${col};font-weight:700">${s.toFixed(1)}</span> — ${data.deprivationLabel || ''}` +
+      `<div style="font-size:11px;color:#777">Electoral Division ${data.edName || ''}` +
+      (data.edPopulation ? `, pop. ${Number(data.edPopulation).toLocaleString()}` : '') +
+      `. 0 is the national average. This describes the <em>area</em>, not the school.</div>` +
+      (data.edThirdLevelPct !== null && data.edThirdLevelPct !== undefined
+        ? `<div style="font-size:11px;color:#777">Third-level educated: ${Number(data.edThirdLevelPct).toFixed(0)}%` +
+          (data.edLoneParentPct !== null && data.edLoneParentPct !== undefined
+            ? ` · lone-parent households: ${Number(data.edLoneParentPct).toFixed(0)}%` : '') + `</div>`
+        : '') +
+      (data.deprivationNote ? `<div style="font-size:11px;color:#E65100">⚠ ${data.deprivationNote}</div>` : ''));
+  }
+  if (areaBits.length) {
+    areaDiv.innerHTML = areaBits.join('<div style="height:8px"></div>');
+    areaSec.style.display = 'block';
+  } else {
+    areaSec.style.display = 'none';
+  }
+
+  // ---- Contact -------------------------------------------------------------
+  const contactSec = document.getElementById('sb-contact-section');
+  const contactDiv = document.getElementById('sb-contact');
+  const contactBits = [];
+  if (data.principal) contactBits.push(`Principal: ${data.principal}`);
+  if (data.phone) contactBits.push(`<a href="tel:${String(data.phone).replace(/[^0-9+]/g,'')}">${data.phone}</a>`);
+  if (data.email) contactBits.push(`<a href="mailto:${data.email}">${data.email}</a>`);
+  if (data.website) contactBits.push(`<a href="${/^https?:/.test(data.website) ? data.website : 'https://' + data.website}" target="_blank" rel="noopener">School website ↗</a>`);
+  if (contactBits.length) {
+    contactDiv.innerHTML = contactBits.join('<br>');
+    contactSec.style.display = 'block';
+  } else {
+    contactSec.style.display = 'none';
+  }
+
   let notesHTML = data.notes || '';
   const facts = [];
-  if (data.enrolment) facts.push(`Enrolment: ${data.enrolment} (2024/25)`);
+  if (data.enrolment) {
+    let e = `Enrolment: ${Number(data.enrolment).toLocaleString()}`;
+    if (data.enrolmentYear) e += ` (${data.enrolmentYear})`;
+    // The male/female split is what actually answers "is this a boys' school?"
+    if (data.maleEnrolment !== null && data.maleEnrolment !== undefined &&
+        data.femaleEnrolment !== null && data.femaleEnrolment !== undefined)
+      e += ` — ${data.maleEnrolment} boys / ${data.femaleEnrolment} girls`;
+    facts.push(e);
+  }
+  if (data.gradeLow && data.gradeHigh) facts.push(`Grades: ${data.gradeLow}–${data.gradeHigh}`);
+  if (data.languageMedium && data.languageMedium !== 'English Medium School') facts.push(data.languageMedium);
+  if (data.schoolTypeDetail && data.schoolTypeDetail !== 'NA') facts.push(data.schoolTypeDetail);
+  if (data.ethosDetail) facts.push(data.ethosDetail);
+  if (data.diocese) facts.push(`Diocese code: ${data.diocese}`);
+  if (data.teacherFte) facts.push(`Teachers (FTE): ${data.teacherFte}`);
+  if (data.freeLunch !== null && data.freeLunch !== undefined && data.enrolment)
+    facts.push(`Free lunch: ${data.freeLunch} of ${data.enrolment}`);
   if (data.patron) facts.push(`Patron: ${data.patron}`);
-  if (data.district_name) facts.push(`District: ${data.district_name}`);
   if (!data.id.startsWith('PRIV-') && !data.id.startsWith('PRE-') && !data.id.startsWith('US-')) facts.push(`Roll no: ${data.id}`);
   if (data.id.startsWith('US-')) facts.push(`NCES ID: ${data.nces_id}`);
   if (facts.length) notesHTML += `<br><span style="color:#555;font-size:12px">${facts.join(' · ')}</span>`;
   if (data.approxLocation) notesHTML += `<br><span style="color:#E65100;font-size:11px;font-weight:600">📍 Approximate location — run geocode_preschools.py or check the address</span>`;
-  if (data.source && data.source.indexOf('DoE') === 0) notesHTML += `<br><span style="color:#2E7D32;font-size:11px;font-weight:600">✓ Verified against DoE register 2024/25</span>`;
-  else if (data.needsReview) notesHTML += `<br><span style="color:#C62828;font-size:11px;font-weight:600">⚠ Not found in official register — details unverified</span>`;
-  else if (data.source && data.source.indexOf('private') !== -1) notesHTML += `<br><span style="color:#E65100;font-size:11px;font-weight:600">Private school — not in DoE recognised-school register</span>`;
+  if (data.closed)
+    notesHTML += `<br><span style="color:#B71C1C;font-size:11px;font-weight:700">⚠ This roll number is not in the Department's 2026 register — the school has closed or amalgamated. Shown for reference only.</span>`;
+  else if (data.registerStatus)
+    notesHTML += `<br><span style="color:#E65100;font-size:11px;font-weight:600">${data.registerStatus}</span>`;
+  if (data.verifiedSource)
+    notesHTML += `<br><span style="color:#2E7D32;font-size:11px;font-weight:600">✓ ${data.verifiedSource}${data.verifiedDate ? ' — checked ' + data.verifiedDate : ''}</span>`;
+  if (data.genderSource && data.country === 'US')
+    notesHTML += `<br><span style="color:#777;font-size:10px">Gender: ${data.genderSource}</span>`;
+  if (data.ethosNote)
+    notesHTML += `<br><span style="color:#777;font-size:10px">${data.ethosNote}</span>`;
   sbNotes.innerHTML = notesHTML;
   
   // Feeders
@@ -454,21 +643,42 @@ filtersHeader.addEventListener('click', () => {
 const activeFilters = {
   preschool:true, primary:true, secondary:true, special:true,
   boys:true, girls:true, coed:true,
-  feepaying:true, free:true, irish:true, charter:true
+  feepaying:true, free:true, irish:true, charter:true,
+  boarding:true, public:true, private:true,
+  closed:false            // closed schools are hidden until asked for
 };
 const btnCols = {
   preschool:'#16a34a', primary:'#0369a1', secondary:'#6b21a8', special:'#ea580c',
   boys:'#1e40af', girls:'#be185d', coed:'#6b21a8',
-  feepaying:'#c2410c', free:'#15803d', irish:'#ca8a04', charter:'#ca8a04'
+  feepaying:'#c2410c', free:'#15803d', irish:'#ca8a04', charter:'#ca8a04',
+  boarding:'#0f766e', public:'#0369a1', private:'#c2410c', closed:'#6b7280'
 };
 
 Object.keys(activeFilters).forEach(k => {
   const btn = document.getElementById('f-'+k);
   if (!btn) return;
   btn.style.borderColor = btnCols[k];
-  btn.style.background = btnCols[k];
-  btn.style.color = 'white';
+  btn.style.background = activeFilters[k] ? btnCols[k] : 'white';
+  btn.style.color = activeFilters[k] ? 'white' : btnCols[k];
 });
+
+// Denomination dropdown -- one control rather than eleven buttons, because the
+// ethos values are now normalised (they used to be split by capitalisation,
+// so any count or filter on them was wrong by roughly 12%).
+const ethosSelect = document.getElementById('f-ethos');
+if (ethosSelect) {
+  ethosSelect.addEventListener('change', function () {
+    ethosFilter = this.value;
+    refreshMarkers();
+  });
+}
+
+function refreshMarkers() {
+  markersGroup.clearLayers();
+  markersGroup.addLayers(allMarkers.filter(m => passesFilters(m._schoolData)));
+  clearLines();
+  clearParishes();
+}
 
 window.toggleFilter = function(key) {
   activeFilters[key] = !activeFilters[key];
@@ -481,11 +691,7 @@ window.toggleFilter = function(key) {
     btn.style.color = btnCols[key];
   }
   
-  markersGroup.clearLayers();
-  const activeSet = allMarkers.filter(m => passesFilters(m._schoolData));
-  markersGroup.addLayers(activeSet);
-  clearLines();
-  clearParishes();
+  refreshMarkers();
   sb.classList.remove('open');
 };
 
@@ -545,12 +751,8 @@ async function refreshNearest() {
   // 1. Get top 6 nearest by straight line for each group to shortlist
   Object.keys(groups).forEach(t => {
     let cands = schools
-      .filter(s => s.type === t && s.lat && s.lng)
-      .filter(s => {
-        const irishOk = s.irish ? activeFilters.irish : true;
-        return t === 'preschool' ? activeFilters.preschool && irishOk
-          : activeFilters[t] && activeFilters[s.gender] && activeFilters[s.fees] && irishOk;
-      })
+      .filter(s => s.lat && s.lng && schoolLevels(s).includes(t))
+      .filter(passesFilters)
       .map(s => ({ d: pinDistKm(s.lat, s.lng), s: s }))
       .sort((a, b) => a.d - b.d)
       .slice(0, 6);
@@ -671,6 +873,10 @@ window.setRegion = function(region) {
     if (usFilters) usFilters.style.display = 'block';
     map.setView([39.8, -98.5], 4);
     if (parishLayer && map.hasLayer(parishLayer)) map.removeLayer(parishLayer);
+    // The Irish planning-area layer is meaningless over the US: drop it.
+    if (spaLayer && map.hasLayer(spaLayer)) map.removeLayer(spaLayer);
+    boundaryOn.spa = false;
+    setLayerButton('f-layer-spa', false, '#00695C');
   } else {
     btnIe.style.background = '#1a237e';
     btnIe.style.color = 'white';
@@ -680,7 +886,192 @@ window.setRegion = function(region) {
     if (ieFilters) ieFilters.style.display = 'block';
     map.setView([53.4, -8.0], 7);
     if (parishLayer && !map.hasLayer(parishLayer)) map.addLayer(parishLayer);
+    // ...and US district outlines are meaningless over Ireland.
+    Object.values(districtLayers).forEach(l => { if (map.hasLayer(l)) map.removeLayer(l); });
+    boundaryOn.district = false;
+    setLayerButton('f-layer-district', false, '#00695C');
   }
+};
+
+
+// ============================================================
+// BOUNDARY LAYERS  (planning areas IE, school districts US)
+// ============================================================
+//
+// Both of these are loaded ON DEMAND. The planning-area file is 2.1 MB and the
+// US district files add up to ~40 MB, so nothing is fetched until the button
+// is pressed, and the US files are fetched one state at a time based on what
+// is actually on screen.
+//
+// The wording throughout is deliberate. Neither layer is a catchment:
+//   * Ireland has no catchment areas in law. Under the Education (Admission to
+//     Schools) Act 2018 every school sets its own oversubscription criteria and
+//     a child may apply anywhere. School Planning Areas are how the Department
+//     decides where to BUILD capacity.
+//   * The US had attendance boundaries, but NCES closed the survey after
+//     2015-16 with no successor. What exists now is district boundaries, which
+//     for most families are not the same thing as the school they are zoned for.
+// Getting this wrong on a map someone buys a house from would be the single
+// most expensive mistake this project could make.
+
+let spaLayer = null;
+let spaLoading = null;
+const districtLayers = {};      // state code -> L.geoJSON
+const districtLoading = {};
+const boundaryOn = { spa: false, district: false };
+
+function setLayerButton(id, on, colour) {
+  const btn = document.getElementById(id);
+  if (!btn) return;
+  btn.style.borderColor = colour;
+  btn.style.background = on ? colour : 'white';
+  btn.style.color = on ? 'white' : colour;
+}
+setLayerButton('f-layer-spa', false, '#00695C');
+setLayerButton('f-layer-district', false, '#00695C');
+
+async function loadPlanningAreas() {
+  if (spaLayer) return spaLayer;
+  if (spaLoading) return spaLoading;
+  spaLoading = (async () => {
+    const res = await fetch('school_planning_areas.geojson');
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const gj = await res.json();
+    spaLayer = L.geoJSON(gj, {
+      style: () => ({ color: '#00695C', weight: 1.2, opacity: 0.8,
+                      fillColor: '#00695C', fillOpacity: 0.05 }),
+      onEachFeature: (f, layer) => {
+        const p = f.properties || {};
+        layer.bindTooltip(
+          `<strong>${p.SPA}</strong><br>${p.Schools || 0} schools` +
+          (p.Coed_Preference ? `<br>Parents wanting co-ed: ${p.Coed_Preference}` : '') +
+          (p.Denominational_Preference ? `<br>Wanting denominational: ${p.Denominational_Preference}` : '') +
+          `<br><em>Planning area — not a catchment</em>`,
+          { sticky: true });
+        layer.on('mouseover', () => layer.setStyle({ fillOpacity: 0.18, weight: 2 }));
+        layer.on('mouseout', () => layer.setStyle({ fillOpacity: 0.05, weight: 1.2 }));
+      }
+    });
+    return spaLayer;
+  })();
+  return spaLoading;
+}
+
+// Which US states are currently on screen, judged from the school rows we have
+// already loaded for this view. Cheap, and avoids a state-boundary lookup.
+function statesInView() {
+  const b = map.getBounds();
+  const seen = new Set();
+  schools.forEach(s => {
+    if (s.country === 'US' && s.state && s.lat && s.lng &&
+        b.contains([s.lat, s.lng])) seen.add(s.state);
+  });
+  return [...seen];
+}
+
+async function loadDistrictsFor(state) {
+  if (districtLayers[state]) return districtLayers[state];
+  if (districtLoading[state]) return districtLoading[state];
+  districtLoading[state] = (async () => {
+    const res = await fetch(`us_districts/${state}.geojson`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const gj = await res.json();
+    const layer = L.geoJSON(gj, {
+      style: () => ({ color: '#00695C', weight: 1.2, opacity: 0.8,
+                      fillColor: '#00695C', fillOpacity: 0.04 }),
+      onEachFeature: (f, l) => {
+        const p = f.properties || {};
+        l.bindTooltip(
+          `<strong>${p.name}</strong><br>${p.kind} district` +
+          (p.gradeLow ? `<br>Grades ${p.gradeLow}–${p.gradeHigh}` : '') +
+          `<br><em>District boundary — not an attendance zone</em>`,
+          { sticky: true });
+      }
+    });
+    districtLayers[state] = layer;
+    return layer;
+  })();
+  return districtLoading[state];
+}
+
+async function refreshDistrictLayers() {
+  if (!boundaryOn.district) return;
+  for (const st of statesInView()) {
+    try {
+      const layer = await loadDistrictsFor(st);
+      if (!map.hasLayer(layer)) layer.addTo(map).bringToBack();
+    } catch (e) {
+      console.warn(`District boundaries unavailable for ${st}:`, e.message);
+    }
+  }
+}
+
+window.toggleBoundaryLayer = async function (which) {
+  boundaryOn[which] = !boundaryOn[which];
+  if (which === 'spa') {
+    setLayerButton('f-layer-spa', boundaryOn.spa, '#00695C');
+    if (boundaryOn.spa) {
+      try {
+        const layer = await loadPlanningAreas();
+        layer.addTo(map).bringToBack();
+      } catch (e) {
+        console.error('Planning areas unavailable:', e);
+        boundaryOn.spa = false;
+        setLayerButton('f-layer-spa', false, '#00695C');
+      }
+    } else if (spaLayer && map.hasLayer(spaLayer)) {
+      map.removeLayer(spaLayer);
+    }
+  } else {
+    setLayerButton('f-layer-district', boundaryOn.district, '#00695C');
+    if (boundaryOn.district) {
+      await refreshDistrictLayers();
+    } else {
+      Object.values(districtLayers).forEach(l => {
+        if (map.hasLayer(l)) map.removeLayer(l);
+      });
+    }
+  }
+};
+
+map.on('moveend', refreshDistrictLayers);
+
+window.showBoundaryExplainer = function () {
+  const existing = document.getElementById('boundary-explainer');
+  if (existing) { existing.remove(); return; }
+  const div = document.createElement('div');
+  div.id = 'boundary-explainer';
+  div.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:4000;' +
+    'display:flex;align-items:center;justify-content:center;padding:20px';
+  div.innerHTML = `
+    <div style="background:#fff;max-width:560px;max-height:80vh;overflow:auto;border-radius:8px;padding:22px;font-size:13px;line-height:1.55">
+      <h3 style="margin:0 0 10px">Why there are no catchment areas on this map</h3>
+      <p><strong>Ireland does not have them.</strong> Not "hard to find" — they do not
+      exist in law. Under the Education (Admission to Schools) Act 2018 each school
+      publishes its own oversubscription criteria, and a child may apply to any
+      school in the country. What the Department of Education does use is
+      <strong>314 School Planning Areas</strong>, which govern where it builds
+      capacity, not who gets a place. Those are the polygons in the "Planning
+      areas" layer.</p>
+      <p>What actually decides an Irish place is the school's own admissions
+      criteria — siblings, parish, feeder school, distance, date of application.
+      Where this map has them, they are in the school's sidebar.</p>
+      <p><strong>The United States stopped publishing them.</strong> NCES ran the
+      School Attendance Boundary Survey until 2015–16 and then closed it with no
+      successor; it only ever covered the ~600 largest districts and excluded
+      charters and magnets. The academic alternative, SABINS, stops at 2011–12.
+      The only current national school geography is the <strong>school
+      district</strong> boundary, which is what the "School districts" layer
+      shows. For most American families the district they live in and the school
+      they are zoned for are different things.</p>
+      <p style="color:#B71C1C"><strong>So:</strong> do not read either layer as
+      "living here gets my child into that school". Neither one means that.</p>
+      <button onclick="document.getElementById('boundary-explainer').remove()"
+        style="margin-top:8px;padding:8px 16px;border:none;border-radius:4px;background:#1a237e;color:#fff;cursor:pointer">
+        Got it</button>
+    </div>`;
+  div.addEventListener('click', e => { if (e.target === div) div.remove(); });
+  document.body.appendChild(div);
 };
 
 initApp();

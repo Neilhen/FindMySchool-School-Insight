@@ -38,6 +38,8 @@ h1, h2, h3, .title-main, .sb-name, .sb-fee-val, .filter-label {
   height: 100vh;
   width: 100%;
   z-index: 0;
+  /* the "zoom in to see them all" notice is positioned inside the map */
+  position: relative;
 }
 
 /* UI Layout - Glassmorphism */

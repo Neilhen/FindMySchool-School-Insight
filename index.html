@@ -91,17 +91,53 @@
         </div>
       </div>
       
+      <div class="filter-group">
+        <span class="filter-label">Denomination / ethos</span>
+        <select id="f-ethos" style="width:100%;padding:6px;border:1px solid #ccc;border-radius:4px;font-size:12px;">
+          <option value="">Any denomination</option>
+          <option value="Catholic">Catholic</option>
+          <option value="Multi-denominational">Multi-denominational</option>
+          <option value="Inter-denominational">Inter-denominational</option>
+          <option value="Church of Ireland">Church of Ireland</option>
+          <option value="Nonsectarian">Nonsectarian (US public)</option>
+          <option value="__other">Other / minority faith</option>
+        </select>
+      </div>
+
       <div class="filter-group" id="ie-filters">
         <span class="filter-label">Special (IE)</span>
         <div class="filter-btns">
           <button class="filter-btn" id="f-irish" onclick="toggleFilter('irish')">★ Irish-medium</button>
+          <button class="filter-btn" id="f-boarding" onclick="toggleFilter('boarding')">Boarding</button>
         </div>
       </div>
 
       <div class="filter-group" id="us-filters" style="display:none;">
-        <span class="filter-label">Special (US)</span>
+        <span class="filter-label">Sector (US)</span>
         <div class="filter-btns">
-          <button class="filter-btn" id="f-charter" onclick="toggleFilter('charter')">Charter School</button>
+          <button class="filter-btn" id="f-public" onclick="toggleFilter('public')">Public</button>
+          <button class="filter-btn" id="f-private" onclick="toggleFilter('private')">Private</button>
+          <button class="filter-btn" id="f-charter" onclick="toggleFilter('charter')">Charter</button>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-label">Boundary layers</span>
+        <div class="filter-btns">
+          <button class="filter-btn" id="f-layer-spa" onclick="toggleBoundaryLayer('spa')">Planning areas (IE)</button>
+          <button class="filter-btn" id="f-layer-district" onclick="toggleBoundaryLayer('district')">School districts (US)</button>
+        </div>
+        <div style="font-size:10px;color:#777;margin-top:4px;line-height:1.35">
+          Neither layer is a catchment. Ireland has no catchment areas in law;
+          the US stopped publishing attendance boundaries in 2016.
+          <a href="#" onclick="showBoundaryExplainer();return false;">Why →</a>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-label">Closed schools</span>
+        <div class="filter-btns">
+          <button class="filter-btn" id="f-closed" onclick="toggleFilter('closed')">Show closed</button>
         </div>
       </div>
     </div>
@@ -124,6 +160,14 @@
     <div class="sb-section">
       <div class="sb-section-title">Location</div>
       <div id="sb-location" class="sb-text">Location</div>
+    </div>
+    <div class="sb-section" id="sb-area-section" style="display:none">
+      <div class="sb-section-title">Area context</div>
+      <div id="sb-area" class="sb-text"></div>
+    </div>
+    <div class="sb-section" id="sb-contact-section" style="display:none">
+      <div class="sb-section-title">Contact</div>
+      <div id="sb-contact" class="sb-text"></div>
     </div>
     <div class="sb-section">
       <div class="sb-section-title">Notes</div>
