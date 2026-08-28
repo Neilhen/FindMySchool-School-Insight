@@ -40,8 +40,25 @@
   and what the area around each one is like.</p>
   <p class="herofind"><a class="btn" href="/schools/">Browse by county</a>
      <a class="btn ghost" href="/admissions-calendar.html">Application deadlines</a>
-     <a class="btn ghost" href="/map.html">Open the map</a></p>
+     <a class="btn ghost" href="/guides/school-catchment-areas-ireland.html">How admission really works</a></p>
   <p class="thin">Use the search box above to jump straight to a school.</p>
+</section>
+
+<section class="mapwrap">
+  <h2>Every one of them, on a map</h2>
+  <p class="lede">Click a school for the detail behind it, or
+     <a href="/map.html">open the full map</a> to filter by ethos, fees,
+     special-class provision and school-transport eligibility.</p>
+  <div id="home-map" class="homemap">
+    <p id="home-map-status" class="homemap-status">Loading the map…</p>
+  </div>
+  <p class="maplegend">
+    <span class="dot primary"></span>Primary
+    <span class="dot secondary"></span>Secondary
+    <span class="dot special"></span>Special
+    <span class="dot preschool"></span>Preschool
+    <span class="thin">Scroll-wheel zoom starts after you click the map.</span>
+  </p>
 </section>
 
 <section class="stats">
@@ -103,5 +120,6 @@
 </footer>
 <script src="/schools/shortlist.js" defer></script>
 <script src="/schools/search.js" defer></script>
+<script src="/schools/homepage-map.js" defer></script>
 </body>
 </html>

@@ -1,9 +1,35 @@
 // ============================================================
 // BASEMAPS & INIT
 // ============================================================
-const lightMap = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-  attribution: '&copy; OpenStreetMap contributors &copy; CARTO', subdomains: 'abcd', maxZoom: 19
-});
+// The default basemap was CARTO's light_all until CARTO put their free
+// basemaps behind an API key: the tiles kept serving, but every one of them
+// now arrives with "API KEY REQUIRED / carto.com/basemaps/apikey" stamped
+// diagonally across it. A watermark on a map about children's schooling reads
+// as a broken or unlicensed site, so it had to go.
+//
+// Esri's Light Gray Canvas is the closest match to the look we had, needs no
+// key, and is already the host behind the satellite layer below, so it adds no
+// new dependency. It ships as two layers by design -- a label-free base, and a
+// separate reference layer carrying place names -- which is why this is a
+// LayerGroup rather than a single tileLayer. Labels on top means school pins
+// never sit underneath a town name.
+//
+// maxNativeZoom matters here. This service has no tiles beyond zoom 16, and a
+// parent looking at one school will zoom past that. Without it Leaflet asks
+// for a zoom-19 tile, gets nothing, and the map goes blank at exactly the
+// moment someone is looking closely. With it, Leaflet upscales the zoom-16
+// tile instead: slightly soft, but a map.
+const ESRI_CANVAS = {
+  maxNativeZoom: 16, maxZoom: 19,
+  attribution: '&copy; Esri, HERE, Garmin, &copy; OpenStreetMap contributors'
+};
+const lightBase = L.tileLayer(
+  'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
+  { ...ESRI_CANVAS, zIndex: 1 });
+const lightLabels = L.tileLayer(
+  'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}',
+  { ...ESRI_CANVAS, attribution: '', zIndex: 2 });
+const lightMap = L.layerGroup([lightBase, lightLabels]);
 const streetMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; OpenStreetMap contributors', maxZoom: 19
 });

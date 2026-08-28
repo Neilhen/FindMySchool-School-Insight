@@ -65,6 +65,41 @@ table.cal th{text-align:left;font-size:.7rem;text-transform:uppercase;letter-spa
 table.cal td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
 table.cal td.when{white-space:nowrap;font-variant-numeric:tabular-nums;color:var(--soft)}
 .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;margin-bottom:22px}
+/* Homepage map. Sized by aspect-ratio with a min-height so it is a real
+   feature on a phone rather than a letterbox, and never taller than the
+   viewport so the content beneath it is still discoverable by scrolling. */
+/* The map is the one thing on this page that earns more width than the
+   reading column. Text stays at 820px because that is where prose is
+   comfortable; a map at 820px looks like a diagram, and at 1160 it looks like
+   the point of the page. The negative margins break it out of main's column
+   without changing the document order, and collapse to nothing below the
+   breakpoint where there is no spare width to take. */
+.mapwrap{margin:26px 0 34px}
+@media (min-width:1200px){
+  .mapwrap{width:1160px;margin-left:calc((820px - 1160px) / 2);
+    margin-right:calc((820px - 1160px) / 2)}
+}
+.mapwrap h2{margin-bottom:6px}
+.mapwrap .lede{margin-top:0}
+.homemap{height:min(64vh,560px);min-height:320px;border:1px solid var(--line);
+  border-radius:10px;overflow:hidden;background:var(--sunk);
+  display:flex;align-items:center;justify-content:center}
+.homemap.ready{display:block}
+.homemap-status{color:var(--soft);font-size:.95rem;margin:0;padding:0 18px;text-align:center}
+.maplegend{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;
+  margin:10px 0 0;font-size:.85rem;color:var(--soft)}
+.maplegend .dot{width:10px;height:10px;border-radius:50%;display:inline-block;
+  margin-right:5px;vertical-align:-1px}
+.maplegend .dot.primary{background:#2563eb}
+.maplegend .dot.secondary{background:#7c3aed}
+.maplegend .dot.special{background:#c2410c}
+.maplegend .dot.preschool{background:#0f766e}
+.hm-name{display:block;font-weight:600;margin-bottom:2px}
+.hm-meta{display:block;color:var(--soft);font-size:.85rem}
+.hm-ratio,.hm-sc{display:block;margin-top:5px;font-size:.85rem;font-weight:600}
+.hm-ratio{color:#8d1c1c}
+.hm-sc{color:#1d5b2b}
+.leaflet-container{font:inherit}
 h3.calmonth{margin:22px 0 8px;font-size:1.02rem;color:var(--soft);font-weight:600;letter-spacing:.01em}
 .verdict{padding:11px 14px;border-radius:7px;margin:0 0 12px;font-size:.97rem;border:1px solid}
 .verdict.stop{background:#fdecec;border-color:#f0bcbc;color:#8d1c1c}
