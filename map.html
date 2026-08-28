@@ -45,8 +45,12 @@
     </div>
 
     <div class="psec tight" id="search-box">
-      <input type="text" id="search-input" placeholder="Search for a school by name">
-      <ul id="search-results"></ul>
+      <input type="text" id="search-input" autocomplete="off"
+             placeholder="School name, address or Eircode"
+             aria-label="Search by school name, address or Eircode">
+      <ul id="search-results" role="listbox"></ul>
+      <div class="searchhint">Type an address or Eircode to drop a pin and see
+        the nearest schools.</div>
     </div>
 
     <div class="psec tight">
@@ -56,16 +60,13 @@
     </div>
 
     <div class="psec" id="pin-box">
-      <span class="filter-label">Check an address</span>
-      <div class="pinrow">
-        <input type="text" id="pin-input" placeholder="Address or Eircode">
-        <button id="pin-go" class="btn-solid">Find</button>
-      </div>
+      <span class="filter-label">Nearest schools to a point</span>
       <div class="pinrow">
         <button id="pin-drop" class="filter-btn">Drop a pin on the map</button>
         <button id="pin-clear" class="filter-btn" style="display:none">Clear pin</button>
       </div>
-      <div class="filter-note">Shows the nearest schools and whether you would
+      <div class="filter-note">Search an address above, or drop a pin. Either way
+        you get the nearest schools, the distance to each, and whether you would
         qualify for school transport.</div>
       <div id="pin-status" class="filter-note"></div>
       <div id="pin-results"></div>

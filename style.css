@@ -141,7 +141,8 @@ h1, h2, h3, .title-main, .sb-name, .sb-fee-val, .filter-label {
 /* Search Bar */
 #search-box {
   position: relative;
-  padding: 12px 18px; /* Slightly tighter than main panels if desired, or same */
+  /* .psec sets the padding; this only needs to be a positioning context for
+     the results dropdown. */
 }
 #search-input {
   width: 100%;
@@ -628,3 +629,50 @@ h1, h2, h3, .title-main, .sb-name, .sb-fee-val, .filter-label {
 .marker-cluster-small div, .marker-cluster-medium div, .marker-cluster-large div {
   background: transparent;
 }
+
+/* ---------------------------------------------------------------------------
+   The unified search: one box for school names, addresses and Eircodes.
+--------------------------------------------------------------------------- */
+.searchhint { font-size: 11.5px; color: var(--faint); margin-top: 6px; line-height: 1.4; }
+
+#search-results li {
+  display: grid;
+  grid-template-columns: 62px 1fr;
+  grid-template-areas: "kind name" "kind sub";
+  gap: 0 10px;
+  padding: 9px 12px;
+  align-items: baseline;
+}
+#search-results li strong {
+  grid-area: name; font-weight: 600; font-size: 13px; color: var(--ink);
+  overflow-wrap: anywhere;
+}
+/* What kind of thing this row is, set in its own column so the eye can run
+   down it. Without this the address row is indistinguishable from a school
+   whose name happens to contain a number. */
+.sr-kind {
+  grid-area: kind; font-size: 10px; text-transform: uppercase;
+  letter-spacing: .06em; color: var(--faint); font-weight: 600;
+  padding-top: 2px;
+}
+.sr-sub { grid-area: sub; font-size: 11.5px; color: var(--soft); }
+#search-results li.sel, #search-results li:hover { background: var(--sunk); }
+#search-results li.sr-address .sr-kind { color: var(--accent); }
+#search-results li.sr-address { border-left: 2px solid var(--accent); }
+
+/* The nearest-schools panel gets a little emphasis once it holds something,
+   because it is the answer to the question that was just asked. */
+#pin-box.active { background: var(--sunk); }
+#pin-box.active #pin-status { color: var(--ink); }
+
+/* The dropdown is a floating card, so it should look like one: inset to the
+   same gutter as the input above it rather than bleeding to the panel edge,
+   and short enough that it never hides the whole panel behind it. */
+#search-results {
+  left: 16px; right: 16px;
+  top: calc(100% - 2px);
+  max-height: 252px;
+  border-radius: 8px;
+  padding: 4px 0;
+}
+#search-results li:last-child { border-bottom: none; }

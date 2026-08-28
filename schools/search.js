@@ -37,26 +37,53 @@
     return 2 + (pos > 12 ? 1 : 0);
   }
 
-  function render(rows, q) {
+  // An Eircode, or something with a house number in it, is an address rather
+  // than a school name. These pages hold no geocoder -- they are static files
+  // -- so the address row hands off to the map, which does.
+  var EIRCODE = /^[AC-FHKNPRTV-Y][0-9]{2}\s?[0-9AC-FHKNPRTV-Y]{4}$/i;
+  function looksLikeAddress(s) {
+    s = s.trim();
+    return EIRCODE.test(s) || /^\d+[a-z]?[\s,]/i.test(s) || (/,/.test(s) && /\d/.test(s));
+  }
+  function addressRow(q) {
+    return '<a class="q-hit q-addr" role="option" href="/map.html#addr=' +
+      encodeURIComponent(q) + '">' +
+      '<span class="q-name">Find schools near “' + q.replace(/[<>&]/g, '') + '”</span>' +
+      '<span class="q-meta">Opens the map, drops a pin and lists the nearest schools</span></a>';
+  }
+
+  // `q` is lowercased for matching; `raw` is what the person actually typed and
+  // is the only thing that should ever be shown back to them or handed to the
+  // map. Using q here turned "D02 X285" into "d02 x285" in the suggestion and
+  // in the link.
+  function render(rows, q, raw) {
     current = rows; activeIdx = -1;
+    raw = raw || q;
     if (!q) { panel.innerHTML = ''; panel.classList.remove('open'); return; }
-    if (!rows.length) {
-      panel.innerHTML = '<div class="q-none">No school matches “' +
-        q.replace(/[<>&]/g, '') + '”</div>';
-      panel.classList.add('open');
-      return;
-    }
-    panel.innerHTML = rows.map(function (r, i) {
+    var addressy = looksLikeAddress(raw);
+    // Eircodes are conventionally written in capitals.
+    if (EIRCODE.test(raw)) { raw = raw.toUpperCase(); }
+    var html = rows.map(function (r, i) {
       return '<a class="q-hit" role="option" data-i="' + i + '" href="' + r.u + '">' +
         '<span class="q-name">' + r.n + '</span>' +
         '<span class="q-meta">' + [r.t, r.a, r.c].filter(Boolean).join(' · ') + '</span></a>';
     }).join('');
+    if (addressy) {
+      html = addressRow(raw) + html;
+    } else if (!rows.length) {
+      html = '<div class="q-none">No school matches “' + raw.replace(/[<>&]/g, '') +
+             '”</div>' + addressRow(raw);
+    } else {
+      html = html + addressRow(raw);
+    }
+    panel.innerHTML = html;
     panel.classList.add('open');
   }
 
   function search() {
-    var q = input.value.trim().toLowerCase();
-    if (q.length < 2) { render([], ''); return; }
+    var raw = input.value.trim();
+    var q = raw.toLowerCase();
+    if (q.length < 2) { render([], '', ''); return; }
     load().then(function (rows) {
       var hits = [];
       for (var i = 0; i < rows.length; i++) {
@@ -65,7 +92,7 @@
         if (hits.length > 400) break;      // plenty to rank from
       }
       hits.sort(function (a, b) { return a[0] - b[0] || a[1].n.length - b[1].n.length; });
-      render(hits.slice(0, 8).map(function (h) { return h[1]; }), q);
+      render(hits.slice(0, 8).map(function (h) { return h[1]; }), q, raw);
     });
   }
 
@@ -89,7 +116,7 @@
       if (activeIdx >= 0 && hits[activeIdx]) { e.preventDefault(); location.href = hits[activeIdx].href; }
       else if (current.length) { e.preventDefault(); location.href = current[0].u; }
     } else if (e.key === 'Escape') {
-      input.value = ''; render([], '');
+      input.value = ''; render([], '', '');
     }
   });
 

@@ -793,34 +793,103 @@ map.on('click', function(e) {
 const searchInput = document.getElementById('search-input');
 const searchResults = document.getElementById('search-results');
 
+// ---------------------------------------------------------------------------
+// ONE SEARCH BOX FOR SCHOOLS AND ADDRESSES
+//
+// There used to be two: "Search for a school" up here, and a separate "Check an
+// address" box with its own Find button further down the panel. Anyone arriving
+// wanting to know what is near a house typed the address into the first one,
+// got nothing, and had no reason to think a second box existed.
+//
+// Now one box takes a school name, a street address or an Eircode, and works
+// out which it is being given.
+// ---------------------------------------------------------------------------
+
+// An Eircode is a routing key -- one letter, two digits -- then four
+// characters from the same restricted alphabet (no B, G, I, J, L, M, O, Q, S,
+// U, Z, which exist to stop lookalikes). Written with or without the space.
+const EIRCODE = /^[AC-FHKNPRTV-Y][0-9]{2}\s?[0-9AC-FHKNPRTV-Y]{4}$/i;
+// A US ZIP, for when the map is showing the States.
+const ZIP = /^[0-9]{5}(-[0-9]{4})?$/;
+
+function looksLikeAddress(q) {
+  const s = q.trim();
+  if (EIRCODE.test(s) || ZIP.test(s)) return true;
+  if (/^\d+[a-z]?[\s,]/i.test(s)) return true;   // "45 Newtown Park Avenue"
+  if (/,/.test(s) && /\d/.test(s)) return true;   // "Marlborough Road, Dublin 4"
+  return false;
+}
+
 let searchTimeout;
-searchInput.addEventListener('input', function() {
-  const q = this.value.toLowerCase().trim();
+let searchRows = [];      // [{el, run}] in display order
+let searchCursor = -1;
+
+function clearSearchResults() {
   searchResults.innerHTML = '';
-  if (q.length < 3) {
-    searchResults.style.display = 'none';
-    return;
-  }
-  
+  searchResults.style.display = 'none';
+  searchRows = [];
+  searchCursor = -1;
+}
+
+function highlight(i) {
+  searchRows.forEach((r, n) => r.el.classList.toggle('sel', n === i));
+  searchCursor = i;
+  if (searchRows[i]) searchRows[i].el.scrollIntoView({ block: 'nearest' });
+}
+
+function addRow(html, run, cls) {
+  const li = document.createElement('li');
+  li.innerHTML = html;
+  if (cls) li.className = cls;
+  li.onclick = run;
+  li.onmouseenter = () => highlight(searchRows.indexOf(row));
+  const row = { el: li, run: run };
+  searchRows.push(row);
+  searchResults.appendChild(li);
+  return row;
+}
+
+function esc(v) {
+  return String(v == null ? '' : v)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+searchInput.addEventListener('input', function () {
+  const raw = this.value.trim();
+  const q = raw.toLowerCase();
   clearTimeout(searchTimeout);
+  if (q.length < 3) { clearSearchResults(); return; }
+
   searchTimeout = setTimeout(async () => {
-    const { data, error } = await window.supabaseClient
-      .from('schools')
-      .select('*')
-      .ilike('name', `%${q}%`)
-      .limit(8);
-      
-    if (error || !data.length) {
-      searchResults.style.display = 'none';
-      return;
-    }
-    
-    // Add to global cache so clicking works without panning
+    clearSearchResults();
+    const addressy = looksLikeAddress(raw);
+
+    // The address option is always offered, and goes first when the query
+    // plainly is one. A school name can never be an Eircode, but "Blackrock"
+    // is both a school name and a place, so the choice stays with the reader
+    // rather than being guessed for them.
+    const addrRow = () => addRow(
+      '<span class="sr-kind">Address</span><strong>' + esc(raw) + '</strong>' +
+      '<span class="sr-sub">Put a pin here and list the nearest schools</span>',
+      () => { clearSearchResults(); geocodeQuery(raw); },
+      'sr-address');
+
+    if (addressy) addrRow();
+
+    // Nominatim asks for no more than one request a second and we are a guest
+    // there, so the geocoder is never called while someone is still typing --
+    // only when they choose the address row or press Enter on it.
+    let data = [];
+    try {
+      const res = await window.supabaseClient
+        .from('schools').select('*').ilike('name', `%${q}%`).limit(8);
+      data = res.data || [];
+    } catch (e) { data = []; }
+
     data.forEach(s => {
       if (!loadedSchoolIds.has(s.id)) {
         loadedSchoolIds.add(s.id);
         schools.push(s);
-        // Add to secondary map logic, but don't force render on map yet
         if (s.feeders) {
           feederMap[s.id] = s.feeders;
           s.feeders.forEach(secId => {
@@ -831,20 +900,47 @@ searchInput.addEventListener('input', function() {
       }
     });
 
-    searchResults.style.display = 'block';
-    data.forEach(match => {
-      const li = document.createElement('li');
-      li.innerHTML = `<strong>${match.name}</strong> <span style="color:#888;font-size:10px">(${match.area || match.state})</span>`;
-      li.onclick = () => {
+    data.forEach(match => addRow(
+      '<span class="sr-kind">School</span><strong>' + esc(match.name) + '</strong>' +
+      '<span class="sr-sub">' + esc(match.area || match.county || match.state || '') + '</span>',
+      () => {
         map.setView([match.lat, match.lng], 16);
         openSidebar(match);
         drawFeederLines(match);
         searchInput.value = '';
-        searchResults.style.display = 'none';
-      };
-      searchResults.appendChild(li);
-    });
-  }, 300);
+        clearSearchResults();
+      }));
+
+    if (!addressy) addrRow();
+
+    if (searchRows.length) {
+      searchResults.style.display = 'block';
+      highlight(0);
+    }
+  }, 250);
+});
+
+searchInput.addEventListener('keydown', function (e) {
+  if (!searchRows.length) {
+    // Enter on a query we never got suggestions for still does the useful
+    // thing rather than nothing at all.
+    if (e.key === 'Enter' && this.value.trim().length >= 3) {
+      e.preventDefault();
+      geocodeQuery(this.value.trim());
+    }
+    return;
+  }
+  if (e.key === 'ArrowDown') { e.preventDefault(); highlight((searchCursor + 1) % searchRows.length); }
+  else if (e.key === 'ArrowUp') { e.preventDefault(); highlight((searchCursor - 1 + searchRows.length) % searchRows.length); }
+  else if (e.key === 'Enter') {
+    e.preventDefault();
+    const row = searchRows[searchCursor] || searchRows[0];
+    if (row) row.run();
+  } else if (e.key === 'Escape') { clearSearchResults(); }
+});
+
+document.addEventListener('click', function (e) {
+  if (!searchResults.contains(e.target) && e.target !== searchInput) clearSearchResults();
 });
 
 // ============================================================
@@ -1126,24 +1222,72 @@ async function refreshNearest() {
   }
 }
 
-async function geocodePin() {
-  const q = document.getElementById('pin-input').value.trim();
+let mapRegion = 'IE';
+
+// Nominatim is a free service run on donated hardware. Their usage policy asks
+// for a real identifying User-Agent or Referer and no more than one request a
+// second. The Referer is sent automatically by the browser; the rate limit is
+// respected by only ever geocoding on a deliberate action -- never while
+// someone types.
+async function nominatim(q) {
+  const cc = mapRegion === 'US' ? 'us' : 'ie';
+  const url = 'https://nominatim.openstreetmap.org/search?format=json&limit=1'
+            + '&countrycodes=' + cc + '&q=' + encodeURIComponent(q);
+  const r = await fetch(url);
+  if (!r.ok) throw new Error('geocoder ' + r.status);
+  return await r.json();
+}
+
+async function geocodeQuery(q) {
+  q = (q || '').trim();
   if (!q) return;
   const st = document.getElementById('pin-status');
-  st.textContent = 'Searching…';
+  const say = (msg) => { if (st) st.textContent = msg; };
+  say('Looking up "' + q + '"…');
+  document.getElementById('pin-box').classList.add('active');
+
   try {
-    const r = await fetch('https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=ie&q='
-      + encodeURIComponent(q));
-    const data = await r.json();
+    let data = await nominatim(q);
+    let note = '';
+
+    // OpenStreetMap's Irish coverage is good at street level and patchy at
+    // house-number level: "45 Newtown Park Avenue, Blackrock" returns nothing
+    // while the street itself resolves fine. Rather than reporting failure for
+    // an address that plainly exists, drop the house number and say so. For
+    // this purpose -- which schools are near, and the 3.2 km and 4.8 km
+    // transport thresholds -- the street is precise enough.
+    if (!data.length && /^\d+[a-z]?[\s,]/i.test(q)) {
+      const street = q.replace(/^\d+[a-z]?[\s,]+/i, '');
+      data = await nominatim(street);
+      if (data.length) {
+        note = ' Found the street, not the house number — drag the pin to your door.';
+      }
+    }
+
     if (data.length) {
-      setPin(parseFloat(data[0].lat), parseFloat(data[0].lon), data[0].display_name);
+      setPin(parseFloat(data[0].lat), parseFloat(data[0].lon),
+             (data[0].display_name || q).split(',').slice(0, 3).join(',') + note);
     } else {
-      st.textContent = 'Address not found — try adding the area, or use "Drop pin on map".';
+      say('Could not find "' + q + '". An Eircode works best, or use "Drop a pin '
+        + 'on the map" and put it exactly where you want it.');
     }
   } catch (e) {
-    st.textContent = 'Lookup failed — use "Drop pin on map" instead.';
+    say('The address lookup is unavailable just now. Use "Drop a pin on the map" instead.');
   }
 }
+
+// Kept as a name because other code and older links refer to it.
+const geocodePin = () => geocodeQuery(searchInput.value);
+
+// An address handed over from another page: /map.html#addr=Blackrock%2C%20Dublin
+function openAddressFromHash() {
+  const m = /(?:^|[#&])addr=([^&]+)/.exec(location.hash || '');
+  if (!m) return;
+  const q = decodeURIComponent(m[1].replace(/\+/g, ' '));
+  if (searchInput) searchInput.value = q;
+  geocodeQuery(q);
+}
+window.addEventListener('hashchange', openAddressFromHash);
 
 // Guarded: see the note above the filter section. One missing element used to
 // take the whole page down with it.
@@ -1151,12 +1295,11 @@ const on = (id, ev, fn) => {
   const el = document.getElementById(id);
   if (el) { el.addEventListener(ev, fn); }
 };
-on('pin-go', 'click', geocodePin);
-on('pin-input', 'keydown', e => { if (e.key === 'Enter') geocodePin(); });
 on('pin-clear', 'click', clearPin);
-document.getElementById('pin-drop').addEventListener('click', () => {
+on('pin-drop', 'click', () => {
   pinDropMode = true;
-  document.getElementById('pin-status').textContent = 'Now click anywhere on the map…';
+  document.getElementById('pin-box').classList.add('active');
+  document.getElementById('pin-status').textContent = 'Now click the spot on the map.';
 });
 map.on('click', function (e) {
   if (pinDropMode) {
@@ -1171,6 +1314,7 @@ window.setRegion = function(region) {
   const ieFilters = document.getElementById('ie-filters');
   const usFilters = document.getElementById('us-filters');
   
+  mapRegion = region;
   if (region === 'US') {
     // The tabs are a segmented control now; the selected half is expressed
     // with aria-selected, which is both the accessible state and the hook the
@@ -1603,4 +1747,5 @@ window.addEventListener('hashchange', openSchoolFromHash);
 
 initApp();
 openSchoolFromHash();
+openAddressFromHash();
 

@@ -52,6 +52,8 @@ header.site nav{display:flex;gap:16px;margin-left:auto}
   background:var(--bg);border:1px solid var(--line);border-radius:8px;overflow:hidden;
   box-shadow:0 8px 26px -12px rgba(0,0,0,.45);max-height:340px;overflow-y:auto}
 #q-results.open{display:block}
+.q-addr{border-left:2px solid var(--accent)}
+.q-addr .q-name{font-weight:600}
 .q-hit{display:block;padding:8px 12px;text-decoration:none;color:var(--ink);
   border-bottom:1px solid var(--line)}
 .q-hit:last-child{border-bottom:none}
