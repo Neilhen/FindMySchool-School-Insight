@@ -76,17 +76,27 @@
     if (status) { status.remove(); }
     host.classList.add('ready');
 
-    var base = L.tileLayer(
-      'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
-      { maxNativeZoom: 16, maxZoom: 18, zIndex: 1,
-        attribution: '&copy; Esri, HERE, Garmin, &copy; OpenStreetMap contributors' });
-    var labels = L.tileLayer(
-      'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}',
-      { maxNativeZoom: 16, maxZoom: 18, zIndex: 2 });
+    // CARTO's light_all, the same basemap the full map uses. The key is
+    // domain-scoped and travels in every tile URL a browser requests, so it is
+    // public by nature -- the same class of thing as a Google Maps browser
+    // key. It also lives in app.js; change both together.
+    var CARTO_KEY = 'cb1_2g3f_1_4aa7b5e61a8c427fbd78ee9a';
+    var layers = CARTO_KEY
+      ? [L.tileLayer(
+          'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png?key=' + CARTO_KEY,
+          { attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+            subdomains: 'abcd', maxZoom: 18, detectRetina: true })]
+      : [L.tileLayer(
+          'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
+          { maxNativeZoom: 16, maxZoom: 18, zIndex: 1,
+            attribution: '&copy; Esri, HERE, Garmin, &copy; OpenStreetMap contributors' }),
+         L.tileLayer(
+          'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}',
+          { maxNativeZoom: 16, maxZoom: 18, zIndex: 2 })];
 
     var map = L.map(host, {
       center: [53.42, -7.95], zoom: 7, scrollWheelZoom: false,
-      layers: [base, labels]
+      layers: layers
     });
     // Scroll-wheel zoom is off until the map is clicked. A map that swallows
     // the page scroll on the way past is the single most irritating thing an
