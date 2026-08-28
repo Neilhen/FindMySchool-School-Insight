@@ -22,14 +22,18 @@
    file keeps working.
 --------------------------------------------------------------------------- */
 :root {
-  --paper:#FBFAF8;
+  /* Tell the browser this document is light. Without it, a machine in dark
+     appearance still renders the form controls and scrollbars dark -- so the
+     ethos dropdown and the search field came up black on a white panel. */
+  color-scheme: light;
+  --paper:#FFFFFF;
   --card:#FFFFFF;
-  --sunk:#F4F1EC;
-  --line:#E5E0D8;
-  --line-2:#D6CFC4;
-  --ink:#1B1917;
-  --soft:#5D564E;
-  --faint:#8C857A;
+  --sunk:#F6F5F2;
+  --line:#E5E2DB;
+  --line-2:#D4D0C7;
+  --ink:#1A1917;
+  --soft:#5A544C;
+  --faint:#8A837A;
   --accent:#33302B;
   --accent-ink:#FFFFFF;
   /* SELECTED, WITHOUT INVERTING.
@@ -39,7 +43,7 @@
      down a list your eye is trying to read straight down. Selection is now a
      warm tint, a darker border and a heavier weight -- three cues, only one
      of them colour, and the text never changes colour. */
-  --sel-bg:#EFE8DC;
+  --sel-bg:#F1ECE1;
   --sel-line:#33302B;
   --sel-ink:#1B1917;
   --muted-ink:#6E675C;   /* meets 4.5:1 on the sunk fill, unlike --faint */
@@ -236,7 +240,7 @@ h1, h2, h3, .title-main, .sb-name, .sb-fee-val, .filter-label {
      nothing reflows when a chip is selected. */
   box-shadow: inset 0 0 0 1px var(--sel-line);
 }
-.filter-btn.on:hover { background: #E8E0D1; }
+.filter-btn.on:hover { background: #EAE3D4; }
 /* The level chips carry a dot in the pin's colour, so the connection between
    "Primary" here and a blue dot on the map is visible rather than learned. */
 .lvdot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
