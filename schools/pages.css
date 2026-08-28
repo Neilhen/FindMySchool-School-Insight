@@ -1,9 +1,40 @@
 /* Static school pages. Deliberately small and dependency-free:
    these pages exist to be fast and indexable, not to be an application. */
-:root{--ink:#16202b;--soft:#5a6b7a;--faint:#8494a2;--line:#e2e8ee;
-      --bg:#ffffff;--sunk:#f5f8fa;--brand:#1a237e;--good:#1B5E20;--stop:#B71C1C}
-@media (prefers-color-scheme:dark){:root{--ink:#e8eef3;--soft:#a9b8c4;--faint:#7d8d9a;
-  --line:#26343f;--bg:#0f1720;--sunk:#16212b}}
+/* ONE PALETTE, USED BY EVERY PAGE INCLUDING THE MAP.
+   Warm neutrals, and a single accent that is a warm charcoal rather than a
+   colour. The rule the whole site follows: chrome is greyscale, and colour is
+   reserved for things that MEAN something -- a school's level on the map, and
+   whether a school was oversubscribed. When the furniture is coloured too,
+   none of it reads as significant. */
+:root{
+  --bg:#FBFAF8;        /* paper, very slightly warm */
+  --card:#FFFFFF;
+  --sunk:#F4F1EC;      /* quiet fill: table headers, chips at rest */
+  --line:#E5E0D8;
+  --line-2:#D6CFC4;
+  --ink:#1B1917;       /* warm near-black */
+  --soft:#5D564E;
+  --faint:#8C857A;
+  --accent:#33302B;    /* the one accent: active states, primary buttons */
+  --accent-ink:#FFFFFF;
+  --brand:#1B1917;
+  /* Meaning, not decoration. Muted to sit inside a warm neutral page. */
+  --stop:#8A3A2C;--stop-bg:#F8ECE8;--stop-line:#E8CFC7;
+  --warn:#87661E;--warn-bg:#FAF2E1;--warn-line:#EBDCB8;
+  --good:#3E5A3B;--good-bg:#EEF3EB;--good-line:#D3E0CE;
+  /* School level. The only categorical colour in the system, and it exists
+     because these are the colours of the pins on the map. */
+  --lv-preschool:#2E7D6B;--lv-primary:#2F5D8A;
+  --lv-secondary:#6B4A7D;--lv-special:#A9552F;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#14120F;--card:#1B1815;--sunk:#211E1A;--line:#302B25;--line-2:#3D372F;
+  --ink:#EDE8E1;--soft:#B0A79B;--faint:#8A8175;
+  --accent:#EDE8E1;--accent-ink:#1B1815;--brand:#EDE8E1;
+  --stop:#E8A99B;--stop-bg:#2A1C18;--stop-line:#4A322A;
+  --warn:#E0C384;--warn-bg:#26200F;--warn-line:#463A1E;
+  --good:#A9CBA3;--good-bg:#182118;--good-line:#2C3B2B;
+}}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
   font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
@@ -46,13 +77,13 @@ table.facts th{text-align:left;font-weight:600;color:var(--soft);width:38%;
   padding:9px 12px 9px 0;border-bottom:1px solid var(--line);vertical-align:top;font-size:.92rem}
 table.facts td{padding:9px 0;border-bottom:1px solid var(--line);vertical-align:top}
 .banner{padding:12px 16px;border-radius:6px;margin:0 0 16px;font-size:.95rem}
-.banner.stop{background:#fdecec;color:var(--stop);border:1px solid #f3c0c0}
-@media (prefers-color-scheme:dark){.banner.stop{background:#2a1113;border-color:#5a2226}}
+.banner.stop{background:var(--stop-bg);color:var(--stop);border:1px solid var(--stop-line)}
 .actions{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 8px}
-.btn{display:inline-block;padding:9px 16px;border-radius:8px;background:var(--brand);
+.btn{display:inline-block;padding:9px 16px;border-radius:7px;background:var(--accent);
   color:#fff;text-decoration:none;border:1px solid var(--brand);cursor:pointer;font-size:14px}
-.btn.ghost{background:transparent;color:var(--brand)}
-.btn[aria-pressed="true"]{background:var(--good);border-color:var(--good);color:#fff}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line-2)}
+.btn.ghost:hover{background:var(--sunk)}
+.btn[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 ul.listing{list-style:none;padding:0;margin:0;columns:2;column-gap:28px}
 ul.listing li{break-inside:avoid;padding:5px 0;border-bottom:1px solid var(--line)}
 ul.listing .thin{display:block}
@@ -90,27 +121,30 @@ table.cal td.when{white-space:nowrap;font-variant-numeric:tabular-nums;color:var
   margin:10px 0 0;font-size:.85rem;color:var(--soft)}
 .maplegend .dot{width:10px;height:10px;border-radius:50%;display:inline-block;
   margin-right:5px;vertical-align:-1px}
-.maplegend .dot.primary{background:#2563eb}
-.maplegend .dot.secondary{background:#7c3aed}
-.maplegend .dot.special{background:#c2410c}
-.maplegend .dot.preschool{background:#0f766e}
+.maplegend .dot.primary{background:var(--lv-primary)}
+.maplegend .dot.secondary{background:var(--lv-secondary)}
+.maplegend .dot.special{background:var(--lv-special)}
+.maplegend .dot.preschool{background:var(--lv-preschool)}
 .hm-name{display:block;font-weight:600;margin-bottom:2px}
 .hm-meta{display:block;color:var(--soft);font-size:.85rem}
 .hm-ratio,.hm-sc{display:block;margin-top:5px;font-size:.85rem;font-weight:600}
-.hm-ratio{color:#8d1c1c}
-.hm-sc{color:#1d5b2b}
+.hm-ratio{color:var(--stop)}
+.hm-sc{color:var(--good)}
 .leaflet-container{font:inherit}
+.hm-cluster .cl{width:100%;height:100%;border-radius:50%;display:flex;
+  align-items:center;justify-content:center;background:rgba(255,255,255,.94);
+  border:1.5px solid var(--line-2);color:#1B1917;font-weight:600;font-size:12px;
+  box-shadow:0 1px 4px rgba(28,26,23,.18)}
+.marker-cluster-small,.marker-cluster-medium,.marker-cluster-large,
+.marker-cluster-small div,.marker-cluster-medium div,.marker-cluster-large div{
+  background:transparent}
 h3.calmonth{margin:22px 0 8px;font-size:1.02rem;color:var(--soft);font-weight:600;letter-spacing:.01em}
 .verdict{padding:11px 14px;border-radius:7px;margin:0 0 12px;font-size:.97rem;border:1px solid}
-.verdict.stop{background:#fdecec;border-color:#f0bcbc;color:#8d1c1c}
-.verdict.warn{background:#fdf3e3;border-color:#f0d9ac;color:#7a5410}
-.verdict.go{background:#eaf5ec;border-color:#c2e0c9;color:#1d5b2b}
-@media (prefers-color-scheme:dark){
-  .verdict.stop{background:#2a1113;border-color:#5a2226;color:#f0b4b4}
-  .verdict.warn{background:#2b2110;border-color:#5b4720;color:#e6c489}
-  .verdict.go{background:#12251a;border-color:#265234;color:#a6d7b3}}
+.verdict.stop{background:var(--stop-bg);border-color:var(--stop-line);color:var(--stop)}
+.verdict.warn{background:var(--warn-bg);border-color:var(--warn-line);color:var(--warn)}
+.verdict.go{background:var(--good-bg);border-color:var(--good-line);color:var(--good)}
 .hero{padding:12px 0 4px}
-.hero h1{max-width:16ch}
+.hero h1{max-width:22ch}
 .herofind{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 6px}
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1px;
   background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden;margin:8px 0 4px}

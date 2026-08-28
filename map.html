@@ -28,62 +28,60 @@
 
 <div id="ui-container">
   <div class="panel">
-    <!-- A real <h1>, not a styled div: this page has one subject and both a
-         screen reader and a crawler should be told what it is. The class keeps
-         it looking exactly as it did. -->
-    <h1 class="title-main" id="app-title">School map of Ireland and the USA</h1>
-    <div class="title-sub">Find schools in your area</div>
-    
-    <!-- Region Toggle -->
-    <div style="display:flex; gap: 4px; margin-top: 10px; background: #e0e6ed; padding: 4px; border-radius: 8px;">
-      <button id="region-ie" onclick="setRegion('IE')" class="filter-btn" style="flex:1; border:none; text-align:center; font-weight:600; background:#1a237e; color:white;">🇮🇪 Ireland</button>
-      <button id="region-us" onclick="setRegion('US')" class="filter-btn" style="flex:1; border:none; text-align:center; font-weight:600; background:transparent;">🇺🇸 USA</button>
-    </div>
-    <div style="display:flex; gap:8px; margin-top:8px; font-size:12px;">
-      <a href="/" style="color:#1a237e; text-decoration:none;">← Home</a>
-      <a href="/schools/" style="color:#1a237e; text-decoration:none;">All schools</a>
-      <a href="/compare.html" id="nav-compare" style="color:#1a237e; text-decoration:none; margin-left:auto;">Shortlist</a>
-    </div>
-  </div>
 
-  <div class="panel" id="search-box">
-    <input type="text" id="search-input" placeholder="Search for a school...">
-    <ul id="search-results"></ul>
-  </div>
-
-
-  <div class="panel" id="pin-box">
-    <span class="filter-label">📍 Check an address</span>
-    <div style="display:flex; gap:6px; margin-top:4px;">
-      <input type="text" id="pin-input" placeholder="Address or Eircode..."
-             style="flex:1; padding:8px 10px; border-radius:8px; border:1px solid var(--border); font-size:13px; outline:none;">
-      <button id="pin-go" class="filter-btn" style="border:1px solid #1a237e; background:#1a237e; color:#fff;">Find</button>
+    <div class="psec">
+      <h1 class="title-main" id="app-title">Find a school</h1>
+      <div class="title-sub">Every school in Ireland and the USA, on one map</div>
+      <div class="regiontabs" role="tablist" aria-label="Region">
+        <button id="region-ie" onclick="setRegion('IE')" role="tab" aria-selected="true">Ireland</button>
+        <button id="region-us" onclick="setRegion('US')" role="tab" aria-selected="false">USA</button>
+      </div>
+      <nav class="maplinks">
+        <a href="/">Home</a>
+        <a href="/schools/">All schools</a>
+        <a href="/admissions-calendar.html">Deadlines</a>
+        <a href="/compare.html" id="nav-compare">Shortlist</a>
+      </nav>
     </div>
-    <div style="display:flex; gap:6px; margin-top:6px;">
-      <button id="pin-drop" class="filter-btn" style="border:1px solid #666;">Drop pin on map</button>
-      <button id="pin-clear" class="filter-btn" style="border:1px solid #999; display:none;">Clear pin</button>
-    </div>
-    <div id="pin-status" style="font-size:11px; color:#777; margin-top:5px;"></div>
-    <div id="pin-results" style="max-height:290px; overflow-y:auto; margin-top:6px; font-size:12px;"></div>
-  </div>
 
-  <div class="panel">
-    <div class="collapsible-header" id="filters-header">
-      <span>Filters & Layers</span>
-      <span id="filters-icon">▼</span>
+    <div class="psec tight" id="search-box">
+      <input type="text" id="search-input" placeholder="Search for a school by name">
+      <ul id="search-results"></ul>
     </div>
-    <div class="collapsible-content" id="filters-content">
-      
+
+    <div class="psec tight">
+      <div id="result-count"><strong>&nbsp;</strong> <span>schools shown</span>
+        <button id="clear-filters" hidden>Clear filters</button>
+      </div>
+    </div>
+
+    <div class="psec" id="pin-box">
+      <span class="filter-label">Check an address</span>
+      <div class="pinrow">
+        <input type="text" id="pin-input" placeholder="Address or Eircode">
+        <button id="pin-go" class="btn-solid">Find</button>
+      </div>
+      <div class="pinrow">
+        <button id="pin-drop" class="filter-btn">Drop a pin on the map</button>
+        <button id="pin-clear" class="filter-btn" style="display:none">Clear pin</button>
+      </div>
+      <div class="filter-note">Shows the nearest schools and whether you would
+        qualify for school transport.</div>
+      <div id="pin-status" class="filter-note"></div>
+      <div id="pin-results"></div>
+    </div>
+
+    <div class="psec pscroll">
       <div class="filter-group">
         <span class="filter-label">Level</span>
         <div class="filter-btns">
-          <button class="filter-btn" id="f-preschool" onclick="toggleFilter('preschool')">Pre-school</button>
-          <button class="filter-btn" id="f-primary" onclick="toggleFilter('primary')">Primary</button>
-          <button class="filter-btn" id="f-secondary" onclick="toggleFilter('secondary')">Secondary</button>
-          <button class="filter-btn" id="f-special" onclick="toggleFilter('special')">Special</button>
+          <button class="filter-btn" id="f-preschool" onclick="toggleFilter('preschool')"><span class="lvdot preschool"></span>Pre-school</button>
+          <button class="filter-btn" id="f-primary" onclick="toggleFilter('primary')"><span class="lvdot primary"></span>Primary</button>
+          <button class="filter-btn" id="f-secondary" onclick="toggleFilter('secondary')"><span class="lvdot secondary"></span>Secondary</button>
+          <button class="filter-btn" id="f-special" onclick="toggleFilter('special')"><span class="lvdot special"></span>Special</button>
         </div>
       </div>
-      
+
       <div class="filter-group">
         <span class="filter-label">Gender</span>
         <div class="filter-btns">
@@ -92,7 +90,7 @@
           <button class="filter-btn" id="f-coed" onclick="toggleFilter('coed')">Co-ed</button>
         </div>
       </div>
-      
+
       <div class="filter-group">
         <span class="filter-label">Fees</span>
         <div class="filter-btns">
@@ -100,36 +98,27 @@
           <button class="filter-btn" id="f-free" onclick="toggleFilter('free')">Free</button>
         </div>
       </div>
-      
+
       <div class="filter-group">
-        <span class="filter-label">Denomination / ethos</span>
-        <select id="f-ethos" style="width:100%;padding:6px;border:1px solid #ccc;border-radius:4px;font-size:12px;">
+        <span class="filter-label">Denomination or ethos</span>
+        <select id="f-ethos">
           <option value="">Any denomination</option>
           <option value="Catholic">Catholic</option>
           <option value="Multi-denominational">Multi-denominational</option>
           <option value="Inter-denominational">Inter-denominational</option>
           <option value="Church of Ireland">Church of Ireland</option>
           <option value="Nonsectarian">Nonsectarian (US public)</option>
-          <option value="__other">Other / minority faith</option>
+          <option value="__other">Other or minority faith</option>
         </select>
       </div>
 
-      <div class="filter-group" id="ie-filters">
-        <span class="filter-label">Special (IE)</span>
-        <div class="filter-btns">
-          <button class="filter-btn" id="f-irish" onclick="toggleFilter('irish')">★ Irish-medium</button>
-          <button class="filter-btn" id="f-boarding" onclick="toggleFilter('boarding')">Boarding</button>
-        </div>
-      </div>
-
       <div class="filter-group">
-        <span class="filter-label">Admissions</span>
+        <span class="filter-label">Getting in</span>
         <div class="filter-btns">
-          <button class="filter-btn" id="f-oversubscribed" onclick="toggleFilter('oversubscribed')">Oversubscribed</button>
+          <button class="filter-btn" id="f-oversubscribed" onclick="toggleFilter('oversubscribed')">Oversubscribed last year</button>
         </div>
-        <div style="font-size:10px;color:#777;margin-top:4px;line-height:1.35">
-          Schools whose Annual Admission Notice shows more applicants than places.
-        </div>
+        <div class="filter-note">Schools whose Annual Admission Notice shows more
+          applicants than places.</div>
       </div>
 
       <div class="filter-group">
@@ -138,8 +127,15 @@
           <button class="filter-btn" id="f-hasSpecialClass" onclick="toggleFilter('hasSpecialClass')">Has a special class</button>
           <button class="filter-btn" id="f-newSpecialClass" onclick="toggleFilter('newSpecialClass')">Opening a new one</button>
         </div>
-        <div style="font-size:10px;color:#777;margin-top:4px;line-height:1.35">
-          NCSE sanctioned classes. Turning one on shows only schools that have it.
+        <div class="filter-note">NCSE-sanctioned classes. A sanctioned class is not
+          a free place — ring the school.</div>
+      </div>
+
+      <div class="filter-group" id="ie-filters">
+        <span class="filter-label">Language and boarding</span>
+        <div class="filter-btns">
+          <button class="filter-btn" id="f-irish" onclick="toggleFilter('irish')">Irish-medium</button>
+          <button class="filter-btn" id="f-boarding" onclick="toggleFilter('boarding')">Boarding</button>
         </div>
       </div>
 
@@ -158,11 +154,9 @@
           <button class="filter-btn" id="f-layer-spa" onclick="toggleBoundaryLayer('spa')">Planning areas (IE)</button>
           <button class="filter-btn" id="f-layer-district" onclick="toggleBoundaryLayer('district')">School districts (US)</button>
         </div>
-        <div style="font-size:10px;color:#777;margin-top:4px;line-height:1.35">
-          Neither layer is a catchment. Ireland has no catchment areas in law;
-          the US stopped publishing attendance boundaries in 2016.
-          <a href="#" onclick="showBoundaryExplainer();return false;">Why →</a>
-        </div>
+        <div class="filter-note">Neither is a catchment. Ireland has no catchment
+          areas in law; the US stopped publishing attendance boundaries in 2016.
+          <a href="#" onclick="showBoundaryExplainer();return false;">Why</a></div>
       </div>
 
       <div class="filter-group">
@@ -172,6 +166,7 @@
         </div>
       </div>
     </div>
+
   </div>
 </div>
 

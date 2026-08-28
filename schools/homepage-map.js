@@ -26,10 +26,10 @@
   var CLUSTER_JS  = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.js';
 
   var COLOUR = {
-    primary:   '#2563eb',
-    secondary: '#7c3aed',
-    special:   '#c2410c',
-    preschool: '#0f766e'
+    primary:   '#2F5D8A',
+    secondary: '#6B4A7D',
+    special:   '#A9552F',
+    preschool: '#2E7D6B'
   };
 
   function css(href) {
@@ -94,7 +94,19 @@
     map.once('click', function () { map.scrollWheelZoom.enable(); });
 
     var cluster = L.markerClusterGroup({
-      chunkedLoading: true, maxClusterRadius: 55, showCoverageOnHover: false
+      chunkedLoading: true, maxClusterRadius: 55, showCoverageOnHover: false,
+      // Same rule as the full map: a cluster is a count, so it grows rather
+      // than changing colour. Colour on this map means what kind of school
+      // something is, and markercluster's default green/amber/red would say
+      // "few / some / many" in exactly the palette we use for meaning.
+      iconCreateFunction: function (c) {
+        var n = c.getChildCount();
+        var size = n < 10 ? 30 : n < 100 ? 36 : n < 1000 ? 42 : 48;
+        return L.divIcon({
+          html: '<div class="cl">' + (n > 999 ? (n / 1000).toFixed(1) + 'k' : n) + '</div>',
+          className: 'hm-cluster', iconSize: L.point(size, size)
+        });
+      }
     });
 
     rows.forEach(function (s) {

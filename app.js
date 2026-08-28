@@ -23,13 +23,35 @@ const ESRI_CANVAS = {
   maxNativeZoom: 16, maxZoom: 19,
   attribution: '&copy; Esri, HERE, Garmin, &copy; OpenStreetMap contributors'
 };
+// CARTO, if and when you have a key.
+//
+// CARTO's light_all was the original basemap and is still the nicest-looking
+// of the free options. They now require a key: request one at
+// carto.com/basemaps/apikey -- email, domain, one line on what you are
+// building, no account, key back by return. Free tier is 5 million tile
+// requests a month and the CARTO + OpenStreetMap attribution must stay
+// visible, which it does below.
+//
+// Paste the key here and CARTO becomes the default basemap; leave it empty and
+// the Esri canvas is used. The key is not a secret -- it is domain-scoped and
+// travels in every tile URL a visitor's browser requests, exactly like a
+// Google Maps browser key -- so it belongs in the code rather than in .env.
+const CARTO_KEY = '';
+
+const cartoLight = CARTO_KEY ? L.tileLayer(
+  'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png?key=' + CARTO_KEY, {
+  attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+  subdomains: 'abcd', maxZoom: 19
+}) : null;
+
 const lightBase = L.tileLayer(
   'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
   { ...ESRI_CANVAS, zIndex: 1 });
 const lightLabels = L.tileLayer(
   'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}',
   { ...ESRI_CANVAS, attribution: '', zIndex: 2 });
-const lightMap = L.layerGroup([lightBase, lightLabels]);
+// CARTO when a key is set, the Esri canvas otherwise. One line to switch.
+const lightMap = cartoLight || L.layerGroup([lightBase, lightLabels]);
 const streetMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; OpenStreetMap contributors', maxZoom: 19
 });
@@ -248,6 +270,14 @@ async function fetchSchoolsInBounds() {
       }
     }
   });
+  // Schools stream in as the map is panned, so the count has to be refreshed
+  // here as well as on a filter change -- otherwise it reads blank until the
+  // first time someone touches a filter, which is exactly when they least need
+  // to be told how many schools there are.
+  if (typeof updateCount === 'function') {
+    updateCount(allMarkers.filter(m => passesFilters(m._schoolData)).length,
+                allMarkers.length);
+  }
 }
 
 map.on('moveend', fetchSchoolsInBounds);
@@ -257,24 +287,41 @@ map.on('zoomend', fetchSchoolsInBounds);
 // ============================================================
 // COLOUR SCHEME
 // ============================================================
+// Pins encode ONE thing: what kind of school it is.
+//
+// They used to encode two at once -- gender crossed with fee status -- in
+// seven colours: navy boys-feepaying, light-blue boys-free, crimson
+// girls-feepaying, pink girls-free, purple coed-feepaying, lilac coed-free,
+// green preschool. Nobody can hold that key in their head, and both of those
+// dimensions already have their own filters, so the colour was spending the
+// map's whole colour budget restating things you could switch on and off.
+//
+// Level is the one dimension people actually scan for, it is the same
+// dimension the homepage map uses, and it is now the same four colours as the
+// dots on the Level filter chips -- so the key is on screen at all times
+// instead of being something you have to learn.
 const COLORS = {
-  boys_feepaying: { fill:'#1e40af', stroke:'#1e3a8a' }, boys_free: { fill:'#60a5fa', stroke:'#2563eb' },
-  girls_feepaying:{ fill:'#be185d', stroke:'#9d174d' }, girls_free: { fill:'#f472b6', stroke:'#db2777' },
-  coed_feepaying: { fill:'#6b21a8', stroke:'#581c87' }, coed_free: { fill:'#c084fc', stroke:'#9333ea' },
-  preschool:      { fill:'#16a34a', stroke:'#15803d' },
+  preschool: { fill:'#2E7D6B', stroke:'#215D50' },
+  primary:   { fill:'#2F5D8A', stroke:'#234769' },
+  secondary: { fill:'#6B4A7D', stroke:'#513960' },
+  special:   { fill:'#A9552F', stroke:'#7F3F23' },
 };
-function getC(gender, fees) { return COLORS[`${gender}_${fees}`] || COLORS.coed_feepaying; }
 
 function createIcon(school) {
+  const c = COLORS[school.type] || COLORS.primary;
   const isPreschool = school.type === 'preschool';
   const isSpecial = school.type === 'special';
-  const c = isPreschool ? COLORS.preschool : isSpecial ? {fill:'#FB8C00',stroke:'#E65100'} : getC(school.gender, school.fees);
-  const size = school.type === 'secondary' ? 22 : isPreschool ? 14 : 16;
-  const star = school.irish ? `<div style="position:absolute;top:-5px;right:-5px;width:12px;height:12px;background:#F9A825;border-radius:50%;border:1.5px solid #BF360C;font-size:9px;display:flex;align-items:center;justify-content:center;color:#333;z-index:2">★</div>` : '';
-  const shape = (isPreschool || isSpecial) ? `border-radius:3px` : `border-radius:50%`;
+  const size = school.type === 'secondary' ? 20 : isPreschool ? 13 : 15;
+  // Shape carries a second, coarser distinction so the map is still readable
+  // in greyscale and to anyone who cannot separate these hues: the two
+  // non-mainstream types are squares, mainstream schools are circles.
+  const shape = (isPreschool || isSpecial) ? 'border-radius:3px' : 'border-radius:50%';
+  const star = school.irish
+    ? '<div class="pin-star">\u2605</div>'
+    : '';
   return L.divIcon({
-    html: `<div style="position:relative;width:${size}px;height:${size}px">
-      <div style="width:${size}px;height:${size}px;${shape};background:${c.fill};border:2.5px solid ${c.stroke};box-shadow:0 2px 6px rgba(0,0,0,.4)"></div>
+    html: `<div class="pin-wrap" style="width:${size}px;height:${size}px">
+      <div style="width:${size}px;height:${size}px;${shape};background:${c.fill};border:2px solid ${c.stroke};box-shadow:0 1px 3px rgba(28,26,23,.35)"></div>
       ${star}
     </div>`,
     className: '', iconSize: [size, size], iconAnchor: [size/2, size/2]
@@ -287,7 +334,15 @@ function createIcon(school) {
 const markersGroup = L.markerClusterGroup({
   maxClusterRadius: 40,
   iconCreateFunction: function(cluster) {
-    return L.divIcon({ html: '<div style="background:var(--primary);color:white;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;box-shadow:0 2px 5px rgba(0,0,0,0.3);border:2px solid white;">' + cluster.getChildCount() + '</div>', className: 'custom-cluster', iconSize: L.point(30, 30) });
+    // A cluster is a count, not a category, so it gets no colour of its own --
+    // it grows instead. Solid dark circles at a fixed size read as heavier
+    // than the individual pins they stand for, which is backwards.
+    const n = cluster.getChildCount();
+    const size = n < 10 ? 30 : n < 100 ? 36 : n < 1000 ? 42 : 48;
+    return L.divIcon({
+      html: '<div class="cl">' + (n > 999 ? (n / 1000).toFixed(1) + 'k' : n) + '</div>',
+      className: 'custom-cluster', iconSize: L.point(size, size)
+    });
   }
 });
 
@@ -409,21 +464,15 @@ function openSidebar(data) {
   if (typeof Shortlist !== 'undefined') {
     const onList = Shortlist.read().indexOf(data.id) >= 0;
     sbFee.insertAdjacentHTML('afterend',
-      `<div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
-         <button id="sb-shortlist" style="padding:7px 13px;border-radius:7px;cursor:pointer;font-size:13px;
-           border:1px solid ${onList ? '#1B5E20' : '#1a237e'};
-           background:${onList ? '#1B5E20' : 'transparent'};
-           color:${onList ? '#fff' : '#1a237e'}">
-           ${onList ? '★ On your shortlist' : '☆ Add to shortlist'}</button>
-         <a href="/compare.html" style="padding:7px 13px;border-radius:7px;font-size:13px;
-           border:1px solid #999;color:#444;text-decoration:none">Compare shortlist</a>
+      `<div class="sb-actions">
+         <button id="sb-shortlist" class="filter-btn${onList ? ' on' : ''}">
+           ${onList ? 'On your shortlist' : 'Add to shortlist'}</button>
+         <a class="filter-btn" href="/compare.html">Compare shortlist</a>
        </div>`);
     document.getElementById('sb-shortlist').onclick = function () {
       const nowOn = Shortlist.toggle(data.id);
-      this.textContent = nowOn ? '★ On your shortlist' : '☆ Add to shortlist';
-      this.style.background = nowOn ? '#1B5E20' : 'transparent';
-      this.style.color = nowOn ? '#fff' : '#1a237e';
-      this.style.borderColor = nowOn ? '#1B5E20' : '#1a237e';
+      this.textContent = nowOn ? 'On your shortlist' : 'Add to shortlist';
+      this.classList.toggle('on', nowOn);
       const nav = document.getElementById('nav-compare');
       const n = Shortlist.read().length;
       if (nav) nav.textContent = n ? `Shortlist (${n})` : 'Shortlist';
@@ -438,7 +487,7 @@ function openSidebar(data) {
   // distance from the home pin, if one is set
   if (typeof homePin !== 'undefined' && homePin) {
     const d = pinDistKm(data.lat, data.lng);
-    locHTML += `<br><strong style="color:#1a237e;">📏 ${d.toFixed(1)} km from your pin</strong>`;
+    locHTML += `<br><strong style="color:var(--ink)">${d.toFixed(1)} km from your pin</strong>`;
     const rule = RADIUS_RULES[data.id];
     if (rule) {
       if (rule.km) {
@@ -792,18 +841,16 @@ searchInput.addEventListener('input', function() {
 // ============================================================
 // FILTER LOGIC
 // ============================================================
-const filtersHeader = document.getElementById('filters-header');
-const filtersContent = document.getElementById('filters-content');
-const filtersIcon = document.getElementById('filters-icon');
-filtersHeader.addEventListener('click', () => {
-  if (filtersContent.style.display === 'none') {
-    filtersContent.style.display = 'block';
-    filtersIcon.textContent = '▼';
-  } else {
-    filtersContent.style.display = 'none';
-    filtersIcon.textContent = '▶';
-  }
-});
+// The filters used to live behind a "Filters & Layers ▼" collapsible. That
+// header is gone: hiding the filter list is the opposite of letting someone
+// see what the map offers, and the list now scrolls inside the panel instead.
+//
+// It is worth recording why this mattered more than it looks. When the header
+// was removed from the markup, this block still bound a click handler to it
+// unguarded, threw on a null element, and killed every line of script after
+// it -- so no filter was painted, no marker was drawn and the map came up
+// empty. A missing element must never be able to do that, which is why every
+// lookup added since is guarded.
 
 const activeFilters = {
   preschool:true, primary:true, secondary:true, special:true,
@@ -816,21 +863,41 @@ const activeFilters = {
   // buttons above, so they start off.
   hasSpecialClass:false, newSpecialClass:false, oversubscribed:false
 };
-const btnCols = {
-  preschool:'#16a34a', primary:'#0369a1', secondary:'#6b21a8', special:'#ea580c',
-  boys:'#1e40af', girls:'#be185d', coed:'#6b21a8',
-  feepaying:'#c2410c', free:'#15803d', irish:'#ca8a04', charter:'#ca8a04',
-  boarding:'#0f766e', public:'#0369a1', private:'#c2410c', closed:'#6b7280',
-  hasSpecialClass:'#4527A0', newSpecialClass:'#1B5E20', oversubscribed:'#B71C1C'
-};
-
-Object.keys(activeFilters).forEach(k => {
-  const btn = document.getElementById('f-'+k);
+// Frozen copy of the starting state, so "Clear filters" restores the defaults
+// rather than turning everything on -- which for the three restrictive filters
+// would be the opposite of clearing them.
+const DEFAULT_FILTERS = Object.freeze({ ...activeFilters });
+// Filter buttons used to be painted from a seventeen-entry colour table --
+// green Pre-school, blue Primary, purple Secondary, orange Special, crimson
+// Girls, gold Irish-medium, and so on. None of it encoded anything the label
+// did not already say, and all of it competed with the pins on the map, which
+// use colour to mean something. The state is now carried by one class, and the
+// look lives in the stylesheet where it belongs.
+// Two kinds of filter, and they need opposite treatments.
+//
+// Most start ON and mean "show these" -- every level, both fee statuses, all
+// three genders. Painting all fourteen of those dark on load produced a wall
+// of black chips in which nothing stood out, and it was also the wrong signal:
+// nothing has been chosen yet. For these, the state worth showing is the one
+// that is UNUSUAL, so an excluded option goes muted and struck through, and
+// the default panel is calm.
+//
+// A few start OFF and mean "only show schools with this" -- oversubscribed,
+// has a special class, show closed. Those genuinely are a constraint the
+// person added, so they get the solid dark fill.
+function paintFilter(key) {
+  const btn = document.getElementById('f-' + key);
   if (!btn) return;
-  btn.style.borderColor = btnCols[k];
-  btn.style.background = activeFilters[k] ? btnCols[k] : 'white';
-  btn.style.color = activeFilters[k] ? 'white' : btnCols[k];
-});
+  const active = !!activeFilters[key];
+  const restrictive = DEFAULT_FILTERS[key] === false;
+  btn.classList.toggle('on', restrictive && active);
+  btn.classList.toggle('off', !restrictive && !active);
+  btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+}
+Object.keys(activeFilters).forEach(paintFilter);
+
+const clearBtn = document.getElementById('clear-filters');
+if (clearBtn) { clearBtn.addEventListener('click', window.clearAllFilters); }
 
 // Denomination dropdown -- one control rather than eleven buttons, because the
 // ethos values are now normalised (they used to be split by capitalisation,
@@ -845,22 +912,42 @@ if (ethosSelect) {
 
 function refreshMarkers() {
   markersGroup.clearLayers();
-  markersGroup.addLayers(allMarkers.filter(m => passesFilters(m._schoolData)));
+  const shown = allMarkers.filter(m => passesFilters(m._schoolData));
+  markersGroup.addLayers(shown);
   clearLines();
   clearParishes();
+  updateCount(shown.length, allMarkers.length);
 }
+
+// "What is available" was previously answerable only by counting pins. This
+// says it in words, and -- just as usefully -- says when a filter is hiding
+// things, which is the state people get stuck in and cannot see.
+function updateCount(shown, total) {
+  const box = document.getElementById('result-count');
+  if (!box) return;
+  const filtered = shown !== total;
+  box.querySelector('strong').textContent = shown.toLocaleString();
+  box.querySelector('span').textContent = filtered
+    ? 'of ' + total.toLocaleString() + ' schools shown'
+    : (shown === 1 ? 'school' : 'schools');
+  const clear = document.getElementById('clear-filters');
+  if (clear) { clear.hidden = !filtered; }
+}
+
+window.clearAllFilters = function () {
+  Object.keys(activeFilters).forEach(function (k) {
+    activeFilters[k] = DEFAULT_FILTERS[k];
+    paintFilter(k);
+  });
+  const es = document.getElementById('f-ethos');
+  if (es) { es.value = ''; }
+  ethosFilter = '';
+  refreshMarkers();
+};
 
 window.toggleFilter = function(key) {
   activeFilters[key] = !activeFilters[key];
-  const btn = document.getElementById('f-'+key);
-  if (activeFilters[key]) {
-    btn.style.background = btnCols[key];
-    btn.style.color = 'white';
-  } else {
-    btn.style.background = 'white';
-    btn.style.color = btnCols[key];
-  }
-  
+  paintFilter(key);
   refreshMarkers();
   sb.classList.remove('open');
 };
@@ -1006,7 +1093,7 @@ async function refreshNearest() {
 
   div.innerHTML = out;
   div.querySelectorAll('.pin-hit').forEach(el => {
-    el.onmouseenter = () => el.style.background = '#f0f4f8';
+    el.onmouseenter = () => el.style.background = 'var(--sunk)';
     el.onmouseleave = () => el.style.background = '';
     el.onclick = () => {
       const s = schools.find(x => x.id === el.dataset.sid);
@@ -1049,9 +1136,15 @@ async function geocodePin() {
   }
 }
 
-document.getElementById('pin-go').addEventListener('click', geocodePin);
-document.getElementById('pin-input').addEventListener('keydown', e => { if (e.key === 'Enter') geocodePin(); });
-document.getElementById('pin-clear').addEventListener('click', clearPin);
+// Guarded: see the note above the filter section. One missing element used to
+// take the whole page down with it.
+const on = (id, ev, fn) => {
+  const el = document.getElementById(id);
+  if (el) { el.addEventListener(ev, fn); }
+};
+on('pin-go', 'click', geocodePin);
+on('pin-input', 'keydown', e => { if (e.key === 'Enter') geocodePin(); });
+on('pin-clear', 'click', clearPin);
 document.getElementById('pin-drop').addEventListener('click', () => {
   pinDropMode = true;
   document.getElementById('pin-status').textContent = 'Now click anywhere on the map…';
@@ -1070,10 +1163,11 @@ window.setRegion = function(region) {
   const usFilters = document.getElementById('us-filters');
   
   if (region === 'US') {
-    btnUs.style.background = '#1a237e';
-    btnUs.style.color = 'white';
-    btnIe.style.background = 'transparent';
-    btnIe.style.color = 'black';
+    // The tabs are a segmented control now; the selected half is expressed
+    // with aria-selected, which is both the accessible state and the hook the
+    // stylesheet uses. No inline colours.
+    btnUs.setAttribute('aria-selected', 'true');
+    btnIe.setAttribute('aria-selected', 'false');
     if (ieFilters) ieFilters.style.display = 'none';
     if (usFilters) usFilters.style.display = 'block';
     map.setView([39.8, -98.5], 4);
@@ -1083,10 +1177,8 @@ window.setRegion = function(region) {
     boundaryOn.spa = false;
     setLayerButton('f-layer-spa', false, '#00695C');
   } else {
-    btnIe.style.background = '#1a237e';
-    btnIe.style.color = 'white';
-    btnUs.style.background = 'transparent';
-    btnUs.style.color = 'black';
+    btnIe.setAttribute('aria-selected', 'true');
+    btnUs.setAttribute('aria-selected', 'false');
     if (usFilters) usFilters.style.display = 'none';
     if (ieFilters) ieFilters.style.display = 'block';
     map.setView([53.4, -8.0], 7);
@@ -1125,12 +1217,14 @@ const districtLayers = {};      // state code -> L.geoJSON
 const districtLoading = {};
 const boundaryOn = { spa: false, district: false };
 
-function setLayerButton(id, on, colour) {
+// Boundary-layer toggles are filters too, so they look and behave like the
+// rest. The colour argument is ignored and kept only so the existing call
+// sites do not all have to change; the state lives in the class.
+function setLayerButton(id, on) {
   const btn = document.getElementById(id);
   if (!btn) return;
-  btn.style.borderColor = colour;
-  btn.style.background = on ? colour : 'white';
-  btn.style.color = on ? 'white' : colour;
+  btn.classList.toggle('on', !!on);
+  btn.setAttribute('aria-pressed', on ? 'true' : 'false');
 }
 setLayerButton('f-layer-spa', false, '#00695C');
 setLayerButton('f-layer-district', false, '#00695C');
@@ -1272,7 +1366,7 @@ window.showBoundaryExplainer = function () {
       <p style="color:#B71C1C"><strong>So:</strong> do not read either layer as
       "living here gets my child into that school". Neither one means that.</p>
       <button onclick="document.getElementById('boundary-explainer').remove()"
-        style="margin-top:8px;padding:8px 16px;border:none;border-radius:4px;background:#1a237e;color:#fff;cursor:pointer">
+        class="btn-solid" style="margin-top:8px">
         Got it</button>
     </div>`;
   div.addEventListener('click', e => { if (e.target === div) div.remove(); });
@@ -1445,7 +1539,7 @@ function renderTransport(result) {
      .filter(([, v]) => v && v.school.id !== n.school.id);
 
     if (alts.length) {
-      html += '<details style="margin-top:3px"><summary style="cursor:pointer;color:#1a237e;font-size:11px">' +
+      html += '<details style="margin-top:3px"><summary style="cursor:pointer;color:var(--soft);font-size:11px">' +
               'If you need a particular ethos or language</summary><div style="font-size:11px;margin-top:3px">';
       alts.forEach(([lab, v]) => {
         html += `<div style="color:${v.eligible ? '#2E7D32' : '#777'}">
