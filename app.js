@@ -1012,6 +1012,7 @@ if (ethosSelect) {
   ethosSelect.addEventListener('change', function () {
     ethosFilter = this.value;
     refreshMarkers();
+    if (homePin) refreshNearest();
   });
 }
 
@@ -1048,12 +1049,17 @@ window.clearAllFilters = function () {
   if (es) { es.value = ''; }
   ethosFilter = '';
   refreshMarkers();
+  if (homePin) refreshNearest();
 };
 
 window.toggleFilter = function(key) {
   activeFilters[key] = !activeFilters[key];
   paintFilter(key);
   refreshMarkers();
+  // The nearest-schools list is filtered too, so it goes stale the moment a
+  // filter changes. It used to sit there showing schools the filters had just
+  // excluded, which is worse than showing nothing.
+  if (homePin) refreshNearest();
   sb.classList.remove('open');
 };
 
@@ -1116,26 +1122,93 @@ function clearPin() {
   document.getElementById('pin-clear').style.display = 'none';
 }
 
+// How far around the pin to look. Two kilometres is the default because it is
+// about the distance a family will actually consider walking or a short drive,
+// and because it sits below both school-transport thresholds -- so the first
+// list you see is the set of schools you are least likely to get a bus to.
+let nearestRadiusKm = 2;
+const RADIUS_STEPS = [2, 5, 10, 20];
+
+// Fetch straight from the database, in a box around the pin.
+//
+// This used to read the `schools` array, which is a cache filled as the map is
+// panned. Geocoding an address moves the map and asks for the nearest schools
+// in the same breath, so the fetch for the new area had not returned yet and
+// the cache still held wherever the map had been before. The result was "No
+// schools match the current filters" at an address surrounded by schools --
+// and the message blamed the filters, which was not even the right lie.
+async function fetchAroundPin(lat, lng, km) {
+  // A degree of latitude is ~111 km anywhere; a degree of longitude shrinks
+  // with the cosine of the latitude. The box is drawn a little wide so the
+  // circle cut from it afterwards is not clipped at its corners.
+  const pad = 1.2;
+  const dLat = (km * pad) / 111;
+  const dLng = (km * pad) / (111 * Math.cos(lat * Math.PI / 180));
+
+  let rows = [];
+  try {
+    for (let page = 0; page < MAX_PAGES; page++) {
+      const { data, error } = await window.supabaseClient
+        .from('schools').select('*')
+        .gte('lat', lat - dLat).lte('lat', lat + dLat)
+        .gte('lng', lng - dLng).lte('lng', lng + dLng)
+        .order('id')
+        .range(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE - 1);
+      if (error) break;
+      rows = rows.concat(data || []);
+      if (!data || data.length < PAGE_SIZE) break;
+    }
+  } catch (e) {
+    return schools;   // fall back to the cache rather than showing nothing
+  }
+
+  rows.forEach(s => {
+    if (!loadedSchoolIds.has(s.id)) { loadedSchoolIds.add(s.id); schools.push(s); }
+  });
+  return rows;
+}
+
+function radiusControls() {
+  const steps = RADIUS_STEPS.map(km =>
+    '<button class="filter-btn rad' + (km === nearestRadiusKm ? ' on' : '') +
+    '" data-km="' + km + '">' + km + ' km</button>').join('');
+  return '<div class="radius-row"><span class="filter-label">Within</span>' +
+         '<div class="filter-btns">' + steps + '</div></div>';
+}
+
+function wireRadius() {
+  document.querySelectorAll('#pin-results .rad').forEach(function (b) {
+    b.addEventListener('click', function () {
+      nearestRadiusKm = parseInt(this.getAttribute('data-km'), 10);
+      refreshNearest();
+    });
+  });
+}
+
 async function refreshNearest() {
   if (!homePin) return;
   const div = document.getElementById('pin-results');
-  div.innerHTML = '<div style="padding:10px;text-align:center;color:#666;">Calculating driving times...</div>';
-  
+  div.innerHTML = radiusControls() +
+    '<div class="pin-loading">Looking within ' + nearestRadiusKm + ' km…</div>';
+  wireRadius();
+
+  const pinLl = homePin.getLatLng();
+  const pool = await fetchAroundPin(pinLl.lat, pinLl.lng, nearestRadiusKm);
+
   const groups = { preschool: 'Pre-school / Montessori', primary: 'Primary', secondary: 'Secondary', special: 'Special' };
   let groupCands = {};
   let allCands = [];
-  
-  // 1. Get top 6 nearest by straight line for each group to shortlist
+
+  // Everything inside the circle before filters, so we can tell the difference
+  // between "there is nothing here" and "your filters hid it".
+  const inRadius = pool.filter(s => s.lat && s.lng
+    && pinDistKm(s.lat, s.lng) <= nearestRadiusKm);
+
   Object.keys(groups).forEach(t => {
-    let cands = schools
-      .filter(s => s.lat && s.lng && schoolLevels(s).includes(t))
+    let cands = inRadius
+      .filter(s => schoolLevels(s).includes(t))
       .filter(passesFilters)
       .map(s => ({ d: pinDistKm(s.lat, s.lng), s: s }))
-      // The client-side cache keeps every school loaded since the page opened,
-      // so without a cap a rural pin offers "nearest" special schools 650 km
-      // away in Dublin, left over from an earlier pan. Nothing beyond an hour's
-      // drive is a real option for a daily school run.
-      .filter(c => c.d <= 60)
       .sort((a, b) => a.d - b.d)
       .slice(0, 6);
     groupCands[t] = cands;
@@ -1143,7 +1216,24 @@ async function refreshNearest() {
   });
 
   if (allCands.length === 0) {
-    div.innerHTML = '<em>No schools match the current filters.</em>';
+    const next = RADIUS_STEPS.find(k => k > nearestRadiusKm);
+    const wider = next
+      ? ' <button class="filter-btn rad" data-km="' + next + '">Look within ' + next + ' km</button>'
+      : '';
+    // Two different problems. Telling them apart is the whole point.
+    // Sentence and remedy on separate lines: run together, the last word of the
+    // sentence ends up orphaned beside the button.
+    const msg = inRadius.length
+      ? '<p class="pin-msg">' + inRadius.length + ' school' +
+        (inRadius.length === 1 ? '' : 's') + ' within ' + nearestRadiusKm +
+        ' km, but your filters exclude them all.</p>' +
+        '<button class="filter-btn" id="pin-clear-filters">Clear filters</button>'
+      : '<p class="pin-msg">No schools within ' + nearestRadiusKm +
+        ' km of this point.</p>' + wider;
+    div.innerHTML = radiusControls() + '<div class="pin-empty">' + msg + '</div>';
+    wireRadius();
+    const cf = document.getElementById('pin-clear-filters');
+    if (cf) cf.addEventListener('click', () => { window.clearAllFilters(); refreshNearest(); });
     return;
   }
 
@@ -1173,7 +1263,8 @@ async function refreshNearest() {
   }
 
   // 3. Render
-  let out = '';
+  let out = radiusControls() +
+    '<div class="pin-count">' + allCands.length + ' within ' + nearestRadiusKm + ' km</div>';
   Object.keys(groups).forEach(t => {
     let cands = groupCands[t];
     if (!cands || cands.length === 0) return;
@@ -1186,20 +1277,19 @@ async function refreshNearest() {
     
     cands = cands.slice(0, 5); // Keep top 5 after sorting
     
-    out += `<div style="font-weight:700; color:#444; margin:8px 0 3px; text-transform:uppercase; font-size:10px;">${groups[t]}</div>`;
+    out += `<div class="pin-group">${groups[t]}</div>`;
     cands.forEach((c) => {
       const distStr = (c.driveMins !== undefined && c.driveMins !== null) 
           ? `🚗 ${c.driveMins} min` 
           : `${c.d.toFixed(1)} km`;
-      out += `<div class="pin-hit" data-sid="${c.s.id}" style="padding:4px 6px; border-radius:6px; cursor:pointer; display:flex; justify-content:space-between; gap:6px;">
-        <span>${c.s.name}</span><span style="color:#888; white-space:nowrap;">${distStr}</span></div>`;
+      out += `<div class="pin-hit" data-sid="${c.s.id}">` +
+        `<span>${c.s.name}</span><span class="pin-dist">${distStr}</span></div>`;
     });
   });
 
   div.innerHTML = out;
+  wireRadius();
   div.querySelectorAll('.pin-hit').forEach(el => {
-    el.onmouseenter = () => el.style.background = 'var(--sunk)';
-    el.onmouseleave = () => el.style.background = '';
     el.onclick = () => {
       const s = schools.find(x => x.id === el.dataset.sid);
       map.setView([s.lat, s.lng], 15);

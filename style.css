@@ -32,6 +32,17 @@
   --faint:#8C857A;
   --accent:#33302B;
   --accent-ink:#FFFFFF;
+  /* SELECTED, WITHOUT INVERTING.
+     A filled dark chip with white text is the usual way to say "this one is
+     on", and it is the wrong way here: at fourteen filters it turns the panel
+     into a grid of black rectangles, and it flips the text colour halfway
+     down a list your eye is trying to read straight down. Selection is now a
+     warm tint, a darker border and a heavier weight -- three cues, only one
+     of them colour, and the text never changes colour. */
+  --sel-bg:#EFE8DC;
+  --sel-line:#33302B;
+  --sel-ink:#1B1917;
+  --muted-ink:#6E675C;   /* meets 4.5:1 on the sunk fill, unlike --faint */
 
   --stop:#8A3A2C;--stop-bg:#F8ECE8;--stop-line:#E8CFC7;
   --warn:#87661E;--warn-bg:#FAF2E1;--warn-line:#EBDCB8;
@@ -217,12 +228,15 @@ h1, h2, h3, .title-main, .sb-name, .sb-fee-val, .filter-label {
 .filter-btn:hover { background: var(--sunk); border-color: var(--faint); }
 .filter-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .filter-btn.on {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--accent-ink);
+  background: var(--sel-bg);
+  border-color: var(--sel-line);
+  color: var(--sel-ink);
   font-weight: 600;
+  /* An inner hairline thickens the edge without changing the box size, so
+     nothing reflows when a chip is selected. */
+  box-shadow: inset 0 0 0 1px var(--sel-line);
 }
-.filter-btn.on .lvdot { box-shadow: 0 0 0 1.5px var(--accent-ink); }
+.filter-btn.on:hover { background: #E8E0D1; }
 /* The level chips carry a dot in the pin's colour, so the connection between
    "Primary" here and a blue dot on the map is visible rather than learned. */
 .lvdot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
@@ -232,12 +246,17 @@ h1, h2, h3, .title-main, .sb-name, .sb-fee-val, .filter-label {
 .lvdot.special   { background: var(--lv-special); }
 
 /* Primary action. Exactly one of these on screen at a time. */
+/* Primary action, still primary without inverting: the weight of the border
+   and the shadow carry the emphasis that a dark fill used to. */
 .btn-solid {
-  padding: 7px 14px; border-radius: 7px; border: 1px solid var(--accent);
-  background: var(--accent); color: var(--accent-ink);
+  padding: 7px 14px; border-radius: 7px;
+  border: 1.5px solid var(--sel-line);
+  background: var(--card); color: var(--ink);
   font-size: 12.5px; font-weight: 600; cursor: pointer;
+  box-shadow: 0 1px 2px rgba(28,26,23,.08);
 }
-.btn-solid:hover { opacity: .9; }
+.btn-solid:hover { background: var(--sel-bg); }
+.btn-solid:active { box-shadow: none; transform: translateY(.5px); }
 
 /* How many schools you are actually looking at. The map showed no count at
    all, so "what is available" could only be answered by counting pins. */
@@ -455,13 +474,14 @@ h1, h2, h3, .title-main, .sb-name, .sb-fee-val, .filter-label {
 .leaflet-popup {
   display: none !important; /* Hidden because we use sidebar */
 }
-/* Cluster icon styling overrides */
+/* The cluster's appearance lives on the .cl div inside it -- see the cluster
+   rules further up. This wrapper used to carry a dark fill and white text of
+   its own, with !important, which is why a ring of it survived every earlier
+   attempt to lighten the clusters. It only needs to be a transparent box now. */
 .custom-cluster {
-  background: var(--primary) !important;
-  color: white !important;
-  border: 2px solid white !important;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2) !important;
-  font-family: 'Outfit', sans-serif !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
 /* =========================================
@@ -547,9 +567,17 @@ h1, h2, h3, .title-main, .sb-name, .sb-fee-val, .filter-label {
   cursor: pointer;
 }
 .regiontabs button + button { border-left: 1px solid var(--line-2); }
+/* A segmented control: a sunk track with the chosen half raised out of it.
+   The selected segment is the LIGHTEST thing here, not the darkest, which is
+   how a physical switch reads and how iOS and macOS have done it for years. */
+.regiontabs { background: var(--sunk); padding: 3px; gap: 3px; border: 1px solid var(--line); }
+.regiontabs button { border-radius: 6px; }
+.regiontabs button + button { border-left: none; }
 .regiontabs button[aria-selected="true"] {
-  background: var(--accent); color: var(--accent-ink); font-weight: 600;
+  background: var(--card); color: var(--ink); font-weight: 600;
+  box-shadow: 0 1px 2px rgba(28,26,23,.10);
 }
+.regiontabs button:not([aria-selected="true"]):hover { color: var(--ink); }
 
 .maplinks { display: flex; gap: 14px; margin-top: 11px; flex-wrap: wrap; }
 .maplinks a {
@@ -608,7 +636,7 @@ h1, h2, h3, .title-main, .sb-name, .sb-fee-val, .filter-label {
 .filter-btn.off {
   background: var(--sunk);
   border-color: var(--line);
-  color: var(--faint);
+  color: var(--muted-ink);
   text-decoration: line-through;
   text-decoration-thickness: 1px;
 }
@@ -657,7 +685,7 @@ h1, h2, h3, .title-main, .sb-name, .sb-fee-val, .filter-label {
 }
 .sr-sub { grid-area: sub; font-size: 11.5px; color: var(--soft); }
 #search-results li.sel, #search-results li:hover { background: var(--sunk); }
-#search-results li.sr-address .sr-kind { color: var(--accent); }
+#search-results li.sr-address .sr-kind { color: var(--sel-line); }
 #search-results li.sr-address { border-left: 2px solid var(--accent); }
 
 /* The nearest-schools panel gets a little emphasis once it holds something,
@@ -676,3 +704,76 @@ h1, h2, h3, .title-main, .sb-name, .sb-fee-val, .filter-label {
   padding: 4px 0;
 }
 #search-results li:last-child { border-bottom: none; }
+
+/* ---------------------------------------------------------------------------
+   Nearest schools around a pin.
+--------------------------------------------------------------------------- */
+.radius-row { display: flex; align-items: center; gap: 8px; margin: 2px 0 8px; }
+.radius-row .filter-label { margin: 0; white-space: nowrap; }
+.radius-row .filter-btn { padding: 4px 9px; font-size: 12px; }
+.pin-count { font-size: 11.5px; color: var(--faint); margin-bottom: 4px; }
+.pin-loading, .pin-empty { padding: 8px 2px; font-size: 12.5px; color: var(--soft); }
+.pin-empty em { font-style: normal; color: var(--ink); }
+.pin-empty .filter-btn { margin-top: 6px; }
+.pin-group {
+  font-weight: 600; color: var(--soft); margin: 10px 0 3px;
+  font-size: 11px; letter-spacing: .04em; text-transform: uppercase;
+}
+.pin-hit {
+  padding: 5px 6px; border-radius: 6px; cursor: pointer;
+  display: flex; justify-content: space-between; gap: 8px; font-size: 12.5px;
+}
+.pin-hit:hover { background: var(--card); }
+.pin-dist { color: var(--faint); white-space: nowrap; }
+
+/* ---------------------------------------------------------------------------
+   The parts of "best in class" that are not colour.
+--------------------------------------------------------------------------- */
+
+/* 1. Focus. Every interactive thing here is reachable by keyboard, and the
+   ring has to be visible against both the white card and the warm tint, so it
+   is drawn in the dark ink with an offset rather than tinted. */
+.filter-btn:focus-visible, .btn-solid:focus-visible, .regiontabs button:focus-visible,
+#search-input:focus-visible, #f-ethos:focus-visible, #clear-filters:focus-visible,
+.maplinks a:focus-visible, .pin-hit:focus-visible {
+  outline: 2px solid var(--sel-line);
+  outline-offset: 2px;
+  border-radius: 7px;
+}
+/* The mouse should not get the ring; the keyboard always should. */
+.filter-btn:focus:not(:focus-visible) { outline: none; }
+
+/* 2. Touch targets. 30px is comfortable with a mouse and too small with a
+   thumb; WCAG asks for 44px. Rather than making every chip huge on the
+   desktop, the padding grows only where the input is a finger. */
+@media (pointer: coarse) {
+  .filter-btn { padding: 10px 13px; font-size: 13.5px; }
+  .radius-row .filter-btn { padding: 9px 12px; }
+  .regiontabs button { padding: 11px 10px; }
+  .maplinks a { padding: 6px 0; }
+  #search-results li { padding: 12px; }
+}
+
+/* 3. Motion. The transitions here are small, but "small" is not the same as
+   "wanted" for someone who gets motion sick from them. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+  #sidebar { transition: none; }
+}
+
+/* 4. Weight belongs to the .on state only.
+   aria-pressed is true for every permissive filter at rest -- all four levels,
+   both fee options, all three genders -- so styling on the attribute made a
+   panel where nothing had been chosen look as though everything had. The
+   attribute is still there and still correct for a screen reader; it just is
+   not the visual hook. */
+.filter-btn.on { font-weight: 600; }
+
+/* 5. A hairline under the panel header keeps the search box anchored when the
+   filter list beneath it scrolls, so the box never scrolls out of reach. */
+#search-box { position: sticky; top: 0; z-index: 5; background: var(--card); }
+.pin-msg { margin: 0 0 8px; color: var(--ink); font-size: 12.5px; line-height: 1.45; }
