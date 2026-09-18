@@ -835,51 +835,34 @@ function drawFeederLines(data) {
   });
 }
 
-// Loaded once, and deliberately not from the viewport. A link whose endpoint
-// has no coordinates is dropped rather than guessed at: a link we cannot place
-// is a link we do not draw.
+// Loaded once, from a file built with the rest of the dataset, and
+// deliberately not from the viewport.
+//
+// This used to query the database for "schools whose feeders array is not
+// empty". No index covers that test, so Postgres scanned all 126,126 rows
+// while the four bounding-box queries were still in flight, and the request
+// intermittently died on the statement timeout -- which meant the lines
+// appeared or did not appear depending on how busy the database was. The graph
+// is 130 schools and 186 links and only changes when the dataset is rebuilt,
+// so it is a 16 KB file the CDN can cache.
 async function loadFeederGraph() {
-  const COLS = 'id,name,type,area,lat,lng';
-  const keep = row => {
-    if (row.lat == null || row.lng == null) return false;
-    feederNodes[row.id] = { id: row.id, name: row.name, type: row.type,
-                            area: row.area, lat: row.lat, lng: row.lng };
-    return true;
-  };
   try {
-    // Every row carries a `feeders` array and almost all of them are EMPTY, so
-    // "is not null" matches all 126,126 schools and the 1,000-row cap then
-    // returns an arbitrary thousand of them with no links in it at all. The
-    // test that actually means "has links" is a non-empty array.
-    const { data: src, error } = await window.supabaseClient
-      .from('schools').select(COLS + ',feeders')
-      .neq('feeders', '[]').limit(1000);
-    if (error) throw error;
+    const res = await fetch('/feeder-links.json');
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const g = await res.json();
 
-    const wanted = new Set();
-    (src || []).forEach(row => {
-      if (!Array.isArray(row.feeders) || !row.feeders.length) return;
-      keep(row);
-      row.feeders.forEach(t => wanted.add(t));
+    Object.keys(g.nodes || {}).forEach(id => {
+      const n = g.nodes[id];
+      feederNodes[id] = { id: id, name: n.n, type: n.t, area: n.a,
+                          lat: n.la, lng: n.ln };
     });
 
-    const missing = [...wanted].filter(id => !feederNodes[id]);
-    for (let i = 0; i < missing.length; i += 200) {
-      const { data: tgt, error: e2 } = await window.supabaseClient
-        .from('schools').select(COLS).in('id', missing.slice(i, i + 200));
-      if (e2) throw e2;
-      (tgt || []).forEach(keep);
-    }
-
-    (src || []).forEach(row => {
-      if (!Array.isArray(row.feeders) || !feederNodes[row.id]) return;
-      row.feeders.forEach(t => {
-        if (!feederNodes[t] || t === row.id) return;
-        if (!feederOut[row.id]) feederOut[row.id] = [];
-        if (!feederIn[t]) feederIn[t] = [];
-        if (!feederOut[row.id].includes(t)) feederOut[row.id].push(t);
-        if (!feederIn[t].includes(row.id)) feederIn[t].push(row.id);
-      });
+    (g.links || []).forEach(([from, to]) => {
+      if (!feederNodes[from] || !feederNodes[to] || from === to) return;
+      if (!feederOut[from]) feederOut[from] = [];
+      if (!feederIn[to]) feederIn[to] = [];
+      if (!feederOut[from].includes(to)) feederOut[from].push(to);
+      if (!feederIn[to].includes(from)) feederIn[to].push(from);
     });
 
     // If a school is already open when the graph lands, its links appear now
