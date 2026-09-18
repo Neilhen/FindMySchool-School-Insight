@@ -134,6 +134,10 @@ function passesFilters(s) {
   if (activeFilters.hasSpecialClass && !s.specialClasses) return false;
   if (activeFilters.newSpecialClass && !s.specialClassesNew) return false;
   if (activeFilters.oversubscribed && !s.oversubscribed) return false;
+  if (activeFilters.deis && !s.deis) return false;
+  // Band 1 is the only band that changes class size, so it gets its own switch
+  // rather than being buried inside "DEIS".
+  if (activeFilters.deisBand1 && s.deisBand !== 'Urban Band 1') return false;
 
   const irishOk = s.irish ? activeFilters.irish : true;
   const charterOk = s.charter ? activeFilters.charter : true;
@@ -422,7 +426,11 @@ function openSidebar(data) {
   if(data.ethos && data.ethos !== 'Unknown' && data.ethos !== 'Other/Unknown') badgesHTML += `<span class="badge" style="background:#FFF3E0;color:#E65100;">${data.ethos}</span>`;
   if(data.irish) badgesHTML += `<span class="badge b-iri">★ Irish-medium</span>`;
   if(data.charter) badgesHTML += `<span class="badge" style="background:#FFF3E0;color:#E65100;">★ Charter</span>`;
-  if(data.deis) badgesHTML += `<span class="badge" style="background:#E8F5E9;color:#2E7D32;font-weight:700;">✓ DEIS</span>`;
+  if (data.deis) {
+    // "DEIS" alone told a parent nothing: Band 1 caps junior classes at 17:1,
+    // Rural does not touch class size at all.
+    badgesHTML += `<span class="badge badge-deis">DEIS${data.deisBand ? ' ' + data.deisBand : ''}</span>`;
+  }
   // A K-12 school is both primary and secondary; say so rather than making the
   // reader guess from a single "Primary" badge.
   if (Array.isArray(data.levels) && data.levels.length > 1)
@@ -966,7 +974,8 @@ const activeFilters = {
   // These two are RESTRICTIVE rather than permissive: off means "don't care",
   // on means "only show schools that have this". That is the opposite of the
   // buttons above, so they start off.
-  hasSpecialClass:false, newSpecialClass:false, oversubscribed:false
+  hasSpecialClass:false, newSpecialClass:false, oversubscribed:false,
+  deis:false, deisBand1:false
 };
 // Frozen copy of the starting state, so "Clear filters" restores the defaults
 // rather than turning everything on -- which for the three restrictive filters

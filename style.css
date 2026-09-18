@@ -781,3 +781,7 @@ h1, h2, h3, .title-main, .sb-name, .sb-fee-val, .filter-label {
    filter list beneath it scrolls, so the box never scrolls out of reach. */
 #search-box { position: sticky; top: 0; z-index: 5; background: var(--card); }
 .pin-msg { margin: 0 0 8px; color: var(--ink); font-size: 12.5px; line-height: 1.45; }
+/* DEIS badge in the school sidebar. Green because it marks resources going in,
+   not a warning — the same reading the guide argues for in words. */
+.badge-deis{background:var(--good-bg);color:var(--good);font-weight:600;
+  border:1px solid var(--good-line)}
