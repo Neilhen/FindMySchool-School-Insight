@@ -229,11 +229,22 @@ async function fetchSchoolsInBounds() {
   const west = bounds.getSouthWest().lng - 0.05;
   const east = bounds.getNorthEast().lng + 0.05;
 
-  const query = () => window.supabaseClient
-    .from('schools')
-    .select('*')
-    .gte('lat', south).lte('lat', north)
-    .gte('lng', west).lte('lng', east);
+  // A view is capped at 4,000 rows (see below), and at country zoom Ireland
+  // has more schools than that. With a DEIS filter on, that cap was being
+  // spent on schools the person had just asked not to see -- so a link
+  // promising 1,197 DEIS schools landed on a map showing 1,186 of them, with
+  // the missing eleven appearing only once you zoomed in. Narrowing the query
+  // itself spends the cap on what was actually asked for.
+  const query = () => {
+    let q = window.supabaseClient
+      .from('schools')
+      .select('*')
+      .gte('lat', south).lte('lat', north)
+      .gte('lng', west).lte('lng', east);
+    if (activeFilters.deisBand1) q = q.eq('deisBand', 'Urban Band 1');
+    else if (activeFilters.deis) q = q.eq('deis', true);
+    return q;
+  };
 
   let data = [];
   let truncated = false;
@@ -1063,13 +1074,22 @@ window.clearAllFilters = function () {
   if (es) { es.value = ''; }
   ethosFilter = '';
   refreshMarkers();
+  // Clearing can only widen the view, so the rows a narrowed query skipped
+  // have to be fetched before the map is honest again.
+  fetchSchoolsInBounds();
   if (homePin) refreshNearest();
 };
+
+// Filters that narrow the database query rather than just hiding markers.
+// Turning one OFF widens what the map should hold, and the rows it skipped
+// while it was on are not in memory, so the view has to be fetched again.
+const NARROWING_FILTERS = ['deis', 'deisBand1'];
 
 window.toggleFilter = function(key) {
   activeFilters[key] = !activeFilters[key];
   paintFilter(key);
   refreshMarkers();
+  if (NARROWING_FILTERS.includes(key)) fetchSchoolsInBounds();
   // The nearest-schools list is filtered too, so it goes stale the moment a
   // filter changes. It used to sit there showing schools the filters had just
   // excluded, which is worse than showing nothing.
@@ -1909,6 +1929,7 @@ function applyFilterHash() {
   if (!keys.length) return;
   keys.forEach(k => { activeFilters[k] = true; paintFilter(k); });
   refreshMarkers();
+  if (keys.some(k => NARROWING_FILTERS.includes(k))) fetchSchoolsInBounds();
   if (typeof homePin !== 'undefined' && homePin && typeof refreshNearest === 'function') refreshNearest();
   showFilterBanner(keys);
   // Bring the filter that the link switched on into view, so it is obvious
