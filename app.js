@@ -1032,6 +1032,11 @@ function refreshMarkers() {
   clearLines();
   clearParishes();
   updateCount(shown.length, allMarkers.length);
+  // If a link put the map into a filtered state, keep that banner honest as
+  // the person turns filters on and off by hand.
+  if (document.getElementById('filter-banner')) {
+    showFilterBanner(Object.keys(HASH_FILTERS).filter(k => activeFilters[k]));
+  }
 }
 
 // "What is available" was previously answerable only by counting pins. This
@@ -1847,4 +1852,70 @@ window.addEventListener('hashchange', openSchoolFromHash);
 initApp();
 openSchoolFromHash();
 openAddressFromHash();
+
+// ============================================================
+// FILTER DEEP LINKS  (/map.html#filter=deis)
+// ============================================================
+// The map opens with every school on it, which is right for someone arriving
+// with no question in mind and wrong for someone arriving from a page about
+// one thing. A link can now say which constraint to start with, so "Show DEIS
+// schools on the map" lands on a map that is already showing them rather than
+// on a map plus an instruction to go and find a filter.
+//
+// Only the restrictive filters -- the ones that mean "show me only schools
+// that have this" -- can be set this way. A hash cannot turn a level or a
+// gender OFF, because a link that silently hid two thirds of the schools would
+// be indistinguishable, to the person reading the map, from missing data.
+// A curated list rather than every restrictive key, with wording written for a
+// sentence rather than for a button. "Show closed" is deliberately not here:
+// a link that quietly added closed schools to the map would be publishing
+// schools that no longer exist.
+const HASH_FILTERS = {
+  deis: 'DEIS schools',
+  deisBand1: 'DEIS Urban Band 1 schools',
+  oversubscribed: 'schools that were oversubscribed last year',
+  hasSpecialClass: 'schools with a special class',
+  newSpecialClass: 'schools opening a new special class'
+};
+
+function filterLabel(key) {
+  return HASH_FILTERS[key] || key;
+}
+
+function showFilterBanner(keys) {
+  let el = document.getElementById('filter-banner');
+  if (!keys.length) { if (el) el.remove(); return; }
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'filter-banner';
+    const box = document.getElementById('result-count');
+    if (!box || !box.parentNode) return;
+    box.parentNode.insertBefore(el, box);
+  }
+  el.innerHTML = '<span>Showing <strong>' + keys.map(filterLabel).join('</strong> and <strong>')
+    + '</strong> only</span><button type="button" id="filter-banner-clear">Show all schools</button>';
+  document.getElementById('filter-banner-clear').onclick = () => {
+    if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+    window.clearAllFilters();
+    showFilterBanner([]);
+  };
+}
+
+function applyFilterHash() {
+  const m = /(?:^|[#&])filter=([^&]+)/.exec(location.hash || '');
+  if (!m) return;
+  const asked = decodeURIComponent(m[1]).split(',').map(x => x.trim()).filter(Boolean);
+  const keys = asked.filter(k => Object.prototype.hasOwnProperty.call(HASH_FILTERS, k));
+  if (!keys.length) return;
+  keys.forEach(k => { activeFilters[k] = true; paintFilter(k); });
+  refreshMarkers();
+  if (typeof homePin !== 'undefined' && homePin && typeof refreshNearest === 'function') refreshNearest();
+  showFilterBanner(keys);
+  // Bring the filter that the link switched on into view, so it is obvious
+  // where the state came from and where to turn it off.
+  const grp = document.getElementById('grp-' + keys[0].replace(/[^a-zA-Z0-9]/g, ''));
+  if (grp && grp.scrollIntoView) grp.scrollIntoView({ block: 'nearest' });
+}
+window.addEventListener('hashchange', applyFilterHash);
+applyFilterHash();
 
