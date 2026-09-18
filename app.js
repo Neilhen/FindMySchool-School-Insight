@@ -77,6 +77,13 @@ const map = L.map('map', {
 
 L.control.zoom({ position: 'bottomright' }).addTo(map);
 
+// Feeder links get their own pane, above the tiles and below the markers, so a
+// line can never cover a pin. It ignores pointer events too, so a line lying
+// across a school can never swallow the click meant for it.
+map.createPane('feederLines');
+map.getPane('feederLines').style.zIndex = 450;
+map.getPane('feederLines').style.pointerEvents = 'none';
+
 const baseMaps = {
   "Light Minimal": lightMap,
   "Detailed Street": streetMap,
@@ -94,8 +101,19 @@ let parishData = null;
 let schools = [];
 let parishLayer = null;
 let loadedSchoolIds = new Set();
-const feederMap = {};
-const secondaryToPrimaryMap = {};
+
+// Feeder links -- which primary schools feed which secondaries -- are one of
+// the few things on this map that cannot be answered from what is currently on
+// screen. A Rathfarnham primary can feed a secondary two parishes away, and
+// this used to resolve each endpoint out of the schools already fetched for the
+// viewport, so the dotted lines quietly disappeared whenever the school at the
+// other end was off screen or hidden by a filter -- which, at any useful zoom,
+// was most of the time. The graph is small: 91 schools, 186 links. It is loaded
+// once, up front, and the lines are drawn from it rather than from the markers.
+const feederNodes = {};   // id -> {id,name,type,area,lat,lng}
+const feederOut = {};     // school id -> ids of the schools it feeds
+const feederIn = {};      // school id -> ids of the schools that feed it
+let lineSubject = null;   // the school whose links are currently drawn
 
 // A school's level(s). US K-12 schools genuinely belong to two levels at once,
 // so the data carries a `levels` array; Irish rows only ever have one, and fall
@@ -175,6 +193,7 @@ async function initApp() {
   // We deliberately do NOT await this yet - it runs alongside the parish
   // download below instead of queueing behind it.
   const schoolsLoading = fetchSchoolsInBounds();
+  const feedersLoading = loadFeederGraph();
 
   // Parish boundaries are a nice-to-have: they stay invisible until you click a
   // school. If this file is slow or fails, the map must still work, so the
@@ -196,6 +215,7 @@ async function initApp() {
   }
 
   await schoolsLoading;
+  await feedersLoading;
 }
 
 // PostgREST caps any single response at 1,000 rows no matter what .limit()
@@ -269,16 +289,7 @@ async function fetchSchoolsInBounds() {
     if (!loadedSchoolIds.has(s.id)) {
       loadedSchoolIds.add(s.id);
       schools.push(s);
-      
-      // Update feeders
-      if (s.feeders) {
-        feederMap[s.id] = s.feeders;
-        s.feeders.forEach(secId => {
-          if (!secondaryToPrimaryMap[secId]) secondaryToPrimaryMap[secId] = [];
-          if (!secondaryToPrimaryMap[secId].includes(s.id)) secondaryToPrimaryMap[secId].push(s.id);
-        });
-      }
-      
+
       // Add Marker
       const m = L.marker([s.lat, s.lng], { icon: createIcon(s) });
       m._schoolData = s;
@@ -376,10 +387,17 @@ let activeLines = [];
 let activeRadiusCircle = null;
 let highlightedParishLayer = null;
 
-function clearLines() { 
-  activeLines.forEach(l => map.removeLayer(l)); 
+// Lines only. This used to clear the admissions radius circle as well, which
+// was fine while it was only ever called on closing the panel, and wrong the
+// moment the lines had to be redrawn with a school still open.
+function clearLines() {
+  activeLines.forEach(l => map.removeLayer(l));
   activeLines = [];
-  if (activeRadiusCircle) { map.removeLayer(activeRadiusCircle); activeRadiusCircle = null; } 
+  lineSubject = null;
+}
+
+function clearRadius() {
+  if (activeRadiusCircle) { map.removeLayer(activeRadiusCircle); activeRadiusCircle = null; }
 }
 
 function clearParishes() {
@@ -389,10 +407,16 @@ function clearParishes() {
   });
 }
 
+// A dotted line over a pale basemap is easy to lose among the roads, so each
+// link is drawn twice: a white casing underneath and the dots on top.
 function drawLine(p1, p2, color) {
-  const line = L.polyline([[p1.lat, p1.lng], [p2.lat, p2.lng]], { color: color, weight: 3, opacity: 0.7, dashArray: '6, 6' }).addTo(map);
-  line.bringToFront();
-  activeLines.push(line);
+  const pts = [[p1.lat, p1.lng], [p2.lat, p2.lng]];
+  activeLines.push(
+    L.polyline(pts, { pane: 'feederLines', color: '#FFFFFF', weight: 5,
+                      opacity: 0.9, lineCap: 'round' }).addTo(map),
+    L.polyline(pts, { pane: 'feederLines', color: color, weight: 2.5,
+                      opacity: 0.95, dashArray: '1 7', lineCap: 'round' }).addTo(map)
+  );
 }
 
 function highlightParish(parishId) {
@@ -420,8 +444,8 @@ const sbFeederList = document.getElementById('sb-feeder-list');
 document.getElementById('close-sidebar').addEventListener('click', () => {
   sb.classList.remove('open');
   clearLines();
+  clearRadius();
   clearParishes();
-  if (activeRadiusCircle) { map.removeLayer(activeRadiusCircle); activeRadiusCircle = null; }
 });
 
 function openSidebar(data) {
@@ -709,14 +733,14 @@ function openSidebar(data) {
   
   // Feeders
   sbFeederList.innerHTML = '';
-  let relatedSchools = [];
-  if (data.type === 'primary' && data.feeders) {
-    relatedSchools = data.feeders.map(id => schools.find(sc => sc.id === id)).filter(Boolean);
-    sbFeederTitle.textContent = "Feeds to Secondary Schools:";
-  } else if (data.type === 'secondary' && secondaryToPrimaryMap[data.id]) {
-    relatedSchools = secondaryToPrimaryMap[data.id].map(id => schools.find(sc => sc.id === id)).filter(Boolean);
-    sbFeederTitle.textContent = "Feeder Primary Schools:";
-  }
+  // Resolved from the feeder graph rather than from the markers on screen.
+  // The old version dropped any school that had not been fetched into the
+  // current view, so this list was silently short for exactly the same reason
+  // the dotted lines were missing.
+  const relatedSchools = feederPartners(data.id);
+  sbFeederTitle.textContent = (feederOut[data.id] || []).length
+    ? "Feeds to these secondary schools"
+    : "Fed by these primary schools";
   
   if (relatedSchools.length > 0) {
     sbFeederSec.style.display = 'block';
@@ -730,6 +754,16 @@ function openSidebar(data) {
       };
       sbFeederList.appendChild(li);
     });
+    // Say what the dotted lines are at the moment they appear, and say what
+    // they are not: a published link is not an entitlement to a place.
+    const note = document.createElement('li');
+    note.className = 'feeder-note';
+    // Worded so it is true read from either end: the primary publishes the
+    // link, the secondary appears in it, and neither means a place.
+    note.textContent = 'The dotted lines on the map show these links. '
+      + 'A published link is not a guarantee of a place \u2014 every school sets '
+      + 'its own admissions criteria.';
+    sbFeederList.appendChild(note);
   } else {
     sbFeederSec.style.display = 'none';
   }
@@ -768,7 +802,7 @@ function openSidebar(data) {
   });
 
   highlightParish(data.parish_id);
-  if (activeRadiusCircle) { map.removeLayer(activeRadiusCircle); activeRadiusCircle = null; }
+  clearRadius();
   const rule = RADIUS_RULES[data.id];
   if (rule && rule.km) {
     activeRadiusCircle = L.circle([data.lat, data.lng], {
@@ -778,18 +812,82 @@ function openSidebar(data) {
   sb.classList.add('open');
 }
 
+// Every school this one is linked to, in both directions: the secondaries a
+// primary feeds, and the primaries that feed a secondary.
+function feederPartners(id) {
+  return (feederOut[id] || []).concat(feederIn[id] || [])
+    .map(i => feederNodes[i]).filter(Boolean);
+}
+
+// The link is coloured for the school at the FAR end, so a line reads as
+// "this leads to a secondary" against the same level colours as the pins.
+const FEEDER_COLOUR = {
+  preschool: '#2E7D6B', primary: '#2F5D8A', secondary: '#6B4A7D', special: '#A9552F'
+};
+
 function drawFeederLines(data) {
   clearLines();
-  if (data.type === 'primary' && data.feeders) {
-    data.feeders.forEach(secId => {
-      const secSchool = schools.find(sc => sc.id === secId);
-      if (secSchool && markerMap[secId]) drawLine(data, secSchool, '#1565C0');
+  if (!data || data.lat == null || data.lng == null) return;
+  lineSubject = data;
+  const here = feederNodes[data.id] || data;
+  feederPartners(data.id).forEach(other => {
+    drawLine(here, other, FEEDER_COLOUR[other.type] || '#6B4A7D');
+  });
+}
+
+// Loaded once, and deliberately not from the viewport. A link whose endpoint
+// has no coordinates is dropped rather than guessed at: a link we cannot place
+// is a link we do not draw.
+async function loadFeederGraph() {
+  const COLS = 'id,name,type,area,lat,lng';
+  const keep = row => {
+    if (row.lat == null || row.lng == null) return false;
+    feederNodes[row.id] = { id: row.id, name: row.name, type: row.type,
+                            area: row.area, lat: row.lat, lng: row.lng };
+    return true;
+  };
+  try {
+    // Every row carries a `feeders` array and almost all of them are EMPTY, so
+    // "is not null" matches all 126,126 schools and the 1,000-row cap then
+    // returns an arbitrary thousand of them with no links in it at all. The
+    // test that actually means "has links" is a non-empty array.
+    const { data: src, error } = await window.supabaseClient
+      .from('schools').select(COLS + ',feeders')
+      .neq('feeders', '[]').limit(1000);
+    if (error) throw error;
+
+    const wanted = new Set();
+    (src || []).forEach(row => {
+      if (!Array.isArray(row.feeders) || !row.feeders.length) return;
+      keep(row);
+      row.feeders.forEach(t => wanted.add(t));
     });
-  } else if (data.type === 'secondary' && secondaryToPrimaryMap[data.id]) {
-    secondaryToPrimaryMap[data.id].forEach(priId => {
-      const priSchool = schools.find(sc => sc.id === priId);
-      if (priSchool && markerMap[priId]) drawLine(data, priSchool, '#2E7D32');
+
+    const missing = [...wanted].filter(id => !feederNodes[id]);
+    for (let i = 0; i < missing.length; i += 200) {
+      const { data: tgt, error: e2 } = await window.supabaseClient
+        .from('schools').select(COLS).in('id', missing.slice(i, i + 200));
+      if (e2) throw e2;
+      (tgt || []).forEach(keep);
+    }
+
+    (src || []).forEach(row => {
+      if (!Array.isArray(row.feeders) || !feederNodes[row.id]) return;
+      row.feeders.forEach(t => {
+        if (!feederNodes[t] || t === row.id) return;
+        if (!feederOut[row.id]) feederOut[row.id] = [];
+        if (!feederIn[t]) feederIn[t] = [];
+        if (!feederOut[row.id].includes(t)) feederOut[row.id].push(t);
+        if (!feederIn[t].includes(row.id)) feederIn[t].push(row.id);
+      });
     });
+
+    // If a school is already open when the graph lands, its links appear now
+    // rather than only on the next click.
+    if (lineSubject) { const open = lineSubject; drawFeederLines(open); openSidebar(open); }
+  } catch (e) {
+    // Non-fatal: without this the map simply shows no links.
+    console.error('Feeder links unavailable (map still works):', e);
   }
 }
 
@@ -802,6 +900,7 @@ map.on('click', function(e) {
   if (!e.originalEvent.target.closest('.leaflet-marker-icon')) {
     sb.classList.remove('open');
     clearLines();
+    clearRadius();
     clearParishes();
   }
 });
@@ -909,13 +1008,6 @@ searchInput.addEventListener('input', function () {
       if (!loadedSchoolIds.has(s.id)) {
         loadedSchoolIds.add(s.id);
         schools.push(s);
-        if (s.feeders) {
-          feederMap[s.id] = s.feeders;
-          s.feeders.forEach(secId => {
-            if (!secondaryToPrimaryMap[secId]) secondaryToPrimaryMap[secId] = [];
-            if (!secondaryToPrimaryMap[secId].includes(s.id)) secondaryToPrimaryMap[secId].push(s.id);
-          });
-        }
       }
     });
 
@@ -1040,7 +1132,12 @@ function refreshMarkers() {
   markersGroup.clearLayers();
   const shown = allMarkers.filter(m => passesFilters(m._schoolData));
   markersGroup.addLayers(shown);
+  // Filters hide pins, not relationships. A link stays drawn while its school
+  // is open even if a filter has hidden the school at the other end -- the
+  // link is a fact about the school, not about the current view.
+  const subject = lineSubject;
   clearLines();
+  if (subject) drawFeederLines(subject);
   clearParishes();
   updateCount(shown.length, allMarkers.length);
   // If a link put the map into a filtered state, keep that banner honest as

@@ -456,6 +456,19 @@ h1, h2, h3, .title-main, .sb-name, .sb-fee-val, .filter-label {
   border-color: #cbd5e1;
   transform: translateY(-1px);
 }
+/* The line that says what the dotted links on the map are. It sits in the same
+   list as the schools, so it has to be unmistakably not one of them: no card,
+   no border, no hover, no pointer. */
+.feeder-list li.feeder-note {
+  display: block;
+  background: none; border: none; border-radius: 0;
+  padding: 2px 2px 0; margin: 0;
+  font-size: 12px; line-height: 1.5; color: var(--soft);
+  cursor: default;
+}
+.feeder-list li.feeder-note:hover {
+  background: none; border: none; transform: none;
+}
 .resource-list {
   list-style: none;
 }
