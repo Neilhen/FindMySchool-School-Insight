@@ -46,7 +46,7 @@
     return EIRCODE.test(s) || /^\d+[a-z]?[\s,]/i.test(s) || (/,/.test(s) && /\d/.test(s));
   }
   function addressRow(q) {
-    return '<a class="q-hit q-addr" role="option" href="/map.html#addr=' +
+    return '<a class="q-hit q-addr" role="option" href="/map#addr=' +
       encodeURIComponent(q) + '">' +
       '<span class="q-name">Find schools near “' + q.replace(/[<>&]/g, '') + '”</span>' +
       '<span class="q-meta">Opens the map, drops a pin and lists the nearest schools</span></a>';

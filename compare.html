@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Compare schools — Find a School</title>
 <meta name="description" content="Put your shortlisted schools side by side: ethos, enrolment, fees with sources, special classes, and the area around each one.">
-<link rel="canonical" href="https://findaschool.ie/compare.html">
+<link rel="canonical" href="https://findaschool.ie/compare">
 <!-- A comparison is personal to whoever built it, so there is nothing here for
      a search engine to index. The school pages are what should rank. -->
 <meta name="robots" content="noindex,follow">
@@ -43,9 +43,9 @@
 <header class="site">
   <a class="brand" href="/">Find a School</a>
   <nav>
-    <a href="/map.html">Map</a>
+    <a href="/map">Map</a>
     <a href="/schools/">All schools</a>
-    <a href="/compare.html" id="nav-compare">Shortlist</a>
+    <a href="/compare" id="nav-compare">Shortlist</a>
   </nav>
 </header>
 
@@ -129,7 +129,7 @@ function render(schools) {
     lede.textContent = '';
     out.innerHTML = `<div class="empty"><p>Nothing on your shortlist yet.</p>
       <p><a class="btn" href="/schools/">Browse schools</a>
-         <a class="btn ghost" href="/map.html">Use the map</a></p>
+         <a class="btn ghost" href="/map">Use the map</a></p>
       <p class="thin">Add schools with the ☆ button on any school page or in the map sidebar.</p></div>`;
     return;
   }
@@ -138,7 +138,7 @@ function render(schools) {
 
   const head = schools.map(s =>
     `<th><span class="schoolname">${s.name}</span>
-       <a class="thin" href="/map.html#school=${encodeURIComponent(s.id)}">map</a> ·
+       <a class="thin" href="/map#school=${encodeURIComponent(s.id)}">map</a> ·
        <button class="rm" data-rm="${s.id}">remove</button></th>`).join('');
 
   const body = ROWS.map(([label, fn, key]) => {

@@ -519,7 +519,7 @@ function openSidebar(data) {
       `<div class="sb-actions">
          <button id="sb-shortlist" class="filter-btn${onList ? ' on' : ''}">
            ${onList ? 'On your shortlist' : 'Add to shortlist'}</button>
-         <a class="filter-btn" href="/compare.html">Compare shortlist</a>
+         <a class="filter-btn" href="/compare">Compare shortlist</a>
        </div>`);
     document.getElementById('sb-shortlist').onclick = function () {
       const nowOn = Shortlist.toggle(data.id);
@@ -1489,7 +1489,7 @@ async function geocodeQuery(q) {
 // Kept as a name because other code and older links refer to it.
 const geocodePin = () => geocodeQuery(searchInput.value);
 
-// An address handed over from another page: /map.html#addr=Blackrock%2C%20Dublin
+// An address handed over from another page: /map#addr=Blackrock%2C%20Dublin
 function openAddressFromHash() {
   const m = /(?:^|[#&])addr=([^&]+)/.exec(location.hash || '');
   if (!m) return;
@@ -1960,7 +1960,7 @@ openSchoolFromHash();
 openAddressFromHash();
 
 // ============================================================
-// FILTER DEEP LINKS  (/map.html#filter=deis)
+// FILTER DEEP LINKS  (/map#filter=deis)
 // ============================================================
 // The map opens with every school on it, which is right for someone arriving
 // with no question in mind and wrong for someone arriving from a page about

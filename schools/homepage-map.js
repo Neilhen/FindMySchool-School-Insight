@@ -65,7 +65,7 @@
       .catch(function () {
         if (status) {
           status.innerHTML = 'The map could not load just now. ' +
-            '<a href="/map.html">Open the full map</a> or ' +
+            '<a href="/map">Open the full map</a> or ' +
             '<a href="/schools/">browse by county</a> instead.';
           status.hidden = false;
         }
