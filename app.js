@@ -883,8 +883,14 @@ async function loadFeederGraph() {
     });
 
     // If a school is already open when the graph lands, its links appear now
-    // rather than only on the next click.
-    if (lineSubject) { const open = lineSubject; drawFeederLines(open); openSidebar(open); }
+    // rather than only on the next click. Only for a school that actually has
+    // links, though: redrawing the panel for the other 97% would throw away
+    // wherever the reader had scrolled to, for no visible gain.
+    if (lineSubject && feederPartners(lineSubject.id).length) {
+      const open = lineSubject;
+      drawFeederLines(open);
+      openSidebar(open);
+    }
   } catch (e) {
     // Non-fatal: without this the map simply shows no links.
     console.error('Feeder links unavailable (map still works):', e);
