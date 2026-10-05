@@ -2254,3 +2254,15 @@ window.toggleAdmissionsHeatmap = async function () {
   updateHeatmapZoom();
 };
 
+function applyHeatmapHash() {
+  if (/(?:^|[#&])(?:heatmap|admissions-heatmap)(?:[=&]|$)/i.test(location.hash || '')) {
+    if (!admissionsHeatmapActive) {
+      setTimeout(() => {
+        window.toggleAdmissionsHeatmap();
+      }, 350);
+    }
+  }
+}
+window.addEventListener('hashchange', applyHeatmapHash);
+applyHeatmapHash();
+
