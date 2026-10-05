@@ -22,6 +22,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.Default.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.js"></script>
+  <!-- Leaflet.heat for Admissions Heatmap -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.heat/0.2.0/leaflet-heat.js"></script>
 
   <link rel="stylesheet" href="style.css" />
   <!-- Cloudflare Web Analytics. The generated pages get this injected from
@@ -129,10 +131,10 @@
       <div class="filter-group">
         <span class="filter-label">Getting in</span>
         <div class="filter-btns">
+          <button class="filter-btn highlight-btn" id="f-admissions-heatmap" onclick="toggleAdmissionsHeatmap()">🔥 Admissions Heatmap</button>
           <button class="filter-btn" id="f-oversubscribed" onclick="toggleFilter('oversubscribed')">Oversubscribed last year</button>
         </div>
-        <div class="filter-note">Schools whose Annual Admission Notice shows more
-          applicants than places.</div>
+        <div class="filter-note">Visualize competition &amp; admission pressure across Ireland. Schools whose Annual Admission Notice shows applicants vs places.</div>
       </div>
 
       <div class="filter-group" id="grp-deis">
@@ -236,6 +238,22 @@
       <div class="sb-section-title">📎 Resources</div>
       <ul class="resource-list" id="sb-links-list"></ul>
     </div>
+  </div>
+</div>
+
+<div id="admissions-heatmap-legend" class="heatmap-legend" style="display: none;">
+  <div class="hm-header">
+    <span class="hm-title">🔥 Admissions Heatmap</span>
+    <button class="hm-close" onclick="toggleAdmissionsHeatmap()" title="Close Heatmap">✕</button>
+  </div>
+  <div class="hm-gradient-bar"></div>
+  <div class="hm-gradient-labels">
+    <span>Places open</span>
+    <span>Competitive</span>
+    <span>Very hard (2.5×+ / waitlist)</span>
+  </div>
+  <div class="hm-mode-indicator" id="hm-mode-text">
+    Regional pressure clusters (Zoom in for school metrics)
   </div>
 </div>
 

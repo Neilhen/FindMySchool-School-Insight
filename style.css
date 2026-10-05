@@ -817,3 +817,147 @@ h1, h2, h3, .title-main, .sb-name, .sb-fee-val, .filter-label {
    not a warning — the same reading the guide argues for in words. */
 .badge-deis{background:var(--good-bg);color:var(--good);font-weight:600;
   border:1px solid var(--good-line)}
+
+/* ============================================================
+   ADMISSIONS HEATMAP
+   ============================================================ */
+.filter-btn.highlight-btn {
+  border-color: #E65100;
+  color: #B71C1C;
+  background: #FFF8E1;
+  font-weight: 600;
+}
+.filter-btn.highlight-btn:hover {
+  background: #FFE082;
+  border-color: #BF360C;
+}
+.filter-btn.highlight-btn.on {
+  background: #B71C1C;
+  color: #FFFFFF;
+  border-color: #880E4F;
+  box-shadow: 0 2px 8px rgba(183, 28, 28, 0.35);
+}
+
+/* Floating Heatmap Legend */
+#admissions-heatmap-legend {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 999;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--line);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+  border-radius: 10px;
+  padding: 12px 16px;
+  width: 300px;
+  font-family: inherit;
+  pointer-events: auto;
+  box-sizing: border-box;
+}
+
+#admissions-heatmap-legend .hm-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+#admissions-heatmap-legend .hm-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+#admissions-heatmap-legend .hm-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--soft);
+  padding: 2px 6px;
+  border-radius: 4px;
+  line-height: 1;
+}
+
+#admissions-heatmap-legend .hm-close:hover {
+  background: var(--sunk);
+  color: var(--ink);
+}
+
+.hm-gradient-bar {
+  height: 10px;
+  border-radius: 5px;
+  background: linear-gradient(to right, #2E7D32, #FBC02D, #F57C00, #D32F2F, #880E4F);
+  margin-bottom: 5px;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.hm-gradient-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10.5px;
+  color: var(--soft);
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.hm-mode-indicator {
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--ink);
+}
+
+/* Individual School Badges at Zoom >= 12 */
+.hm-marker-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+.hm-marker-wrap:hover {
+  transform: scale(1.15);
+  z-index: 10000 !important;
+}
+
+.hm-pill {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  border: 1.5px solid rgba(255,255,255,0.9);
+  letter-spacing: -0.01em;
+}
+
+.hm-pill-hard {
+  background: #B71C1C;
+  color: #FFFFFF;
+}
+
+.hm-pill-comp {
+  background: #E65100;
+  color: #FFFFFF;
+}
+
+.hm-pill-open {
+  background: #2E7D32;
+  color: #FFFFFF;
+}
+
+@media (max-width: 768px) {
+  #admissions-heatmap-legend {
+    top: auto;
+    bottom: 20px;
+    left: 12px;
+    right: 12px;
+    width: auto;
+  }
+}

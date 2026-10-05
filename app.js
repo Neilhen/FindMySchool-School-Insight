@@ -317,6 +317,9 @@ async function fetchSchoolsInBounds() {
 
 map.on('moveend', fetchSchoolsInBounds);
 map.on('zoomend', fetchSchoolsInBounds);
+map.on('zoomend', function() {
+  if (admissionsHeatmapActive) updateHeatmapZoom();
+});
 
 
 // ============================================================
@@ -1152,6 +1155,9 @@ function updateCount(shown, total) {
 }
 
 window.clearAllFilters = function () {
+  if (admissionsHeatmapActive) {
+    window.toggleAdmissionsHeatmap();
+  }
   Object.keys(activeFilters).forEach(function (k) {
     activeFilters[k] = DEFAULT_FILTERS[k];
     paintFilter(k);
@@ -1526,6 +1532,9 @@ window.setRegion = function(region) {
   
   mapRegion = region;
   if (region === 'US') {
+    if (admissionsHeatmapActive) {
+      window.toggleAdmissionsHeatmap();
+    }
     // The tabs are a segmented control now; the selected half is expressed
     // with aria-selected, which is both the accessible state and the hook the
     // stylesheet uses. No inline colours.
@@ -2025,4 +2034,223 @@ function applyFilterHash() {
 }
 window.addEventListener('hashchange', applyFilterHash);
 applyFilterHash();
+
+
+// ============================================================
+// ADMISSIONS HEATMAP (Zoom-adaptive)
+// ============================================================
+let admissionsHeatmapActive = false;
+let admissionsHeatLayer = null;
+let admissionsMetricLayer = null;
+let admissionsHeatmapData = null;
+
+async function openAdmissionsSchool(schoolBrief) {
+  map.setView([schoolBrief.la, schoolBrief.ln], Math.max(map.getZoom(), 14));
+  
+  if (markerMap[schoolBrief.id] && markerMap[schoolBrief.id]._schoolData) {
+    const s = markerMap[schoolBrief.id]._schoolData;
+    openSidebar(s);
+    drawFeederLines(s);
+    return;
+  }
+
+  const fallback = {
+    id: schoolBrief.id,
+    name: schoolBrief.n,
+    lat: schoolBrief.la,
+    lng: schoolBrief.ln,
+    applicationsPerPlace: schoolBrief.r,
+    oversubscribed: schoolBrief.o,
+    waitingList: schoolBrief.w,
+    placesLastYear: schoolBrief.pl,
+    placesOffered: schoolBrief.pl,
+    applicationsLastYear: schoolBrief.app,
+    type: schoolBrief.t,
+    area: schoolBrief.a,
+    admissionsNoticeUrl: schoolBrief.u ? (location.origin + schoolBrief.u) : null
+  };
+  openSidebar(fallback);
+
+  if (window.supabaseClient) {
+    try {
+      const { data, error } = await window.supabaseClient
+        .from('schools').select('*').eq('id', schoolBrief.id).limit(1);
+      if (!error && data && data.length) {
+        openSidebar(data[0]);
+        drawFeederLines(data[0]);
+      }
+    } catch (e) {
+      console.warn('Could not load complete school record', e);
+    }
+  }
+}
+
+function buildAdmissionsHeatmapLayers() {
+  if (!admissionsHeatmapData || !window.L || !L.heatLayer) return;
+
+  const heatPoints = [];
+  const metricMarkers = [];
+
+  admissionsHeatmapData.forEach(s => {
+    if (s.la == null || s.ln == null) return;
+
+    let weight = 0.15;
+    let pillClass = 'hm-pill-open';
+    let pillText = 'Open';
+    let tooltipTitle = `${s.n} — Places available`;
+
+    const r = s.r;
+    const w = s.w || 0;
+    const isOver = s.o;
+
+    if (r != null && r > 0) {
+      if (r >= 2.5 || w >= 40) {
+        weight = 1.0;
+        pillClass = 'hm-pill-hard';
+        pillText = `${r.toFixed(1)}×`;
+        tooltipTitle = `${s.n} — Very Hard (${r}× applicants per place${w ? ', ' + w + ' on waiting list' : ''})`;
+      } else if (r >= 1.8 || w >= 20) {
+        weight = 0.8;
+        pillClass = 'hm-pill-hard';
+        pillText = `${r.toFixed(1)}×`;
+        tooltipTitle = `${s.n} — Hard (${r}× applicants per place${w ? ', ' + w + ' on waiting list' : ''})`;
+      } else if (r >= 1.1 || isOver) {
+        weight = 0.55;
+        pillClass = 'hm-pill-comp';
+        pillText = `${r.toFixed(1)}×`;
+        tooltipTitle = `${s.n} — Competitive (${r}× applicants per place)`;
+      } else {
+        weight = 0.15;
+        pillClass = 'hm-pill-open';
+        pillText = `${r.toFixed(1)}×`;
+        tooltipTitle = `${s.n} — Places available (${r}× ratio)`;
+      }
+    } else if (isOver) {
+      if (w >= 30) {
+        weight = 0.85;
+        pillClass = 'hm-pill-hard';
+        pillText = `Wait: ${w}`;
+        tooltipTitle = `${s.n} — Oversubscribed (${w} on waiting list)`;
+      } else {
+        weight = 0.6;
+        pillClass = 'hm-pill-comp';
+        pillText = w > 0 ? `Wait: ${w}` : 'Oversub';
+        tooltipTitle = `${s.n} — Oversubscribed last year${w ? ' (' + w + ' on waiting list)' : ''}`;
+      }
+    } else {
+      weight = 0.15;
+      pillClass = 'hm-pill-open';
+      pillText = s.pl ? `${s.pl} pl` : 'Open';
+      tooltipTitle = `${s.n} — Confirmed capacity / places available`;
+    }
+
+    heatPoints.push([s.la, s.ln, weight]);
+
+    const icon = L.divIcon({
+      html: `<div class="hm-marker-wrap" title="${tooltipTitle.replace(/"/g, '&quot;')}"><span class="hm-pill ${pillClass}">${pillText}</span></div>`,
+      className: '',
+      iconSize: [50, 24],
+      iconAnchor: [25, 12]
+    });
+
+    const marker = L.marker([s.la, s.ln], { icon: icon });
+    marker.on('click', () => openAdmissionsSchool(s));
+    metricMarkers.push(marker);
+  });
+
+  admissionsHeatLayer = L.heatLayer(heatPoints, {
+    radius: 35,
+    blur: 25,
+    maxZoom: 15,
+    max: 1.0,
+    gradient: {
+      0.15: '#2E7D32',
+      0.45: '#FBC02D',
+      0.65: '#F57C00',
+      0.85: '#D32F2F',
+      1.0:  '#880E4F'
+    }
+  });
+
+  admissionsMetricLayer = L.layerGroup(metricMarkers);
+}
+
+function updateHeatmapZoom() {
+  if (!admissionsHeatmapActive) return;
+
+  const z = map.getZoom();
+  const modeText = document.getElementById('hm-mode-text');
+
+  if (z < 12) {
+    if (admissionsHeatLayer && !map.hasLayer(admissionsHeatLayer)) {
+      map.addLayer(admissionsHeatLayer);
+    }
+    if (admissionsMetricLayer && map.hasLayer(admissionsMetricLayer)) {
+      map.removeLayer(admissionsMetricLayer);
+    }
+    if (admissionsHeatLayer) {
+      admissionsHeatLayer.setOptions({ radius: 36, blur: 25, minOpacity: 0.35 });
+    }
+    if (modeText) {
+      modeText.innerHTML = `<strong>Regional pressure clusters</strong><br><span style="font-size:11px;color:var(--faint)">Zoom in (level ${z}/12) to reveal individual school badges</span>`;
+    }
+  } else {
+    if (admissionsHeatLayer && !map.hasLayer(admissionsHeatLayer)) {
+      map.addLayer(admissionsHeatLayer);
+    }
+    if (admissionsHeatLayer) {
+      admissionsHeatLayer.setOptions({ radius: 18, blur: 18, minOpacity: 0.1 });
+    }
+    if (admissionsMetricLayer && !map.hasLayer(admissionsMetricLayer)) {
+      map.addLayer(admissionsMetricLayer);
+    }
+    if (modeText) {
+      modeText.innerHTML = `<strong>School admissions metrics active</strong><br><span style="font-size:11px;color:var(--faint)">Click any badge to view admission notice &amp; criteria</span>`;
+    }
+  }
+}
+
+window.toggleAdmissionsHeatmap = async function () {
+  const btn = document.getElementById('f-admissions-heatmap');
+  const legend = document.getElementById('admissions-heatmap-legend');
+
+  if (admissionsHeatmapActive) {
+    admissionsHeatmapActive = false;
+    if (btn) btn.classList.remove('on');
+    if (legend) legend.style.display = 'none';
+    if (admissionsHeatLayer && map.hasLayer(admissionsHeatLayer)) map.removeLayer(admissionsHeatLayer);
+    if (admissionsMetricLayer && map.hasLayer(admissionsMetricLayer)) map.removeLayer(admissionsMetricLayer);
+    if (!map.hasLayer(markersGroup)) map.addLayer(markersGroup);
+    return;
+  }
+
+  admissionsHeatmapActive = true;
+  if (btn) btn.classList.add('on');
+  if (legend) legend.style.display = 'block';
+
+  if (typeof mapRegion !== 'undefined' && mapRegion !== 'IE') {
+    window.setRegion('IE');
+  }
+
+  if (map.hasLayer(markersGroup)) {
+    map.removeLayer(markersGroup);
+  }
+
+  if (!admissionsHeatmapData) {
+    try {
+      const resp = await fetch('admissions-heatmap.json');
+      admissionsHeatmapData = await resp.json();
+      buildAdmissionsHeatmapLayers();
+    } catch (err) {
+      console.error('Failed to load admissions-heatmap.json', err);
+      admissionsHeatmapActive = false;
+      if (btn) btn.classList.remove('on');
+      if (legend) legend.style.display = 'none';
+      if (!map.hasLayer(markersGroup)) map.addLayer(markersGroup);
+      return;
+    }
+  }
+
+  updateHeatmapZoom();
+};
 
