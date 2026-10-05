@@ -45,6 +45,10 @@
   <nav>
     <a href="/map">Map</a>
     <a href="/schools/">All schools</a>
+    <a href="/admissions-calendar">Deadlines</a>
+    <a href="/guides/school-catchment-areas-ireland">Catchments</a>
+    <a href="/guides/deis-schools-ireland">DEIS</a>
+    <a href="/guides/fee-paying-schools-ireland">Fee-paying</a>
     <a href="/compare" id="nav-compare">Shortlist</a>
   </nav>
 </header>
@@ -93,7 +97,7 @@ const ROWS = [
   ['Enrolment',       s => s.enrolment ? s.enrolment.toLocaleString() +
                             (s.maleEnrolment != null ? ` <span class="thin">(${s.maleEnrolment}b / ${s.femaleEnrolment}g)</span>` : '') : '—', 'enrolment'],
   ['Irish-medium',    s => s.irish ? 'Yes' : 'No'],
-  ['DEIS',            s => s.deis ? 'Yes' : 'No'],
+  ['DEIS',            s => deisCell(s)],
   ['Special classes', s => specialCell(s), 'special'],
   ['Boarding',        s => (s.attendanceType === 'Boarding' || s.attendanceType === 'Mixed') ? s.attendanceType : 'Day only'],
   ['Planning area',   s => s.planningArea || '—'],
@@ -106,12 +110,37 @@ const ROWS = [
                             s.email ? `<a href="mailto:${s.email}">${s.email}</a>` : ''].filter(Boolean).join('<br>') || '—'],
 ];
 
+function deisCell(s) {
+  if (!s.deis) return 'No';
+  if (!s.deisBand) return 'Yes <span class="thin">— unbanded</span>';
+  if (s.deisBand === 'Urban Band 1') {
+    return `<strong>Urban Band 1</strong><div class="thin" style="color:var(--good)">17:1 junior class cap</div>`;
+  }
+  if (s.deisBand === 'Post-primary') {
+    return `<strong>Post-primary</strong><div class="thin">Free exam fees &amp; HEAR college entry</div>`;
+  }
+  return `<strong>${s.deisBand}</strong><div class="thin">HSCL &amp; extra staffing</div>`;
+}
+
 function feeCell(s) {
   if (s.fees !== 'feepaying') return 'Free';
-  if (!s.annualFee) return 'Fee-paying <span class="thin">— amount not confirmed</span>';
-  const src = /^https?:/.test(s.feeSource || '')
-    ? ` <a href="${s.feeSource}" target="_blank" rel="noopener nofollow">source</a>` : '';
-  return `€${s.annualFee.toLocaleString()} <span class="thin">${s.feeYear || ''}</span>${src}`;
+  let out = '';
+  if (s.annualFee) {
+    const src = /^https?:/.test(s.feeSource || '')
+      ? ` <a href="${s.feeSource}" target="_blank" rel="noopener nofollow">source</a>` : '';
+    out = `<strong>€${s.annualFee.toLocaleString()}</strong> <span class="thin">/ year (${s.feeYear || ''})</span>${src}`;
+  } else if (s.feeLegacyAmount) {
+    out = `Fee-paying <div class="thin">~€${s.feeLegacyAmount.toLocaleString()} (unverified)</div>`;
+  } else {
+    out = 'Fee-paying <span class="thin">— amount not confirmed</span>';
+  }
+  if (s.attendanceType === 'Boarding' || s.attendanceType === 'Mixed') {
+    out += `<div class="thin">${s.attendanceType} available</div>`;
+  }
+  if (s.feeNote) {
+    out += `<div class="thin">${s.feeNote}</div>`;
+  }
+  return out;
 }
 function specialCell(s) {
   if (!s.specialClasses) return 'None listed';
